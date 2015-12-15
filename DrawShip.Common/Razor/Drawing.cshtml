@@ -1,0 +1,16 @@
+﻿@model DrawShip.Common.Drawing
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.FileName</title>
+</head>
+<body>
+	<div class="mxgraph" style="position:relative;overflow:auto;width:100%;background-color:#ffffff;">
+		<div style="width:1px;height:1px;overflow:hidden;">@Model.ReadDiagramContent()</div>
+	</div>
+
+	<script type="text/javascript" src="https://www.draw.io/js/embed-static.min.js"></script>
+</body>
+</html>

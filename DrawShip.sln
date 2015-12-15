@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawShip.Handler", "DrawShip.Handler.csproj", "{46290ACF-DC3B-46A7-AEA6-98F0E69606E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawShip.Common", "DrawShip.Common\DrawShip.Common.csproj", "{3C912AE2-F9CD-4BB2-A6DD-794B205E63A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawShip.Handler", "DrawShip.Handler\DrawShip.Handler.csproj", "{46290ACF-DC3B-46A7-AEA6-98F0E69606E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C912AE2-F9CD-4BB2-A6DD-794B205E63A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C912AE2-F9CD-4BB2-A6DD-794B205E63A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C912AE2-F9CD-4BB2-A6DD-794B205E63A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C912AE2-F9CD-4BB2-A6DD-794B205E63A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46290ACF-DC3B-46A7-AEA6-98F0E69606E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{46290ACF-DC3B-46A7-AEA6-98F0E69606E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46290ACF-DC3B-46A7-AEA6-98F0E69606E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
