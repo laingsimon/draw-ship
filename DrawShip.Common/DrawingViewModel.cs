@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace DrawShip.Common
@@ -7,25 +8,21 @@ namespace DrawShip.Common
 	{
 		private readonly Drawing _drawing;
 		private readonly IFileSystem _fileSystem;
-		private string[] _configuredShapeNames;
 		private readonly string _version;
 
-		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, string version = null, string[] configuredShapeNames = null)
+		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, string version = null)
 		{
 			_drawing = drawing;
 			_fileSystem = fileSystem;
 			_version = version;
-			_configuredShapeNames = configuredShapeNames;
 		}
 
 		public string ShapeNames
 		{
 			get
 			{
-				if (_configuredShapeNames == null)
-					return string.Empty;
-
-				return string.Join(";", _configuredShapeNames);
+				var containedShapeNames = DiagramReader.GetContainedShapeNames(_drawing, _fileSystem, _version);
+				return string.Join(";", containedShapeNames);
 			}
 		}
 

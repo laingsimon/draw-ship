@@ -59,8 +59,7 @@ namespace DrawShip.Handler
 			var viewModel = new DrawingViewModel(
 				drawing,
 				_fileSystemFactory.GetFileSystem(request),
-				version,
-				configuredShapeNames: Shapes.Names);
+				version);
 			_renderer.RenderDrawing(response.Output, viewModel);
 		}
 
