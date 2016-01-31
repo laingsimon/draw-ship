@@ -12,5 +12,25 @@
 	</div>
 
 	<script type="text/javascript" src="https://www.draw.io/embed.js?s=@(Model.ShapeNames)"></script>
+
+	<script type="text/javascript">
+		var _originalWindowOpen = window.open;
+		var _ctrlKeyPressed = false
+		window.open = function(url, options, name)
+		{
+			if (_ctrlKeyPressed)
+				_originalWindowOpen(url, options, name);
+			else
+				document.location = url;
+		}
+
+		window.addEventListener("keydown", function (event) {
+			_ctrlKeyPressed = event.ctrlKey;
+		})
+
+		window.addEventListener("keyup", function (event) {
+			_ctrlKeyPressed = false;
+		})
+	</script>
 </body>
 </html>
