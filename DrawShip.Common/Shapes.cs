@@ -17,13 +17,5 @@ namespace DrawShip.Common
 		/// The names of the shapes that should be included in the previews
 		/// </summary>
 		public static string[] Names { get; set; }
-
-		public static string GetNames()
-		{
-			if (Names == null)
-				return string.Empty;
-
-			return string.Join(";", Names);
-		}
 	}
 }

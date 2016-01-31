@@ -12,14 +12,14 @@ namespace DrawShip.Common
 			_razorView = razorView;
 		}
 
-		public void RenderDrawing(TextWriter textWriter, Drawing drawing)
+		public void RenderDrawing(TextWriter textWriter, DrawingViewModel viewModel)
 		{
 			RazorEngine.Engine.Razor.RunCompile(
 				templateSource: _razorView,
 				name: "drawing",
 				writer: textWriter,
-				modelType: typeof(Drawing),
-				model: drawing);
+				modelType: typeof(DrawingViewModel),
+				model: viewModel);
 		}
 	}
 }

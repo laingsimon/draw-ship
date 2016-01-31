@@ -1,16 +1,16 @@
-﻿@model DrawShip.Common.Drawing
+﻿@model DrawShip.Common.DrawingViewModel
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>@Model.FileName</title>
+    <title>@Model.DrawingTitle</title>
 </head>
 <body>
 	<div class="mxgraph" style="position:relative;overflow:auto;width:100%;background-color:#ffffff;">
 		<div style="width:1px;height:1px;overflow:hidden;">@Model.ReadDiagramContent()</div>
 	</div>
 
-	<script type="text/javascript" src="https://www.draw.io/embed.js?s=@(DrawShip.Common.Shapes.GetNames())"></script>
+	<script type="text/javascript" src="https://www.draw.io/embed.js?s=@(Model.ShapeNames)"></script>
 </body>
 </html>

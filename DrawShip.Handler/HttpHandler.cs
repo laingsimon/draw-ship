@@ -11,11 +11,13 @@ namespace DrawShip.Handler
 	{
 		private readonly PathLibrary _pathLibrary;
 		private readonly HtmlRenderer _renderer;
+		private readonly FileSystemFactory _fileSystemFactory;
 
 		public HttpHandler()
 		{
 			_renderer = new HtmlRenderer(RazorView.Drawing);
 			_pathLibrary = new PathLibrary();
+			_fileSystemFactory = new FileSystemFactory();
 		}
 
 		public bool IsReusable
@@ -29,10 +31,11 @@ namespace DrawShip.Handler
 			var request = context.Request;
 			var response = context.Response;
 
-			var filePath = _GetApplicationRelativePath(request.ServerVariables, request.Url.PathAndQuery);
+			var filePath = _GetApplicationRelativePath(request.ServerVariables, request.Url.LocalPath);
 			var fileName = Path.GetFileName(filePath);
 			var library = HttpUtility.UrlDecode(Path.GetDirectoryName(filePath));
 			var physicalPath = _pathLibrary.GetPhysicalPath(library);
+			var version = _GetVersion(request);
 
 			if (physicalPath == null)
 			{
@@ -53,7 +56,17 @@ namespace DrawShip.Handler
 				return;
 			}
 
-			_renderer.RenderDrawing(response.Output, drawing);
+			var viewModel = new DrawingViewModel(
+				drawing,
+				_fileSystemFactory.GetFileSystem(request),
+				version,
+				configuredShapeNames: Shapes.Names);
+			_renderer.RenderDrawing(response.Output, viewModel);
+		}
+
+		private string _GetVersion(HttpRequest request)
+		{
+			return request.QueryString["v"];
 		}
 
 		private string _GetApplicationRelativePath(NameValueCollection serverVariables, string pathAndQuery)
