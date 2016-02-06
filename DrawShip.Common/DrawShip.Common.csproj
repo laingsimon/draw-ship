@@ -55,6 +55,8 @@
     <Compile Include="DiagramReader.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="DrawingViewModel.cs" />
+    <Compile Include="IIRenderer.cs" />
+    <Compile Include="ImageRenderer.cs" />
     <Compile Include="LocalFileSystem.cs" />
     <Compile Include="HtmlRenderer.cs" />
     <Compile Include="IFileSystem.cs" />

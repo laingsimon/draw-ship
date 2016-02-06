@@ -3,7 +3,7 @@ using RazorEngine.Templating;
 
 namespace DrawShip.Common
 {
-	public class HtmlRenderer
+	public class HtmlRenderer : IIRenderer
 	{
 		private readonly RazorView _razorView;
 
@@ -12,14 +12,17 @@ namespace DrawShip.Common
 			_razorView = razorView;
 		}
 
-		public void RenderDrawing(TextWriter textWriter, DrawingViewModel viewModel)
+		public void RenderDrawing(Stream outputStream, DrawingViewModel viewModel)
 		{
-			RazorEngine.Engine.Razor.RunCompile(
-				templateSource: _razorView,
-				name: "drawing",
-				writer: textWriter,
-				modelType: typeof(DrawingViewModel),
-				model: viewModel);
+			using (var textWriter = new StreamWriter(outputStream))
+			{
+				RazorEngine.Engine.Razor.RunCompile(
+					templateSource: _razorView,
+					name: "drawing",
+					writer: textWriter,
+					modelType: typeof(DrawingViewModel),
+					model: viewModel);
+			}
 		}
 	}
 }

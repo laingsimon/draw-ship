@@ -38,6 +38,13 @@ namespace DrawShip.Common
 			}
 		}
 
+		public string ReadFileContent()
+		{
+			using (var stream = _fileSystem.OpenRead(_drawing, _version))
+			using (var reader = new StreamReader(stream))
+				return reader.ReadToEnd();
+		}
+
 		public string ReadDiagramContent()
 		{
 			using (var stream = _fileSystem.OpenRead(_drawing, _version))

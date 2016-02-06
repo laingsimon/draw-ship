@@ -21,11 +21,20 @@ namespace DrawShip.Viewer
 
 			if (string.IsNullOrEmpty(WorkingDirectory))
 				WorkingDirectory = Environment.CurrentDirectory;
+
+			var formatString = commandLine.SingleOrDefault(arg => arg.StartsWith("/format:"));
+			if (formatString != null)
+			{
+				var format = DiagramFormat.Html;
+				if (Enum.TryParse(formatString.Substring("/format:".Length), true, out format))
+					Format = format;
+			}
 		}
 
 		public string FileName { get; private set; }
 		public string WorkingDirectory { get; private set; }
 		public Mutex Mutex { get; set; }
+		public DiagramFormat Format { get; private set; }
 
 		public void StartProcess(string url)
 		{

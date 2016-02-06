@@ -55,7 +55,8 @@ namespace DrawShip.Viewer
 			var command = new ShowDiagramStructure
 			{
 				FileName = applicationContext.FileName,
-				Directory = applicationContext.WorkingDirectory
+				Directory = applicationContext.WorkingDirectory,
+				Format = applicationContext.Format
 			};
 			var commandJson = JsonConvert.SerializeObject(command);
 

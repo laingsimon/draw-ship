@@ -49,7 +49,8 @@ namespace DrawShip.Viewer
 				new ShowDiagramStructure
 				{
 					FileName = _applicationContext.FileName,
-					Directory = _applicationContext.WorkingDirectory
+					Directory = _applicationContext.WorkingDirectory,
+					Format = _applicationContext.Format
 				});
 		}
 
@@ -66,13 +67,20 @@ namespace DrawShip.Viewer
 		{
 			var versionQueryString = string.IsNullOrEmpty(command.Version)
 				? ""
-				: "?v=" + command.Version;
+				: "v=" + command.Version;
 			var workingDirectoryKey = _GetWorkingDirectoryKey(command.Directory);
-			var fileNameAndVersion = string.Format("{0}/{1}{2}", workingDirectoryKey, command.FileName, versionQueryString);
+			var formatQueryString = command.Format == DiagramFormat.Html
+				? ""
+				: "f=" + command.Format;
+			var queryString = string.Join("&", new[] { versionQueryString, formatQueryString }.Where(s => !string.IsNullOrEmpty(s)));
+			if (!string.IsNullOrEmpty(queryString))
+				queryString = "?" + queryString;
+
+			var fileNameAndVersionAndFormat = string.Format("{0}/{1}{2}", workingDirectoryKey, command.FileName, queryString);
 			var url = string.Format(
 				"http://localhost:{0}/{1}",
 				Port,
-				fileNameAndVersion);
+				fileNameAndVersionAndFormat);
 
 			ApplicationContext.StartProcess(url);
 		}
