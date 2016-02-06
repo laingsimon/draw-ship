@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DrawShip.Viewer
 {
@@ -9,6 +11,7 @@ namespace DrawShip.Viewer
 
 		private readonly ApplicationContext _applicationContext;
 		private readonly IOwinHost _host;
+		private readonly IDictionary<Guid, string> _directoryKeys = new Dictionary<Guid, string>();
 
 		public HostingContext(ApplicationContext applicationContext, IOwinHost host)
 		{
@@ -18,6 +21,8 @@ namespace DrawShip.Viewer
 			_applicationContext = applicationContext;
 			_host = host;
 			_instance = this;
+
+			_directoryKeys.Add(Guid.NewGuid(), applicationContext.WorkingDirectory);
 		}
 
 		public static HostingContext Instance
@@ -40,21 +45,48 @@ namespace DrawShip.Viewer
 
 		public void ApplicationStarted()
 		{
-			DisplayDrawing(_applicationContext.FileName, "");
+			DisplayDrawing(
+				new ShowDiagramStructure
+				{
+					FileName = _applicationContext.FileName,
+					Directory = _applicationContext.WorkingDirectory
+				});
 		}
 
-		public void DisplayDrawing(string fileName, string version)
+		public string GetDirectory(string directoryKey)
 		{
-			var versionQueryString = string.IsNullOrEmpty(version)
+			var key = Guid.Parse(directoryKey);
+
+			return _directoryKeys.ContainsKey(key)
+				? _directoryKeys[key]
+				: null;
+		}
+
+		public void DisplayDrawing(ShowDiagramStructure command)
+		{
+			var versionQueryString = string.IsNullOrEmpty(command.Version)
 				? ""
-				: "?v=" + version;
-			var fileNameAndVersion = string.Format("{0}{1}", fileName, version);
+				: "?v=" + command.Version;
+			var workingDirectoryKey = _GetWorkingDirectoryKey(command.Directory);
+			var fileNameAndVersion = string.Format("{0}/{1}{2}", workingDirectoryKey, command.FileName, versionQueryString);
 			var url = string.Format(
 				"http://localhost:{0}/{1}",
 				Port,
 				fileNameAndVersion);
 
 			ApplicationContext.StartProcess(url);
+		}
+
+		private Guid _GetWorkingDirectoryKey(string directory)
+		{
+			var directoryKeyEntry = _directoryKeys.SingleOrDefault(kvp => kvp.Value.Equals(directory, StringComparison.OrdinalIgnoreCase));
+
+			if (directoryKeyEntry.Key != Guid.Empty)
+				return directoryKeyEntry.Key;
+
+			var key = Guid.NewGuid();
+			_directoryKeys.Add(key, directory);
+			return key;
 		}
 
 		public void DisplayIndex()

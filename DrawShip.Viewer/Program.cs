@@ -8,6 +8,8 @@ namespace DrawShip.Viewer
 {
 	static class Program
 	{
+		private static readonly Mutex _mutex = new Mutex(true, "A727D06E-77C3-4760-AC74-C1D76DD11B91");
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -29,7 +31,7 @@ namespace DrawShip.Viewer
 
 			try
 			{
-				using (var owinHost = new OwinHost())
+				using (var owinHost = new OwinHost(5142))
 				{
 					var hostingContext = new HostingContext(applicationContext, owinHost);
 					var form = new HostingDetail(hostingContext);
@@ -45,8 +47,7 @@ namespace DrawShip.Viewer
 
 		private static void _SendMessageToOtherInstance(ApplicationContext applicationContext)
 		{
-			var title = HostingDetail.GetWindowTitle(applicationContext);
-			var hwnd = NativeMethods.FindWindow(null, title);
+			var hwnd = NativeMethods.FindWindow(null, "DrawShip");
 
 			if (hwnd == IntPtr.Zero)
 				throw new InvalidOperationException("Could not find window to send message to");
@@ -81,18 +82,17 @@ namespace DrawShip.Viewer
 		public static void IntPtrFree(ref IntPtr preAllocated)
 		{
 			if (IntPtr.Zero == preAllocated)
-				throw (new NullReferenceException("Go Home"));
+				return;
+
 			Marshal.FreeHGlobal(preAllocated);
 			preAllocated = IntPtr.Zero;
 		}
 
 		private static Mutex _EnsureSingleInstanceForWorkingDirectory(ApplicationContext applicationContext)
 		{
-			var singleInstanceHash = applicationContext.WorkingDirectory.ToLower().GetHashCode();
-			var mutex = new Mutex(true, string.Format("drawShip.Viewer@{0}", singleInstanceHash));
-			var singleInstance = mutex.WaitOne(TimeSpan.FromSeconds(1));
+			var singleInstance = _mutex.WaitOne(TimeSpan.FromSeconds(1));
 			if (singleInstance)
-				return mutex;
+				return _mutex;
 
 			return null;
 		}

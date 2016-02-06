@@ -4,6 +4,7 @@ using DrawShip.Common;
 using System.IO;
 using System.Web;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace DrawShip.Viewer
 {
@@ -22,14 +23,36 @@ namespace DrawShip.Viewer
 
 		public async Task Handle(IOwinContext context)
 		{
-			var fileName = context.Request.Path.Value.TrimStart('/');
+			var fileNameAndDirectoryKey = context.Request.Path.Value;
+			var match = Regex.Match(fileNameAndDirectoryKey, @"^\/(?<directoryKey>.+?)\/(?<fileName>.+?)$");
+			if (!match.Success)
+			{
+				await context.Respond(HttpStatusCode.BadRequest, "Invalid request - directoryKey and fileName cannot be extracted");
+				return;
+			}
+
+			var fileName = match.Groups["fileName"].Value;
+			var directoryKey = match.Groups["directoryKey"].Value;
+			var directory = _hostingContext.GetDirectory(directoryKey);
+
+			if (directory == null)
+			{
+				await context.Respond(HttpStatusCode.NotFound, "Directory not known - " + directoryKey);
+				return;
+			}
+
 			var version = _GetVersion(context.Request.QueryString);
+			var command = new ShowDiagramStructure
+			{
+				FileName = fileName,
+				Directory = directory,
+				Version = version
+			};
 
-			var drawing = new Drawing(fileName, _hostingContext.ApplicationContext.WorkingDirectory);
-
+			var drawing = new Drawing(fileName, command.Directory);
 			if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
 			{
-				await context.Respond(HttpStatusCode.NotFound, "Drawing not found: " + drawing.FileName);
+				await context.Respond(HttpStatusCode.NotFound, "Drawing not : " + drawing.FileName);
 				return;
 			}
 

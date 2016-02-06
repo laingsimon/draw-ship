@@ -10,15 +10,12 @@ namespace DrawShip.Viewer
 	public class OwinHost : IOwinHost
 	{
 		private readonly IDisposable _service;
-		private static int? _port;
+		private static int _port;
 
-		public OwinHost(int? port = null)
+		public OwinHost(int port)
 		{
 			_port = port;
-			var portArg = port.HasValue
-				? string.Format(":{0}", port.Value)
-				: "";
-			_service = WebApp.Start<_Service>(string.Format("http://localhost{0}", portArg));
+			_service = WebApp.Start<_Service>(string.Format("http://localhost:{0}", port));
 		}
 
 		public void Dispose()
@@ -30,7 +27,7 @@ namespace DrawShip.Viewer
 		{
 			get
 			{
-				return _port ?? 80;
+				return _port;
 			}
 		}
 

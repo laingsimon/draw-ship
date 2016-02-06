@@ -15,11 +15,6 @@ namespace DrawShip.Viewer
 			InitializeComponent();
 		}
 
-		internal static string GetWindowTitle(ApplicationContext applicationContext)
-		{
-			return string.Format("DrawShip:{0}", applicationContext.WorkingDirectory);
-		}
-
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			lblHostingDetail.Text = string.Format(
@@ -27,10 +22,9 @@ namespace DrawShip.Viewer
 				_hostingContext.Port);
 
 			_hostingContext.ApplicationStarted();
-			Text = GetWindowTitle(_hostingContext.ApplicationContext);
+			Text = "DrawShip";
 			icoSystemTray.Text = string.Format(
-				"DrawShip: {0} ({1})",
-				_hostingContext.ApplicationContext.WorkingDirectory,
+				"DrawShip: {0}",
 				_hostingContext.Port);
 		}
 
@@ -63,7 +57,7 @@ namespace DrawShip.Viewer
 			var commandJson = Marshal.PtrToStringAnsi(copyStruct.lpData);
 			var command = JsonConvert.DeserializeObject<ShowDiagramStructure>(commandJson);
 
-			_hostingContext.DisplayDrawing(command.FileName, command.Version);
+			_hostingContext.DisplayDrawing(command);
 		}
 
 		private void icoSystemTray_DoubleClick(object sender, EventArgs e)
