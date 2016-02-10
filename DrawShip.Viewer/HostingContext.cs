@@ -82,7 +82,7 @@ namespace DrawShip.Viewer
 				Port,
 				fileNameAndVersionAndFormat);
 
-			ApplicationContext.StartProcess(url);
+			Process.Start(url);
 		}
 
 		private Guid _GetWorkingDirectoryKey(string directory)
@@ -103,7 +103,7 @@ namespace DrawShip.Viewer
 				"http://localhost:{0}/",
 				Port);
 
-			ApplicationContext.StartProcess(url);
+			Process.Start(url);
 		}
 	}
 }

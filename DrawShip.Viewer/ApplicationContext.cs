@@ -31,14 +31,14 @@ namespace DrawShip.Viewer
 			}
 		}
 
+		public IRunMode GetRunMode()
+		{
+			return new SelfHostRunMode(
+				new OpenDrawingInOtherHostRunMode());
+		}
+
 		public string FileName { get; private set; }
 		public string WorkingDirectory { get; private set; }
-		public Mutex Mutex { get; set; }
 		public DiagramFormat Format { get; private set; }
-
-		public void StartProcess(string url)
-		{
-			Process.Start(url);
-		}
 	}
 }
