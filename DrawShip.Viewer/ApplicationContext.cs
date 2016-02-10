@@ -1,13 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 
 namespace DrawShip.Viewer
 {
 	public class ApplicationContext
 	{
+		private enum RunMode
+		{
+			Run,
+			Install,
+			Uninstall
+		}
+
+		private readonly RunMode _mode = RunMode.Run;
+
 		public ApplicationContext()
 		{
 			var commandLine = Environment.GetCommandLineArgs().Skip(1).ToArray();
@@ -29,12 +36,26 @@ namespace DrawShip.Viewer
 				if (Enum.TryParse(formatString.Substring("/format:".Length), true, out format))
 					Format = format;
 			}
+
+			var mode = commandLine.SingleOrDefault(arg => arg.StartsWith("/mode:"));
+			if (mode != null)
+				Enum.TryParse(mode.Substring("/mode:".Length), true, out _mode);
 		}
 
 		public IRunMode GetRunMode()
 		{
-			return new SelfHostRunMode(
-				new OpenDrawingInOtherHostRunMode());
+			switch(_mode)
+			{
+				case RunMode.Install:
+					return new InstallRunMode();
+
+				case RunMode.Uninstall:
+					return new UninstallRunMode();
+
+				default:
+					return new SelfHostRunMode(
+						new OpenDrawingInOtherHostRunMode());
+			}
 		}
 
 		public string FileName { get; private set; }

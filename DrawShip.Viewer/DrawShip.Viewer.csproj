@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="HostingContext.cs" />
     <Compile Include="HttpHandler.cs" />
+    <Compile Include="InstallRunMode.cs" />
     <Compile Include="IOwinHost.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="OpenDrawingInOtherHostRunMode.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="IRunMode.cs" />
     <Compile Include="SelfHostRunMode.cs" />
     <Compile Include="ShowDiagramStructure.cs" />
+    <Compile Include="UninstallRunMode.cs" />
     <EmbeddedResource Include="HostingDetail.resx">
       <DependentUpon>HostingDetail.cs</DependentUpon>
     </EmbeddedResource>
