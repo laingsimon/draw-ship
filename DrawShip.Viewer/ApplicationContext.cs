@@ -20,7 +20,10 @@ namespace DrawShip.Viewer
 			var commandLine = Environment.GetCommandLineArgs().Skip(1).ToArray();
 			FileName = commandLine.FirstOrDefault(a => !a.StartsWith("/"));
 			if (FileName != null)
+			{
+				FileName = Path.GetFileNameWithoutExtension(FileName);
 				WorkingDirectory = Path.GetDirectoryName(FileName);
+			}
 
 			var configuredDir = commandLine.SingleOrDefault(arg => arg.StartsWith("/dir:"));
 			if (configuredDir != null)
