@@ -89,7 +89,7 @@ namespace DrawShip.Viewer
 			var queryString = HttpUtility.ParseQueryString(request.QueryString.Value);
 			var formatString = queryString["f"];
 			DiagramFormat format;
-			if (!Enum.TryParse(formatString, out format))
+			if (!Enum.TryParse(formatString, true, out format))
 				format = DiagramFormat.Html;
 
 			switch (format)
