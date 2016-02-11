@@ -16,7 +16,8 @@ namespace DrawShip.Viewer
 
 			var xmlFileNode = Registry.ClassesRoot.OpenSubKey(xmlFileType);
 			var xmlFileShell = xmlFileNode.OpenSubKey("shell", true) ?? xmlFileNode.CreateSubKey("shell");
-			xmlFileShell.DeleteSubKeyTree(InstallRunMode.ContextMenuName, false);
+			xmlFileShell.DeleteSubKeyTree(InstallRunMode.HtmlPreviewContextMenuName, false);
+			xmlFileShell.DeleteSubKeyTree(InstallRunMode.ImagePreviewContextMenuName, false);
 
 			return true;
 		}

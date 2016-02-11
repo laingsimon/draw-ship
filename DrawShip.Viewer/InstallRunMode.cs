@@ -6,7 +6,8 @@ namespace DrawShip.Viewer
 {
 	public class InstallRunMode : IRunMode
 	{
-		public const string ContextMenuName = "Preview in DrawShip";
+		public const string HtmlPreviewContextMenuName = "Preview in DrawShip";
+		public const string ImagePreviewContextMenuName = "Preview in DrawShip (image)";
 
 		public bool Run(ApplicationContext applicationContext)
 		{
@@ -20,13 +21,28 @@ namespace DrawShip.Viewer
 
 			var xmlFileNode = Registry.ClassesRoot.OpenSubKey(xmlFileType);
 			var xmlFileShell = xmlFileNode.OpenSubKey("shell", true) ?? xmlFileNode.CreateSubKey("shell");
-			var preview = xmlFileShell.OpenSubKey(ContextMenuName, true) ?? xmlFileShell.CreateSubKey(ContextMenuName);
+			_CreateHtmlPreviewItem(xmlFileShell);
+			_CreateImagePreviewItem(xmlFileShell);
+
+			return true;
+		}
+
+		private static void _CreateHtmlPreviewItem(RegistryKey xmlFileShell)
+		{
+			var preview = xmlFileShell.OpenSubKey(HtmlPreviewContextMenuName, true) ?? xmlFileShell.CreateSubKey(HtmlPreviewContextMenuName);
 			var previewCommand = preview.OpenSubKey("command", true) ?? preview.CreateSubKey("command");
 
 			var applicationExePath = Environment.GetCommandLineArgs().First();
 			previewCommand.SetValue(null, string.Format("\"{0}\" \"%1\"", applicationExePath));
+		}
 
-			return true;
+		private static void _CreateImagePreviewItem(RegistryKey xmlFileShell)
+		{
+			var preview = xmlFileShell.OpenSubKey(ImagePreviewContextMenuName, true) ?? xmlFileShell.CreateSubKey(ImagePreviewContextMenuName);
+			var previewCommand = preview.OpenSubKey("command", true) ?? preview.CreateSubKey("command");
+
+			var applicationExePath = Environment.GetCommandLineArgs().First();
+			previewCommand.SetValue(null, string.Format("\"{0}\" \"%1\" /format:Image", applicationExePath));
 		}
 	}
 }
