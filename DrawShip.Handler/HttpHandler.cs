@@ -48,7 +48,7 @@ namespace DrawShip.Handler
 				return;
 			}
 
-			var drawing = new Drawing(fileName, physicalPath);
+			var drawing = new Drawing(Path.ChangeExtension(fileName, ".xml"), physicalPath);
 
 			if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
 			{

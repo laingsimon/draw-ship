@@ -64,7 +64,7 @@ namespace DrawShip.Viewer
 					Version = version
 				};
 
-				var drawing = new Drawing(fileName, command.Directory);
+				var drawing = new Drawing(Path.ChangeExtension(fileName, ".xml"), command.Directory);
 				if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
 				{
 					await context.Respond(HttpStatusCode.NotFound, "Drawing not : " + drawing.FileName);
