@@ -8,10 +8,16 @@ namespace DrawShip.Viewer
 	{
 		public const string HtmlPreviewContextMenuName = "Preview in DrawShip";
 		public const string ImagePreviewContextMenuName = "Preview in DrawShip (image)";
+		private readonly string _applicationExePath;
+
+		public InstallRunMode()
+		{
+			_applicationExePath = Environment.GetCommandLineArgs().First();
+		}
 
 		public bool Run(ApplicationContext applicationContext)
 		{
-			var xml = Registry.ClassesRoot.OpenSubKey(".xml") ?? Registry.ClassesRoot.CreateSubKey(".xml");
+			var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
 			var xmlFileType = (string)xml.GetValue(null, null);
 			if (xmlFileType == null)
 			{
@@ -19,30 +25,27 @@ namespace DrawShip.Viewer
 				xml.SetValue(null, xmlFileType);
 			}
 
-			var xmlFileNode = Registry.ClassesRoot.OpenSubKey(xmlFileType);
-			var xmlFileShell = xmlFileNode.OpenSubKey("shell", true) ?? xmlFileNode.CreateSubKey("shell");
-			_CreateHtmlPreviewItem(xmlFileShell);
-			_CreateImagePreviewItem(xmlFileShell);
+			var windows10XmlShell = Registry.ClassesRoot.OpenPath(@"SystemFileAssociations\.xml\shell", createIfRequired: true);
+			var xmlShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
+
+			_CreatePreviewItem(HtmlPreviewContextMenuName, "\"%1\"", new[] { xmlShell, windows10XmlShell });
+			_CreatePreviewItem(ImagePreviewContextMenuName, "\"%1\" /format:Image", new[] { xmlShell, windows10XmlShell });
 
 			return true;
 		}
 
-		private static void _CreateHtmlPreviewItem(RegistryKey xmlFileShell)
+		private void _CreatePreviewItem(string name, string commandFormat, RegistryKey[] shells)
 		{
-			var preview = xmlFileShell.OpenSubKey(HtmlPreviewContextMenuName, true) ?? xmlFileShell.CreateSubKey(HtmlPreviewContextMenuName);
-			var previewCommand = preview.OpenSubKey("command", true) ?? preview.CreateSubKey("command");
+			foreach (var shell in shells)
+			{
+				if (shell == null)
+					continue;
 
-			var applicationExePath = Environment.GetCommandLineArgs().First();
-			previewCommand.SetValue(null, string.Format("\"{0}\" \"%1\"", applicationExePath));
-		}
-
-		private static void _CreateImagePreviewItem(RegistryKey xmlFileShell)
-		{
-			var preview = xmlFileShell.OpenSubKey(ImagePreviewContextMenuName, true) ?? xmlFileShell.CreateSubKey(ImagePreviewContextMenuName);
-			var previewCommand = preview.OpenSubKey("command", true) ?? preview.CreateSubKey("command");
-
-			var applicationExePath = Environment.GetCommandLineArgs().First();
-			previewCommand.SetValue(null, string.Format("\"{0}\" \"%1\" /format:Image", applicationExePath));
+				var preview = shell.OpenKey(name, createIfRequired: true);
+				var command = preview.OpenKey("command", createIfRequired: true);
+				command.SetValue(null, string.Format("\"{0}\" {1}", _applicationExePath, commandFormat));
+				preview.SetValue("icon", string.Format("{0},0", _applicationExePath));
+			}
 		}
 	}
 }

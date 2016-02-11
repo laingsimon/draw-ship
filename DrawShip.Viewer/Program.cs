@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Windows.Forms;
 
 namespace DrawShip.Viewer
 {
@@ -11,13 +12,21 @@ namespace DrawShip.Viewer
 		[STAThread]
 		static void Main()
 		{
-			ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+			try
+			{
+				ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+				ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
-			var applicationContext = new ApplicationContext();
-			var runMode = applicationContext.GetRunMode();
+				var applicationContext = new ApplicationContext();
+				var runMode = applicationContext.GetRunMode();
 
-			runMode.Run(applicationContext);
+				runMode.Run(applicationContext);
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show("Error running command:\r\n" + exc.Message, "DrawShip", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Environment.ExitCode = -1;
+			}
 		}
 	}
 }
