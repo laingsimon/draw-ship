@@ -23,13 +23,7 @@ namespace DrawShip.Viewer
 			_service.Dispose();
 		}
 
-		public int Port
-		{
-			get
-			{
-				return _port;
-			}
-		}
+		public int Port => _port;
 
 		private class _Service
 		{

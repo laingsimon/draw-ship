@@ -7,7 +7,7 @@ namespace DrawShip.Viewer
 {
 	public partial class HostingDetail : Form
 	{
-		private HostingContext _hostingContext;
+		private readonly HostingContext _hostingContext;
 
 		public HostingDetail(HostingContext detail)
 		{
@@ -46,12 +46,12 @@ namespace DrawShip.Viewer
 		protected override void WndProc(ref Message m)
 		{
 			if (m.Msg == NativeMethods.WM_COPYDATA)
-				AcceptData(m);
+				_AcceptData(m);
 
 			base.WndProc(ref m);
 		}
 
-		private void AcceptData(Message m)
+		private void _AcceptData(Message m)
 		{
 			var copyStruct = (NativeMethods.COPYDATASTRUCT)m.GetLParam(typeof(NativeMethods.COPYDATASTRUCT));
 			var commandJson = Marshal.PtrToStringAnsi(copyStruct.lpData);

@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace DrawShip
+namespace DrawShip.Common
 {
 	internal static class CompressedXmlStream
 	{
@@ -28,7 +28,7 @@ namespace DrawShip
 		public static Stream Read(string base64EncodedDeflatedXml)
 		{
 			if (string.IsNullOrEmpty(base64EncodedDeflatedXml))
-				throw new ArgumentNullException("base64EncodedDeflatedXml");
+				throw new ArgumentNullException(nameof(base64EncodedDeflatedXml));
 
 			var decoded = new Base64Stream(base64EncodedDeflatedXml);
 			var decompression = new DeflateStream(decoded, CompressionMode.Decompress);
@@ -38,9 +38,9 @@ namespace DrawShip
 		public static Stream Write(Stream underlyingStream)
 		{
 			if (underlyingStream == null)
-				throw new ArgumentNullException("underlyingStream");
+				throw new ArgumentNullException(nameof(underlyingStream));
 			if (!underlyingStream.CanWrite)
-				throw new ArgumentException("Stream must be writable", "underlyingStream");
+				throw new ArgumentException("Stream must be writable", nameof(underlyingStream));
 
 			var base64Stream = new Base64Stream(underlyingStream, false);
 			var compression = new DeflateStream(base64Stream, CompressionMode.Compress);

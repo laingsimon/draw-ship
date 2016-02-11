@@ -13,7 +13,7 @@ namespace DrawShip.Handler
 		public PathLibrary(IReadOnlyDictionary<string, string> lookup, string defaultPath)
 		{
 			if (string.IsNullOrEmpty(defaultPath))
-				throw new ArgumentNullException("defaultPath");
+				throw new ArgumentNullException(nameof(defaultPath));
 
 			_lookup = lookup;
 			_defaultPath = defaultPath;

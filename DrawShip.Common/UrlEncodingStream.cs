@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace DrawShip
+namespace DrawShip.Common
 {
 	internal class UrlEncodingStream : Stream
 	{
@@ -14,14 +14,14 @@ namespace DrawShip
 		public UrlEncodingStream(Stream underlyingStream, bool readOnly)
 		{
 			if (underlyingStream == null)
-				throw new ArgumentNullException("underlyingStream");
+				throw new ArgumentNullException(nameof(underlyingStream));
 
 			_readOnly = readOnly;
 
 			if (readOnly)
 			{
 				if (!underlyingStream.CanRead)
-					throw new ArgumentException("Stream must be readable", "underlyingStream");
+					throw new ArgumentException("Stream must be readable", nameof(underlyingStream));
 
 				var urlEncodedData = new StreamReader(underlyingStream).ReadToEnd();
 				if (string.IsNullOrEmpty(urlEncodedData))
@@ -32,7 +32,7 @@ namespace DrawShip
 			else
 			{
 				if (!underlyingStream.CanWrite)
-					throw new ArgumentException("Stream must be writeable", "underlyingStream");
+					throw new ArgumentException("Stream must be writeable", nameof(underlyingStream));
 
 				_dataStream = underlyingStream;
 			}
@@ -54,25 +54,10 @@ namespace DrawShip
 			return _dataStream.BeginWrite(buffer, offset, count, callback, state);
 		}
 
-		public override bool CanRead
-		{
-			get { return _readOnly; }
-		}
-
-		public override bool CanSeek
-		{
-			get { return _dataStream.CanSeek; }
-		}
-
-		public override bool CanTimeout
-		{
-			get { return _dataStream.CanTimeout; }
-		}
-
-		public override bool CanWrite
-		{
-			get { return !_readOnly; }
-		}
+		public override bool CanRead => _readOnly;
+		public override bool CanSeek => _dataStream.CanSeek;
+		public override bool CanTimeout => _dataStream.CanTimeout;
+		public override bool CanWrite => !_readOnly;
 
 		public override void Close()
 		{
@@ -119,10 +104,7 @@ namespace DrawShip
 			return _dataStream.FlushAsync(cancellationToken);
 		}
 
-		public override long Length
-		{
-			get { return _dataStream.Length; }
-		}
+		public override long Length => _dataStream.Length;
 
 		public override long Position
 		{

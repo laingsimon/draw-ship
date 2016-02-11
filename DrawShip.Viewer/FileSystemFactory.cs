@@ -1,5 +1,4 @@
-﻿using System;
-using DrawShip.Common;
+﻿using DrawShip.Common;
 using Microsoft.Owin;
 
 namespace DrawShip.Viewer

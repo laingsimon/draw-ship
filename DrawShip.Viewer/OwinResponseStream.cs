@@ -13,20 +13,9 @@ namespace DrawShip.Viewer
 			_response = response;
 		}
 
-		public override bool CanRead
-		{
-			get { return false; }
-		}
-
-		public override bool CanSeek
-		{
-			get { return false; }
-		}
-
-		public override bool CanWrite
-		{
-			get { return true; }
-		}
+		public override bool CanRead => false;
+		public override bool CanSeek => false;
+		public override bool CanWrite => true;
 
 		public override long Length
 		{

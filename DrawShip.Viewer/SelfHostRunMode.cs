@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
 

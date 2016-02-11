@@ -6,14 +6,14 @@ namespace DrawShip.Viewer
 {
 	public class ApplicationContext
 	{
-		private enum RunMode
+		private enum _RunMode
 		{
 			Run,
 			Install,
 			Uninstall
 		}
 
-		private readonly RunMode _mode = RunMode.Run;
+		private readonly _RunMode _mode = _RunMode.Run;
 
 		public ApplicationContext()
 		{
@@ -35,7 +35,7 @@ namespace DrawShip.Viewer
 			var formatString = commandLine.SingleOrDefault(arg => arg.StartsWith("/format:"));
 			if (formatString != null)
 			{
-				var format = DiagramFormat.Html;
+				DiagramFormat format;
 				if (Enum.TryParse(formatString.Substring("/format:".Length), true, out format))
 					Format = format;
 			}
@@ -49,10 +49,10 @@ namespace DrawShip.Viewer
 		{
 			switch(_mode)
 			{
-				case RunMode.Install:
+				case _RunMode.Install:
 					return new InstallRunMode();
 
-				case RunMode.Uninstall:
+				case _RunMode.Uninstall:
 					return new UninstallRunMode();
 
 				default:
@@ -61,8 +61,8 @@ namespace DrawShip.Viewer
 			}
 		}
 
-		public string FileName { get; private set; }
-		public string WorkingDirectory { get; private set; }
+		public string FileName { get; }
+		public string WorkingDirectory { get; }
 		public DiagramFormat Format { get; private set; }
 	}
 }

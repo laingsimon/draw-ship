@@ -101,7 +101,7 @@ namespace DrawShip.Viewer
 			}
 		}
 
-		private string _GetVersion(QueryString owinQueryString)
+		private static string _GetVersion(QueryString owinQueryString)
 		{
 			var queryString = HttpUtility.ParseQueryString(owinQueryString.Value);
 			return queryString["v"];

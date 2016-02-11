@@ -14,15 +14,8 @@ namespace DrawShip.Common
 			_content = content;
 		}
 
-		public string Template
-		{
-			get { return null; }
-		}
-
-		public string TemplateFile
-		{
-			get { return null; }
-		}
+		public string Template => null;
+		public string TemplateFile => null;
 
 		public TextReader GetTemplateReader()
 		{

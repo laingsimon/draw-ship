@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DrawShip
+namespace DrawShip.Common
 {
 	internal class Base64Stream : Stream
 	{
@@ -15,7 +15,7 @@ namespace DrawShip
 		public Base64Stream(string base64String)
 		{
 			if (string.IsNullOrEmpty(base64String))
-				throw new ArgumentNullException("base64String");
+				throw new ArgumentNullException(nameof(base64String));
 
 			_dataStream = new MemoryStream(Convert.FromBase64String(base64String), false);
 			_readOnly = true;
@@ -24,13 +24,13 @@ namespace DrawShip
 		public Base64Stream(Stream underlyingStream, bool readOnly)
 		{
 			if (underlyingStream == null)
-				throw new ArgumentNullException("underlyingStream");
+				throw new ArgumentNullException(nameof(underlyingStream));
 
 			_readOnly = readOnly;
 			if (readOnly)
 			{
 				if (!underlyingStream.CanRead)
-					throw new ArgumentException("Stream must be readable", "underlyingStream");
+					throw new ArgumentException("Stream must be readable", nameof(underlyingStream));
 
 				var base64Data = new StreamReader(underlyingStream).ReadToEnd();
 
@@ -42,7 +42,7 @@ namespace DrawShip
 			else
 			{
 				if (!underlyingStream.CanWrite)
-					throw new ArgumentException("Stream must be writable", "underlyingStream");
+					throw new ArgumentException("Stream must be writable", nameof(underlyingStream));
 
 				_underlyingStream = underlyingStream;
 				_dataStream = new MemoryStream();
@@ -65,25 +65,10 @@ namespace DrawShip
 			return _dataStream.BeginWrite(buffer, offset, count, callback, state);
 		}
 
-		public override bool CanRead
-		{
-			get { return _readOnly; }
-		}
-
-		public override bool CanSeek
-		{
-			get { return _dataStream.CanSeek; }
-		}
-
-		public override bool CanTimeout
-		{
-			get { return _dataStream.CanTimeout; }
-		}
-
-		public override bool CanWrite
-		{
-			get { return !_readOnly; }
-		}
+		public override bool CanRead => _readOnly;
+		public override bool CanSeek => _dataStream.CanSeek;
+		public override bool CanTimeout => _dataStream.CanTimeout;
+		public override bool CanWrite => !_readOnly;
 
 		public override void Close()
 		{
@@ -92,8 +77,7 @@ namespace DrawShip
 			_dataStream.SetLength(0);
 			_dataStream.Close();
 
-			if (_underlyingStream != null)
-				_underlyingStream.Close();
+			_underlyingStream?.Close();
 		}
 
 		public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
@@ -143,10 +127,7 @@ namespace DrawShip
 			_dataStream.SetLength(0);
 		}
 
-		public override long Length
-		{
-			get { return _dataStream.Length; }
-		}
+		public override long Length => _dataStream.Length;
 
 		public override long Position
 		{

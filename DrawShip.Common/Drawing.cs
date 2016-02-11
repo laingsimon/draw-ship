@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace DrawShip.Common
+﻿namespace DrawShip.Common
 {
 	public class Drawing
 	{
