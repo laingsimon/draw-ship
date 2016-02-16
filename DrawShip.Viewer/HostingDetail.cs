@@ -33,11 +33,6 @@ namespace DrawShip.Viewer
 			Hide();
 		}
 
-		private void btnExit_Click(object sender, EventArgs e)
-		{
-			Application.Exit();
-		}
-
 		private void lblHostingDetail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			_hostingContext.DisplayIndex();
@@ -72,6 +67,16 @@ namespace DrawShip.Viewer
 				e.Cancel = true;
 				Hide();
 			}
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+		private void itmExit_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
 		}
 	}
 }

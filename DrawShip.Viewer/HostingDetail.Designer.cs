@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HostingDetail));
-			this.btnExit = new System.Windows.Forms.Button();
+			this.btnClose = new System.Windows.Forms.Button();
 			this.tblLayout = new System.Windows.Forms.TableLayoutPanel();
 			this.lblHostingDetail = new System.Windows.Forms.LinkLabel();
 			this.icoSystemTray = new System.Windows.Forms.NotifyIcon(this.components);
@@ -41,22 +41,22 @@
 			this.mnuTrayIcon.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// btnExit
+			// btnClose
 			// 
-			this.btnExit.Dock = System.Windows.Forms.DockStyle.Right;
-			this.btnExit.Location = new System.Drawing.Point(271, 46);
-			this.btnExit.Name = "btnExit";
-			this.btnExit.Size = new System.Drawing.Size(75, 29);
-			this.btnExit.TabIndex = 0;
-			this.btnExit.Text = "Exit";
-			this.btnExit.UseVisualStyleBackColor = true;
-			this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+			this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
+			this.btnClose.Location = new System.Drawing.Point(271, 46);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(75, 29);
+			this.btnClose.TabIndex = 0;
+			this.btnClose.Text = "Close";
+			this.btnClose.UseVisualStyleBackColor = true;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// tblLayout
 			// 
 			this.tblLayout.ColumnCount = 1;
 			this.tblLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tblLayout.Controls.Add(this.btnExit, 0, 1);
+			this.tblLayout.Controls.Add(this.btnClose, 0, 1);
 			this.tblLayout.Controls.Add(this.lblHostingDetail, 0, 0);
 			this.tblLayout.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tblLayout.Location = new System.Drawing.Point(0, 0);
@@ -95,7 +95,7 @@
             this.itmShowDetail,
             this.itmExit});
 			this.mnuTrayIcon.Name = "mnuTrayIcon";
-			this.mnuTrayIcon.Size = new System.Drawing.Size(137, 48);
+			this.mnuTrayIcon.Size = new System.Drawing.Size(153, 70);
 			// 
 			// itmShowDetail
 			// 
@@ -109,7 +109,7 @@
 			this.itmExit.Name = "itmExit";
 			this.itmExit.Size = new System.Drawing.Size(152, 22);
 			this.itmExit.Text = "Exit";
-			this.itmExit.Click += new System.EventHandler(this.btnExit_Click);
+			this.itmExit.Click += new System.EventHandler(this.itmExit_Click);
 			// 
 			// HostingDetail
 			// 
@@ -138,7 +138,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button btnExit;
+		private System.Windows.Forms.Button btnClose;
 		private System.Windows.Forms.TableLayoutPanel tblLayout;
 		private System.Windows.Forms.LinkLabel lblHostingDetail;
 		private System.Windows.Forms.NotifyIcon icoSystemTray;
