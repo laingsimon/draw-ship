@@ -3,7 +3,7 @@ using RazorEngine.Templating;
 
 namespace DrawShip.Common
 {
-	public class HtmlRenderer : IIRenderer
+	public class HtmlRenderer : IRenderer
 	{
 		private readonly RazorView _razorView;
 

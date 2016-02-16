@@ -33,12 +33,18 @@ namespace DrawShip.Viewer
 
 				app.UseErrorPage();
 
-				var rendererFactory = new RendererFactory();
 				var httpHandler = new Lazy<HttpHandler>(
-					() => new HttpHandler(
-						HostingContext.Instance,
-						rendererFactory.GetHtmlRenderer(),
-						rendererFactory.GetImageRenderer()));
+					() => {
+						var hostingContext = HostingContext.Instance;
+						var applicationContext = hostingContext.ApplicationContext;
+						var rendererFactory = applicationContext.RendererFactory;
+
+						return new HttpHandler(
+							hostingContext,
+							applicationContext.FileSystemFactory,
+							rendererFactory.GetHtmlRenderer(),
+							rendererFactory.GetImageRenderer());
+					});
 				app.Run(context =>
 				{
 					return Task.Factory.StartNew(() => httpHandler.Value.Handle(context));

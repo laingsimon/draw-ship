@@ -13,15 +13,19 @@ namespace DrawShip.Viewer
 	{
 		private readonly FileSystemFactory _fileSystemFactory;
 		private readonly HostingContext _hostingContext;
-		private readonly IIRenderer _htmlRenderer;
-		private readonly IIRenderer _imageRenderer;
+		private readonly IRenderer _htmlRenderer;
+		private readonly IRenderer _imageRenderer;
 
-		public HttpHandler(HostingContext hostingContext, IIRenderer htmlRenderer, IIRenderer imageRenderer)
+		public HttpHandler(
+			HostingContext hostingContext,
+			FileSystemFactory fileSystemFactory,
+			IRenderer htmlRenderer,
+			IRenderer imageRenderer)
 		{
 			_hostingContext = hostingContext;
 			_htmlRenderer = htmlRenderer;
 			_imageRenderer = imageRenderer;
-			_fileSystemFactory = new FileSystemFactory();
+			_fileSystemFactory = fileSystemFactory;
 		}
 
 		public async Task Handle(IOwinContext context)
@@ -54,7 +58,7 @@ namespace DrawShip.Viewer
 					Version = version
 				};
 
-				var drawing = new Drawing(Path.ChangeExtension(fileName, ".xml"), command.Directory);
+				var drawing =  command.GetDrawing(fileName);
 				if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
 				{
 					await context.Respond(HttpStatusCode.NotFound, "Drawing not : " + drawing.FileName);
@@ -74,7 +78,7 @@ namespace DrawShip.Viewer
 			}
 		}
 
-		private IIRenderer _GetRenderer(IOwinRequest request)
+		private IRenderer _GetRenderer(IOwinRequest request)
 		{
 			var queryString = HttpUtility.ParseQueryString(request.QueryString.Value);
 			var formatString = queryString["f"];

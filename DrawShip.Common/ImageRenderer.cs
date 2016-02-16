@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace DrawShip.Common
 {
-	public class ImageRenderer : IIRenderer
+	public class ImageRenderer : IRenderer
 	{
 		private readonly HttpClient _client;
 		private readonly Size _renderSize;

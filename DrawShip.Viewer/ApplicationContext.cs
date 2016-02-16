@@ -1,7 +1,6 @@
 ﻿using DrawShip.ComInterop;
 using DrawShip.Common;
 using System;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
@@ -46,6 +45,9 @@ namespace DrawShip.Viewer
 			var mode = commandLine.SingleOrDefault(arg => arg.StartsWith("/mode:"));
 			if (mode != null)
 				Enum.TryParse(mode.Substring("/mode:".Length), true, out _mode);
+
+			FileSystemFactory = new FileSystemFactory();
+			RendererFactory = new RendererFactory();
 		}
 
 		public IRunMode GetRunMode()
@@ -64,16 +66,19 @@ namespace DrawShip.Viewer
 			}
 		}
 
+		public FileSystemFactory FileSystemFactory { get; }
+		public RendererFactory RendererFactory { get; }
 		public string FileName { get; }
 		public string WorkingDirectory { get; }
+		public DiagramFormat Format { get; set; }
 
 		public void PrintDrawing(ShowDiagramStructure command)
 		{
 			var tempFile = _CreateTempFile();
 
-			var renderer = new RendererFactory().GetImageRenderer();
-			var fileSystem = new LocalFileSystem();
-			var drawing = new Drawing(Path.ChangeExtension(command.FileName, ".xml"), command.Directory);
+			var renderer = RendererFactory.GetImageRenderer();
+			var fileSystem = FileSystemFactory.GetFileSystem(null);
+			var drawing = command.GetDrawing();
 
 			using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
 				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem));
@@ -92,7 +97,5 @@ namespace DrawShip.Viewer
 				throw new IOException("Could not create temporary file for printing - " + exc.Message);
 			}
 		}
-
-		public DiagramFormat Format { get; private set; }
 	}
 }
