@@ -45,7 +45,7 @@ namespace DrawShip.Viewer
 
 		public void ApplicationStarted()
 		{
-			DisplayDrawing(
+			ExecuteCommand(
 				new ShowDiagramStructure
 				{
 					FileName = _applicationContext.FileName,
@@ -63,7 +63,15 @@ namespace DrawShip.Viewer
 				: null;
 		}
 
-		public void DisplayDrawing(ShowDiagramStructure command)
+		public void ExecuteCommand(ShowDiagramStructure command)
+		{
+			if (command.Format == DiagramFormat.Print)
+				_applicationContext.PrintDrawing(command);
+
+			_OpenDrawing(command);
+		}
+
+		private void _OpenDrawing(ShowDiagramStructure command)
 		{
 			var versionQueryString = string.IsNullOrEmpty(command.Version)
 				? ""

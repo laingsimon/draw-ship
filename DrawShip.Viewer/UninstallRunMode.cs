@@ -20,7 +20,7 @@ namespace DrawShip.Viewer
 
 			_RemoveContextMenuItems(
 				new[] { windows10XmlShell, xmlShell },
-				new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName });
+				new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName, InstallRunMode.PrintContextMenuName });
 			
 			return true;
 		}

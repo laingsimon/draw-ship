@@ -52,7 +52,7 @@ namespace DrawShip.Viewer
 			var commandJson = Marshal.PtrToStringAnsi(copyStruct.lpData);
 			var command = JsonConvert.DeserializeObject<ShowDiagramStructure>(commandJson);
 
-			_hostingContext.DisplayDrawing(command);
+			_hostingContext.ExecuteCommand(command);
 		}
 
 		private void icoSystemTray_DoubleClick(object sender, EventArgs e)

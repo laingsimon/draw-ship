@@ -8,6 +8,7 @@ namespace DrawShip.Viewer
 	{
 		public const string HtmlPreviewContextMenuName = "Preview in DrawShip";
 		public const string ImagePreviewContextMenuName = "Preview in DrawShip (image)";
+		public const string PrintContextMenuName = "Print using DrawShip";
 		private readonly string _applicationExePath;
 
 		public InstallRunMode()
@@ -30,6 +31,7 @@ namespace DrawShip.Viewer
 
 			_CreatePreviewItem(HtmlPreviewContextMenuName, "\"%1\"", new[] { xmlShell, windows10XmlShell });
 			_CreatePreviewItem(ImagePreviewContextMenuName, "\"%1\" /format:Image", new[] { xmlShell, windows10XmlShell });
+			_CreatePreviewItem(PrintContextMenuName, "\"%1\" /format:Print", new[] { xmlShell, windows10XmlShell });
 
 			return true;
 		}

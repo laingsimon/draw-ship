@@ -25,6 +25,17 @@ namespace DrawShip.Viewer
 
 			try
 			{
+				if (applicationContext.Format == DiagramFormat.Print)
+				{
+					applicationContext.PrintDrawing(new ShowDiagramStructure
+					{
+						Format = applicationContext.Format,
+						Directory = applicationContext.WorkingDirectory,
+						FileName = applicationContext.FileName
+					});
+					return true;
+				}
+
 				using (var owinHost = new OwinHost(5142))
 				{
 					Application.EnableVisualStyles();

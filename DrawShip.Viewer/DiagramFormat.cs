@@ -3,6 +3,7 @@
 	public enum DiagramFormat
 	{
 		Html,
-		Image
+		Image,
+		Print
 	}
 }

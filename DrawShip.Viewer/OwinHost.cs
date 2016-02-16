@@ -33,7 +33,12 @@ namespace DrawShip.Viewer
 
 				app.UseErrorPage();
 
-				var httpHandler = new Lazy<HttpHandler>(() => new HttpHandler(HostingContext.Instance));
+				var rendererFactory = new RendererFactory();
+				var httpHandler = new Lazy<HttpHandler>(
+					() => new HttpHandler(
+						HostingContext.Instance,
+						rendererFactory.GetHtmlRenderer(),
+						rendererFactory.GetImageRenderer()));
 				app.Run(context =>
 				{
 					return Task.Factory.StartNew(() => httpHandler.Value.Handle(context));

@@ -5,10 +5,7 @@ using System.IO;
 using System.Web;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Net.Http;
 using System;
-using System.Drawing;
-using System.Configuration;
 
 namespace DrawShip.Viewer
 {
@@ -16,35 +13,15 @@ namespace DrawShip.Viewer
 	{
 		private readonly FileSystemFactory _fileSystemFactory;
 		private readonly HostingContext _hostingContext;
-		private readonly HtmlRenderer _htmlRenderer;
-		private readonly ImageRenderer _imageRenderer;
+		private readonly IIRenderer _htmlRenderer;
+		private readonly IIRenderer _imageRenderer;
 
-		public HttpHandler(HostingContext hostingContext)
+		public HttpHandler(HostingContext hostingContext, IIRenderer htmlRenderer, IIRenderer imageRenderer)
 		{
-			var imageExportUrl = new Uri("https://exp.draw.io/ImageExport4/export", UriKind.Absolute);
-			var proxy = WebRequest.DefaultWebProxy.GetProxy(imageExportUrl);
-
 			_hostingContext = hostingContext;
-			_htmlRenderer = new HtmlRenderer(RazorView.Drawing);
-			_imageRenderer = new ImageRenderer(
-				new HttpClient(new HttpClientHandler
-				{
-					Proxy = proxy != imageExportUrl ? new WebProxy(proxy) { UseDefaultCredentials = true } : null,
-					UseProxy = proxy != null
-				}),
-				imageExportUrl,
-				_GetImagePreviewSize());
+			_htmlRenderer = htmlRenderer;
+			_imageRenderer = imageRenderer;
 			_fileSystemFactory = new FileSystemFactory();
-		}
-
-		private static Size _GetImagePreviewSize()
-		{
-			int resolution = 3000;
-
-			int.TryParse(ConfigurationManager.AppSettings["imageResolution"], out resolution);
-			return new Size(
-				resolution,
-				resolution);
 		}
 
 		public async Task Handle(IOwinContext context)

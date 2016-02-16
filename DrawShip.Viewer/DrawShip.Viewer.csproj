@@ -81,6 +81,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="ComInterop\COLORREF.cs" />
+    <Compile Include="ComInterop\IInitializeWithFile.cs" />
+    <Compile Include="ComInterop\IInitializeWithStream.cs" />
+    <Compile Include="ComInterop\IObjectWithSite.cs" />
+    <Compile Include="ComInterop\IOleWindow.cs" />
+    <Compile Include="ComInterop\IPreviewHandler.cs" />
+    <Compile Include="ComInterop\IPreviewHandlerFrame.cs" />
+    <Compile Include="ComInterop\IPreviewHandlerVisuals.cs" />
+    <Compile Include="ComInterop\LOGFONT.cs" />
+    <Compile Include="ComInterop\MSG.cs" />
+    <Compile Include="ComInterop\RECT.cs" />
+    <Compile Include="ComInterop\WIA.cs" />
     <Compile Include="DiagramFormat.cs" />
     <Compile Include="FileSystemFactory.cs" />
     <Compile Include="HostingDetail.cs">
@@ -102,6 +114,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRunMode.cs" />
     <Compile Include="RegistryExtensions.cs" />
+    <Compile Include="RendererFactory.cs" />
     <Compile Include="SelfHostRunMode.cs" />
     <Compile Include="ShowDiagramStructure.cs" />
     <Compile Include="UninstallRunMode.cs" />
@@ -142,6 +155,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="tray_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WIA">
+      <Guid>{94A0E92D-43C0-494E-AC29-FD45948A5221}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DrawShip.ComInterop;
+using DrawShip.Common;
+using System;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
@@ -63,6 +66,33 @@ namespace DrawShip.Viewer
 
 		public string FileName { get; }
 		public string WorkingDirectory { get; }
+
+		public void PrintDrawing(ShowDiagramStructure command)
+		{
+			var tempFile = _CreateTempFile();
+
+			var renderer = new RendererFactory().GetImageRenderer();
+			var fileSystem = new LocalFileSystem();
+			var drawing = new Drawing(Path.ChangeExtension(command.FileName, ".xml"), command.Directory);
+
+			using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
+				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem));
+
+			Wia.Print(null, tempFile);
+		}
+
+		private static string _CreateTempFile()
+		{
+			try
+			{
+				return Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
+			}
+			catch (Exception exc)
+			{
+				throw new IOException("Could not create temporary file for printing - " + exc.Message);
+			}
+		}
+
 		public DiagramFormat Format { get; private set; }
 	}
 }
