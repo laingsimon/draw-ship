@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Net.Http;
 using System;
+using System.Drawing;
+using System.Configuration;
 
 namespace DrawShip.Viewer
 {
@@ -30,8 +32,19 @@ namespace DrawShip.Viewer
 					Proxy = proxy != imageExportUrl ? new WebProxy(proxy) { UseDefaultCredentials = true } : null,
 					UseProxy = proxy != null
 				}),
-				imageExportUrl);
+				imageExportUrl,
+				_GetImagePreviewSize());
 			_fileSystemFactory = new FileSystemFactory();
+		}
+
+		private static Size _GetImagePreviewSize()
+		{
+			int resolution = 3000;
+
+			int.TryParse(ConfigurationManager.AppSettings["imageResolution"], out resolution);
+			return new Size(
+				resolution,
+				resolution);
 		}
 
 		public async Task Handle(IOwinContext context)
