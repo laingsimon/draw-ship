@@ -9,6 +9,9 @@ using System;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// This type is equivalent to a WebApi controller, it will handle all owin requests
+	/// </summary>
 	public class HttpHandler
 	{
 		private readonly FileSystemFactory _fileSystemFactory;
@@ -28,6 +31,11 @@ namespace DrawShip.Viewer
 			_fileSystemFactory = fileSystemFactory;
 		}
 
+		/// <summary>
+		/// Handle the current request
+		/// </summary>
+		/// <param name="context"></param>
+		/// <returns></returns>
 		public async Task Handle(IOwinContext context)
 		{
 			try
@@ -78,6 +86,11 @@ namespace DrawShip.Viewer
 			}
 		}
 
+		/// <summary>
+		/// Get the renderer for the current request
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		private IRenderer _GetRenderer(IOwinRequest request)
 		{
 			var queryString = HttpUtility.ParseQueryString(request.QueryString.Value);
@@ -95,6 +108,11 @@ namespace DrawShip.Viewer
 			}
 		}
 
+		/// <summary>
+		/// Get the version from the request (if present)
+		/// </summary>
+		/// <param name="owinQueryString"></param>
+		/// <returns></returns>
 		private static string _GetVersion(QueryString owinQueryString)
 		{
 			var queryString = HttpUtility.ParseQueryString(owinQueryString.Value);

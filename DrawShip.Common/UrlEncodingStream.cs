@@ -6,6 +6,9 @@ using System.Web;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// Read or write to an underlying stream, encoding/decoding textual data with url encoding rules
+	/// </summary>
 	internal class UrlEncodingStream : Stream
 	{
 		private readonly Stream _dataStream;

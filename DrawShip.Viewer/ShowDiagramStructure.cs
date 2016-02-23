@@ -1,9 +1,12 @@
 ﻿using DrawShip.Common;
-using System;
 using System.IO;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Information about a drawing which should be rendered.
+	/// The name, format and path, etc.
+	/// </summary>
 	public struct ShowDiagramStructure
 	{
 		public string FileName { get; set; }

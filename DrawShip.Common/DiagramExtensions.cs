@@ -6,9 +6,19 @@ using System.Xml.XPath;
 
 namespace DrawShip.Common
 {
-	public static class DiagramReader
+	/// <summary>
+	/// Helper methods for Diagrams
+	/// </summary>
+	public static class DiagramExtensions
 	{
-		public static string[] GetContainedShapeNames(Drawing drawing, IFileSystem fileSystem, string version)
+		/// <summary>
+		/// Get the names of the shapes that are used within a diagram
+		/// </summary>
+		/// <param name="drawing"></param>
+		/// <param name="fileSystem"></param>
+		/// <param name="version"></param>
+		/// <returns></returns>
+		public static string[] GetContainedShapeNames(this Drawing drawing, IFileSystem fileSystem, string version)
 		{
 			using (var rawDrawingStream = fileSystem.OpenRead(drawing, version))
 			using (var drawingStream = CompressedXmlStream.Read(rawDrawingStream))

@@ -4,6 +4,10 @@ using System.Windows.Forms;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Run mode for hosting owin in the current process/application
+	/// If another process is running, then a command will be sent to the other process to execute the hosting
+	/// </summary>
 	public class SelfHostRunMode : IRunMode
 	{
 		private static readonly Mutex _mutex = new Mutex(true, "A727D06E-77C3-4760-AC74-C1D76DD11B91");

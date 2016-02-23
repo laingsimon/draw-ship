@@ -7,6 +7,11 @@ using System.Collections.Specialized;
 
 namespace DrawShip.Handler
 {
+	/// <summary>
+	/// ASP.net http handler for IIS, which can respond to requests with html rendered responses
+	/// Image responses are not possible, as if the IIS instance is running behind a proxy, then the application
+	///   will not be able to communicate out (unless the app is running as a proxy-permitted user).
+	/// </summary>
 	public class HttpHandler : IHttpHandler
 	{
 		private readonly PathLibrary _pathLibrary;

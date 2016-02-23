@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// The context for the currently running owin host
+	/// </summary>
 	public class HostingContext
 	{
 		private static HostingContext _instance;
@@ -25,25 +28,37 @@ namespace DrawShip.Viewer
 			_directoryKeys.Add(Guid.NewGuid(), applicationContext.WorkingDirectory);
 		}
 
+		/// <summary>
+		/// A singleton instance for the currently hosted owin application
+		/// </summary>
 		public static HostingContext Instance
 		{
 			[DebuggerStepThrough]
 			get { return _instance; }
 		}
 
+		/// <summary>
+		/// The port the owin host is running on
+		/// </summary>
 		public int Port
 		{
 			[DebuggerStepThrough]
 			get { return _host.Port; }
 		}
 
+		/// <summary>
+		/// The process/application context the hosted owin application is running within
+		/// </summary>
 		public ApplicationContext ApplicationContext
 		{
 			[DebuggerStepThrough]
 			get { return _applicationContext; }
 		}
 
-		public void ApplicationStarted()
+		/// <summary>
+		/// The owin host has finished starting, trigger any relevant events
+		/// </summary>
+		public void OnApplicationStarted()
 		{
 			ExecuteCommand(
 				new ShowDiagramStructure
@@ -54,6 +69,11 @@ namespace DrawShip.Viewer
 				});
 		}
 
+		/// <summary>
+		/// Get the directory for a given directory key (which will map to a physical path)
+		/// </summary>
+		/// <param name="directoryKey"></param>
+		/// <returns></returns>
 		public string GetDirectory(string directoryKey)
 		{
 			var key = Guid.Parse(directoryKey);
@@ -63,6 +83,11 @@ namespace DrawShip.Viewer
 				: null;
 		}
 
+		/// <summary>
+		/// Execute the given command
+		/// If the command is to print a drawing, then the drawing will be printed directly (without rendering the drawing in a browser)
+		/// </summary>
+		/// <param name="command"></param>
 		public void ExecuteCommand(ShowDiagramStructure command)
 		{
 			if (command.Format == DiagramFormat.Print)
@@ -71,6 +96,10 @@ namespace DrawShip.Viewer
 			_OpenDrawing(command);
 		}
 
+		/// <summary>
+		/// Open the drawing in a browser, formatting the url for the command appropriately to maintain all the parameters
+		/// </summary>
+		/// <param name="command"></param>
 		private void _OpenDrawing(ShowDiagramStructure command)
 		{
 			var versionQueryString = string.IsNullOrEmpty(command.Version)
@@ -93,6 +122,11 @@ namespace DrawShip.Viewer
 			Process.Start(url);
 		}
 
+		/// <summary>
+		/// Get a directory key for the given physical path, if one cannot be found - create one and return it
+		/// </summary>
+		/// <param name="directory"></param>
+		/// <returns></returns>
 		private Guid _GetWorkingDirectoryKey(string directory)
 		{
 			var directoryKeyEntry = _directoryKeys.SingleOrDefault(kvp => kvp.Value.Equals(directory, StringComparison.OrdinalIgnoreCase));
@@ -105,6 +139,9 @@ namespace DrawShip.Viewer
 			return key;
 		}
 
+		/// <summary>
+		/// Open the index page in a browser, this should present all of the registered paths for the current hosting context
+		/// </summary>
 		public void DisplayIndex()
 		{
 			var url = string.Format(

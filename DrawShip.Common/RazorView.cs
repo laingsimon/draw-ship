@@ -3,6 +3,9 @@ using RazorEngine.Templating;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// A type which represents a razor view
+	/// </summary>
 	public class RazorView : ITemplateSource
 	{
 		public static readonly RazorView Drawing = new RazorView(Properties.Resources.Drawing);

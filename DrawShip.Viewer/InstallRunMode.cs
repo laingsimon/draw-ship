@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Run mode for installing the context menu items into windows to start the application
+	/// </summary>
 	public class InstallRunMode : IRunMode
 	{
 		public const string HtmlPreviewContextMenuName = "Preview in DrawShip";

@@ -4,6 +4,9 @@ using Microsoft.Owin;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Proxy a OwinResponse via a Stream abstraction
+	/// </summary>
 	public class OwinResponseStream : Stream
 	{
 		private readonly IOwinResponse _response;

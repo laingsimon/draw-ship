@@ -21,7 +21,7 @@ namespace DrawShip.Viewer
 				"http://localhost:{0}",
 				_hostingContext.Port);
 
-			_hostingContext.ApplicationStarted();
+			_hostingContext.OnApplicationStarted();
 			Text = "DrawShip";
 			icoSystemTray.Text = string.Format(
 				"DrawShip: {0}",
@@ -38,6 +38,11 @@ namespace DrawShip.Viewer
 			_hostingContext.DisplayIndex();
 		}
 
+		/// <summary>
+		/// Accept windows messages from another process, if the message is WM_COPYDATA, then process it
+		/// WM_COPYDATA messages will contain a ShowDiagramCommand structure with the information on what should be performed.
+		/// </summary>
+		/// <param name="m"></param>
 		protected override void WndProc(ref Message m)
 		{
 			if (m.Msg == NativeMethods.WM_COPYDATA)
@@ -46,6 +51,10 @@ namespace DrawShip.Viewer
 			base.WndProc(ref m);
 		}
 
+		/// <summary>
+		/// Unwrap the ShowDiagramCommand from the windows message and ask the HostingContext to execute it
+		/// </summary>
+		/// <param name="m"></param>
 		private void _AcceptData(Message m)
 		{
 			var copyStruct = (NativeMethods.COPYDATASTRUCT)m.GetLParam(typeof(NativeMethods.COPYDATASTRUCT));

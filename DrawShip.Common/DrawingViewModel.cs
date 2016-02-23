@@ -3,6 +3,9 @@ using System.Xml.Linq;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// A view model representation of a drawing
+	/// </summary>
 	public class DrawingViewModel
 	{
 		private readonly Drawing _drawing;
@@ -16,15 +19,21 @@ namespace DrawShip.Common
 			_version = version;
 		}
 
+		/// <summary>
+		/// The names of the shapes that are used in the drawing
+		/// </summary>
 		public string ShapeNames
 		{
 			get
 			{
-				var containedShapeNames = DiagramReader.GetContainedShapeNames(_drawing, _fileSystem, _version);
+				var containedShapeNames = _drawing.GetContainedShapeNames(_fileSystem, _version);
 				return string.Join(";", containedShapeNames);
 			}
 		}
 
+		/// <summary>
+		/// The title for the drawing
+		/// </summary>
 		public string DrawingTitle
 		{
 			get
@@ -37,6 +46,10 @@ namespace DrawShip.Common
 			}
 		}
 
+		/// <summary>
+		/// Read the drawing file content
+		/// </summary>
+		/// <returns></returns>
 		public string ReadFileContent()
 		{
 			using (var stream = _fileSystem.OpenRead(_drawing, _version))
@@ -44,7 +57,11 @@ namespace DrawShip.Common
 				return reader.ReadToEnd();
 		}
 
-		public string ReadDiagramContent()
+		/// <summary>
+		/// Read the relevant part of the drawing
+		/// </summary>
+		/// <returns></returns>
+		public string ReadDrawingContent()
 		{
 			using (var stream = _fileSystem.OpenRead(_drawing, _version))
 			{

@@ -7,8 +7,15 @@ using System.Net.Http;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Factory type for renderers
+	/// </summary>
 	public class RendererFactory
 	{
+		/// <summary>
+		/// Create a renderer which can render a drawing into an image
+		/// </summary>
+		/// <returns></returns>
 		public ImageRenderer GetImageRenderer()
 		{
 			var imageExportUrl = new Uri("https://exp.draw.io/ImageExport4/export", UriKind.Absolute);
@@ -24,6 +31,10 @@ namespace DrawShip.Viewer
 				_GetImagePreviewSize());
 		}
 
+		/// <summary>
+		/// Create a renderer which can render a drawing into an interactive preview
+		/// </summary>
+		/// <returns></returns>
 		public HtmlRenderer GetHtmlRenderer()
 		{
 			return new HtmlRenderer(RazorView.Drawing);

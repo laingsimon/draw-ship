@@ -1,8 +1,10 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Run mode for uninstalling the context menu items from windows
+	/// </summary>
 	public class UninstallRunMode : IRunMode
 	{
 		public bool Run(ApplicationContext applicationContext)

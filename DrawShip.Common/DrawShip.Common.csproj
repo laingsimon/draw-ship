@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="Base64Stream.cs" />
     <Compile Include="CompressedXmlStream.cs" />
-    <Compile Include="DiagramReader.cs" />
+    <Compile Include="DiagramExtensions.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="DrawingViewModel.cs" />
     <Compile Include="IRenderer.cs" />

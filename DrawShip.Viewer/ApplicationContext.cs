@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// The context of the process/application
+	/// </summary>
 	public class ApplicationContext
 	{
 		private enum _RunMode
@@ -50,6 +53,10 @@ namespace DrawShip.Viewer
 			RendererFactory = new RendererFactory();
 		}
 
+		/// <summary>
+		/// Get the run mode for the process/application
+		/// </summary>
+		/// <returns></returns>
 		public IRunMode GetRunMode()
 		{
 			switch(_mode)
@@ -66,12 +73,35 @@ namespace DrawShip.Viewer
 			}
 		}
 
+		/// <summary>
+		/// The file-system factory to use to get a file-system instance
+		/// </summary>
 		public FileSystemFactory FileSystemFactory { get; }
+
+		/// <summary>
+		/// The factory to use to get a drawing renderer instance
+		/// </summary>
 		public RendererFactory RendererFactory { get; }
+
+		/// <summary>
+		/// The filename given to this process/application
+		/// </summary>
 		public string FileName { get; }
+
+		/// <summary>
+		/// The working directory of this process/application
+		/// </summary>
 		public string WorkingDirectory { get; }
+
+		/// <summary>
+		/// The format to be used for rendering the diagram (e.g. Html/Image)
+		/// </summary>
 		public DiagramFormat Format { get; set; }
 
+		/// <summary>
+		/// Print the drawing requested for this process/application, without asking another process to
+		/// </summary>
+		/// <param name="command"></param>
 		public void PrintDrawing(ShowDiagramStructure command)
 		{
 			var tempFile = _CreateTempFile();

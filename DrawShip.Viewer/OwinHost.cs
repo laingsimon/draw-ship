@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// The host for owin, this type will create and start the owin host
+	/// </summary>
 	public class OwinHost : IOwinHost
 	{
 		private readonly IDisposable _service;
-		private static int _port;
+		private readonly int _port;
 
 		public OwinHost(int port)
 		{
@@ -18,19 +21,30 @@ namespace DrawShip.Viewer
 			_service = WebApp.Start<_Service>(string.Format("http://localhost:{0}", port));
 		}
 
+		/// <summary>
+		/// Stop the owin host
+		/// </summary>
 		public void Dispose()
 		{
 			_service.Dispose();
 		}
 
+		/// <summary>
+		/// The port that owin is running on
+		/// </summary>
 		public int Port => _port;
 
+		/// <summary>
+		/// Owin infrastructure
+		/// </summary>
 		private class _Service
 		{
+			/// <summary>
+			/// Configure and start owin
+			/// </summary>
+			/// <param name="app"></param>
 			public void Configuration(IAppBuilder app)
 			{
-				_port = _GetRunningPort(app);
-
 				app.UseErrorPage();
 
 				var httpHandler = new Lazy<HttpHandler>(
@@ -49,14 +63,6 @@ namespace DrawShip.Viewer
 				{
 					return Task.Factory.StartNew(() => httpHandler.Value.Handle(context));
 				});
-			}
-
-			private static int _GetRunningPort(IAppBuilder app)
-			{
-				var hostAddresses = (IEnumerable<IDictionary<string, object>>)app.Properties["host.Addresses"];
-				var hostDictionary = hostAddresses.Single();
-
-				return int.Parse((string)hostDictionary["port"]);
 			}
 		}
 	}

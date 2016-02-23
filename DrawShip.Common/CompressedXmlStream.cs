@@ -6,6 +6,9 @@ using System.Xml.XPath;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// Read and write to a stream, compressing the data using a DeflateStream
+	/// </summary>
 	internal static class CompressedXmlStream
 	{
 		public static Stream Read(Stream stream)

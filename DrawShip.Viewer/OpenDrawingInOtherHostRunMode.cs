@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace DrawShip.Viewer
 {
+	/// <summary>
+	/// Run mode for opening a drawing using another process
+	/// </summary>
 	public class OpenDrawingInOtherHostRunMode : IRunMode
 	{
 		public bool Run(ApplicationContext applicationContext)
@@ -27,29 +30,12 @@ namespace DrawShip.Viewer
 				lpData = Marshal.StringToHGlobalAnsi(commandJson),
 				cbData = commandJson.Length + 1
 			};
-			IntPtr copyDataBuff = _IntPtrAlloc(copyData);
+			var copyDataBuff = copyData.AllocatePointer();
 			NativeMethods.SendMessage(hwnd, NativeMethods.WM_COPYDATA, IntPtr.Zero, copyDataBuff);
-			_IntPtrFree(ref copyDataBuff);
+			copyDataBuff.FreePointer();
+			copyDataBuff = IntPtr.Zero;
 
 			return true;
-		}
-
-		// Allocate a pointer to an arbitrary structure on the global heap.
-		private static IntPtr _IntPtrAlloc<T>(T param)
-		{
-			IntPtr retval = Marshal.AllocHGlobal(Marshal.SizeOf(param));
-			Marshal.StructureToPtr(param, retval, false);
-			return retval;
-		}
-
-		// Free a pointer to an arbitrary structure from the global heap.
-		private static void _IntPtrFree(ref IntPtr preAllocated)
-		{
-			if (IntPtr.Zero == preAllocated)
-				return;
-
-			Marshal.FreeHGlobal(preAllocated);
-			preAllocated = IntPtr.Zero;
 		}
 	}
 }

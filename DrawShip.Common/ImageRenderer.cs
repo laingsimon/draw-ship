@@ -6,6 +6,9 @@ using System.Net.Http;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// Renderer that can render the drawing into an image (png)
+	/// </summary>
 	public class ImageRenderer : IRenderer
 	{
 		private readonly HttpClient _client;

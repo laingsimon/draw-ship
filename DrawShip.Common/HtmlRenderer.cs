@@ -3,6 +3,9 @@ using RazorEngine.Templating;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// Renderer that can render the drawing in a html interactive preview compatible manner
+	/// </summary>
 	public class HtmlRenderer : IRenderer
 	{
 		private readonly RazorView _razorView;

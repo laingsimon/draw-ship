@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DrawShip.Common
 {
+	/// <summary>
+	/// Read and write to an underlying stream, encoding/decoding the data in Base64
+	/// </summary>
 	internal class Base64Stream : Stream
 	{
 		private readonly MemoryStream _dataStream;
