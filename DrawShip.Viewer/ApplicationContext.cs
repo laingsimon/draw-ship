@@ -3,6 +3,7 @@ using DrawShip.Common;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace DrawShip.Viewer
 {
@@ -111,7 +112,7 @@ namespace DrawShip.Viewer
 			var drawing = command.GetDrawing();
 
 			using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
-				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem));
+				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem, null));
 
 			Wia.Print(null, tempFile);
 		}

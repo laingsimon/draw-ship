@@ -13,16 +13,16 @@ namespace DrawShip.Viewer
 		private static HostingContext _instance;
 
 		private readonly ApplicationContext _applicationContext;
-		private readonly IOwinHost _host;
 		private readonly IDictionary<Guid, string> _directoryKeys = new Dictionary<Guid, string>();
+		private readonly int _port;
 
-		public HostingContext(ApplicationContext applicationContext, IOwinHost host)
+		public HostingContext(ApplicationContext applicationContext, int port)
 		{
 			if (_instance != null)
 				throw new InvalidOperationException("Not allowed to have multiple instances");
 
+			_port = port;
 			_applicationContext = applicationContext;
-			_host = host;
 			_instance = this;
 
 			_directoryKeys.Add(Guid.NewGuid(), applicationContext.WorkingDirectory);
@@ -43,7 +43,7 @@ namespace DrawShip.Viewer
 		public int Port
 		{
 			[DebuggerStepThrough]
-			get { return _host.Port; }
+			get { return _port; }
 		}
 
 		/// <summary>
@@ -74,12 +74,10 @@ namespace DrawShip.Viewer
 		/// </summary>
 		/// <param name="directoryKey"></param>
 		/// <returns></returns>
-		public string GetDirectory(string directoryKey)
+		public string GetDirectory(Guid directoryKey)
 		{
-			var key = Guid.Parse(directoryKey);
-
-			return _directoryKeys.ContainsKey(key)
-				? _directoryKeys[key]
+			return _directoryKeys.ContainsKey(directoryKey)
+				? _directoryKeys[directoryKey]
 				: null;
 		}
 
@@ -102,24 +100,10 @@ namespace DrawShip.Viewer
 		/// <param name="command"></param>
 		private void _OpenDrawing(ShowDiagramStructure command)
 		{
-			var versionQueryString = string.IsNullOrEmpty(command.Version)
-				? ""
-				: "v=" + command.Version;
 			var workingDirectoryKey = _GetWorkingDirectoryKey(command.Directory);
-			var formatQueryString = command.Format == DiagramFormat.Html
-				? ""
-				: "f=" + command.Format;
-			var queryString = string.Join("&", new[] { versionQueryString, formatQueryString }.Where(s => !string.IsNullOrEmpty(s)));
-			if (!string.IsNullOrEmpty(queryString))
-				queryString = "?" + queryString;
 
-			var fileNameAndVersionAndFormat = string.Format("{0}/{1}{2}", workingDirectoryKey, command.FileName, queryString);
-			var url = string.Format(
-				"http://localhost:{0}/{1}",
-				Port,
-				fileNameAndVersionAndFormat);
-
-			Process.Start(url);
+			var url = WebApiStartup.FormatUrl(workingDirectoryKey, command.FileName, command.Format, command.Version);
+			Process.Start(url.ToString());
 		}
 
 		/// <summary>

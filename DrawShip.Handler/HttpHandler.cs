@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Collections.Specialized;
+using System;
 
 namespace DrawShip.Handler
 {
@@ -64,6 +65,7 @@ namespace DrawShip.Handler
 			var viewModel = new DrawingViewModel(
 				drawing,
 				_fileSystemFactory.GetFileSystem(request),
+				null,
 				version);
 			_renderer.RenderDrawing(response.OutputStream, viewModel);
 		}

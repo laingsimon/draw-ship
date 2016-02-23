@@ -40,7 +40,7 @@ namespace DrawShip.Viewer
 					return true;
 				}
 
-				using (var owinHost = new OwinHost(5142))
+				using (var owinHost = WebApiStartup.Start(string.Format("http://localhost:{0}", 5142)))
 				{
 					Application.EnableVisualStyles();
 					Application.SetCompatibleTextRenderingDefault(false);
@@ -48,7 +48,7 @@ namespace DrawShip.Viewer
 					var form = new HostingDetail(
 						new HostingContext(
 							applicationContext,
-							owinHost));
+							5142));
 					Application.Run(form);
 				}
 

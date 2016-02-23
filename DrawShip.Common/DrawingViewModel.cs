@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Linq;
 
 namespace DrawShip.Common
@@ -10,13 +11,20 @@ namespace DrawShip.Common
 	{
 		private readonly Drawing _drawing;
 		private readonly IFileSystem _fileSystem;
+		private readonly Uri _imageFormatUrl;
 		private readonly string _version;
 
-		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, string version = null)
+		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, Uri imageFormatUrl, string version = null)
 		{
 			_drawing = drawing;
 			_fileSystem = fileSystem;
 			_version = version;
+			_imageFormatUrl = imageFormatUrl;
+		}
+
+		public Uri ImageFormatUrl
+		{
+			get { return _imageFormatUrl; }
 		}
 
 		/// <summary>

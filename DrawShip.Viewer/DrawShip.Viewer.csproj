@@ -68,7 +68,19 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,6 +105,7 @@
     <Compile Include="ComInterop\MSG.cs" />
     <Compile Include="ComInterop\RECT.cs" />
     <Compile Include="ComInterop\WIA.cs" />
+    <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
     <Compile Include="FileSystemFactory.cs" />
     <Compile Include="HostingDetail.cs">
@@ -102,22 +115,20 @@
       <DependentUpon>HostingDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="HostingContext.cs" />
-    <Compile Include="HttpHandler.cs" />
     <Compile Include="InstallRunMode.cs" />
-    <Compile Include="IOwinHost.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="OpenDrawingInOtherHostRunMode.cs" />
-    <Compile Include="OwinExtensions.cs" />
-    <Compile Include="OwinHost.cs" />
-    <Compile Include="OwinResponseStream.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRunMode.cs" />
     <Compile Include="RegistryExtensions.cs" />
     <Compile Include="RendererFactory.cs" />
+    <Compile Include="RenderResponseMessage.cs" />
     <Compile Include="SelfHostRunMode.cs" />
     <Compile Include="ShowDiagramStructure.cs" />
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="UninstallRunMode.cs" />
+    <Compile Include="WebApiStartup.cs" />
     <EmbeddedResource Include="HostingDetail.resx">
       <DependentUpon>HostingDetail.cs</DependentUpon>
     </EmbeddedResource>

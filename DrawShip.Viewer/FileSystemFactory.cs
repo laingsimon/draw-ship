@@ -1,5 +1,5 @@
 ﻿using DrawShip.Common;
-using Microsoft.Owin;
+using System.Net.Http;
 
 namespace DrawShip.Viewer
 {
@@ -8,7 +8,7 @@ namespace DrawShip.Viewer
 	/// </summary>
 	public class FileSystemFactory
 	{
-		public IFileSystem GetFileSystem(IOwinContext context)
+		public IFileSystem GetFileSystem(HttpRequestMessage request)
 		{
 			return new LocalFileSystem();
 		}
