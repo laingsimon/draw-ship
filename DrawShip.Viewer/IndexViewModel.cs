@@ -6,15 +6,13 @@ namespace DrawShip.Viewer
 	public class IndexViewModel
 	{
 		private readonly HostingContext _hostingContext;
-		private readonly IReadOnlyDictionary<Guid, string> _paths;
 
 		public IndexViewModel(HostingContext hostingContext)
 		{
 			_hostingContext = hostingContext;
-			_paths = hostingContext.GetDirectoryPaths();
 		}
 
-		public IReadOnlyDictionary<Guid, string> Paths => _paths;
+		public IReadOnlyDictionary<int, string> Paths => _hostingContext.GetDirectoryPaths();
 		public string ExecutingPath => GetType().Assembly.Location;
 	}
 }

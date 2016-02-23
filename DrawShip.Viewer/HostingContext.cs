@@ -13,7 +13,7 @@ namespace DrawShip.Viewer
 		private static HostingContext _instance;
 
 		private readonly ApplicationContext _applicationContext;
-		private readonly Dictionary<Guid, string> _directoryKeys = new Dictionary<Guid, string>();
+		private readonly Dictionary<int, string> _directoryKeys = new Dictionary<int, string>();
 		private readonly int _port;
 
 		public HostingContext(ApplicationContext applicationContext, int port)
@@ -25,7 +25,7 @@ namespace DrawShip.Viewer
 			_applicationContext = applicationContext;
 			_instance = this;
 
-			_directoryKeys.Add(Guid.NewGuid(), applicationContext.WorkingDirectory);
+			_directoryKeys.Add(applicationContext.WorkingDirectory.GetHashCode(), applicationContext.WorkingDirectory);
 		}
 
 		/// <summary>
@@ -74,7 +74,7 @@ namespace DrawShip.Viewer
 		/// </summary>
 		/// <param name="directoryKey"></param>
 		/// <returns></returns>
-		public string GetDirectory(Guid directoryKey)
+		public string GetDirectory(int directoryKey)
 		{
 			return _directoryKeys.ContainsKey(directoryKey)
 				? _directoryKeys[directoryKey]
@@ -111,14 +111,14 @@ namespace DrawShip.Viewer
 		/// </summary>
 		/// <param name="directory"></param>
 		/// <returns></returns>
-		private Guid _GetWorkingDirectoryKey(string directory)
+		private int _GetWorkingDirectoryKey(string directory)
 		{
 			var directoryKeyEntry = _directoryKeys.SingleOrDefault(kvp => kvp.Value.Equals(directory, StringComparison.OrdinalIgnoreCase));
 
-			if (directoryKeyEntry.Key != Guid.Empty)
+			if (directoryKeyEntry.Key != 0)
 				return directoryKeyEntry.Key;
 
-			var key = Guid.NewGuid();
+			var key = directory.GetHashCode();
 			_directoryKeys.Add(key, directory);
 			return key;
 		}
@@ -135,7 +135,7 @@ namespace DrawShip.Viewer
 			Process.Start(url);
 		}
 
-		public IReadOnlyDictionary<Guid, string> GetDirectoryPaths()
+		public IReadOnlyDictionary<int, string> GetDirectoryPaths()
 		{
 			return _directoryKeys;
 		}

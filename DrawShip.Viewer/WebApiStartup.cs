@@ -47,7 +47,7 @@ namespace DrawShip.Viewer
 			return WebApp.Start<WebApiStartup>(url: url);
 		}
 
-		public static Uri FormatUrl(Guid workingDirectoryKey, string fileName, DiagramFormat format, string version, string routeName = "DefaultApi")
+		public static Uri FormatUrl(int workingDirectoryKey, string fileName, DiagramFormat format, string version, string routeName = "DefaultApi")
 		{
 			var route = _configuation.Routes[routeName];
 			var allRouteValues = new Dictionary<string, object>

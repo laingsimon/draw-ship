@@ -19,7 +19,7 @@ namespace DrawShip.Viewer
 			_rendererFactory = new RendererFactory();
 		}
 
-		public IHttpActionResult Get(Guid directoryKey, string fileName, string version = null, DiagramFormat format = DiagramFormat.Html)
+		public IHttpActionResult Get(int directoryKey, string fileName, string version = null, DiagramFormat format = DiagramFormat.Html)
 		{
 			var directory = _hostingContext.GetDirectory(directoryKey);
 
