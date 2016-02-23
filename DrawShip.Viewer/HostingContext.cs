@@ -13,7 +13,7 @@ namespace DrawShip.Viewer
 		private static HostingContext _instance;
 
 		private readonly ApplicationContext _applicationContext;
-		private readonly IDictionary<Guid, string> _directoryKeys = new Dictionary<Guid, string>();
+		private readonly Dictionary<Guid, string> _directoryKeys = new Dictionary<Guid, string>();
 		private readonly int _port;
 
 		public HostingContext(ApplicationContext applicationContext, int port)
@@ -133,6 +133,11 @@ namespace DrawShip.Viewer
 				Port);
 
 			Process.Start(url);
+		}
+
+		public IReadOnlyDictionary<Guid, string> GetDirectoryPaths()
+		{
+			return _directoryKeys;
 		}
 	}
 }

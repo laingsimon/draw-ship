@@ -29,6 +29,15 @@ namespace DrawShip.Viewer
 				}
 			);
 
+			_configuation.Routes.MapHttpRoute(
+				name: "Index",
+				routeTemplate: "",
+				defaults: new
+				{
+					controller = "Index"
+				}
+			);
+
 			appBuilder.UseWebApi(_configuation);
 		}
 
