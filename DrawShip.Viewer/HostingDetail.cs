@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -86,6 +87,11 @@ namespace DrawShip.Viewer
 		private void itmExit_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
+		}
+
+		private void lnkGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Process.Start(lnkGitHub.Text);
 		}
 	}
 }

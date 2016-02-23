@@ -37,6 +37,7 @@
 			this.mnuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.itmShowDetail = new System.Windows.Forms.ToolStripMenuItem();
 			this.itmExit = new System.Windows.Forms.ToolStripMenuItem();
+			this.lnkGitHub = new System.Windows.Forms.LinkLabel();
 			this.tblLayout.SuspendLayout();
 			this.mnuTrayIcon.SuspendLayout();
 			this.SuspendLayout();
@@ -54,9 +55,11 @@
 			// 
 			// tblLayout
 			// 
-			this.tblLayout.ColumnCount = 1;
+			this.tblLayout.ColumnCount = 2;
 			this.tblLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tblLayout.Controls.Add(this.btnClose, 0, 1);
+			this.tblLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
+			this.tblLayout.Controls.Add(this.lnkGitHub, 0, 1);
+			this.tblLayout.Controls.Add(this.btnClose, 1, 1);
 			this.tblLayout.Controls.Add(this.lblHostingDetail, 0, 0);
 			this.tblLayout.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tblLayout.Location = new System.Drawing.Point(0, 0);
@@ -70,6 +73,7 @@
 			// lblHostingDetail
 			// 
 			this.lblHostingDetail.AutoSize = true;
+			this.tblLayout.SetColumnSpan(this.lblHostingDetail, 2);
 			this.lblHostingDetail.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblHostingDetail.Location = new System.Drawing.Point(3, 0);
 			this.lblHostingDetail.Name = "lblHostingDetail";
@@ -95,21 +99,34 @@
             this.itmShowDetail,
             this.itmExit});
 			this.mnuTrayIcon.Name = "mnuTrayIcon";
-			this.mnuTrayIcon.Size = new System.Drawing.Size(153, 70);
+			this.mnuTrayIcon.Size = new System.Drawing.Size(137, 48);
 			// 
 			// itmShowDetail
 			// 
 			this.itmShowDetail.Name = "itmShowDetail";
-			this.itmShowDetail.Size = new System.Drawing.Size(152, 22);
+			this.itmShowDetail.Size = new System.Drawing.Size(136, 22);
 			this.itmShowDetail.Text = "Show Detail";
 			this.itmShowDetail.Click += new System.EventHandler(this.icoSystemTray_DoubleClick);
 			// 
 			// itmExit
 			// 
 			this.itmExit.Name = "itmExit";
-			this.itmExit.Size = new System.Drawing.Size(152, 22);
+			this.itmExit.Size = new System.Drawing.Size(136, 22);
 			this.itmExit.Text = "Exit";
 			this.itmExit.Click += new System.EventHandler(this.itmExit_Click);
+			// 
+			// lnkGitHub
+			// 
+			this.lnkGitHub.AutoSize = true;
+			this.lnkGitHub.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lnkGitHub.Location = new System.Drawing.Point(3, 43);
+			this.lnkGitHub.Name = "lnkGitHub";
+			this.lnkGitHub.Size = new System.Drawing.Size(259, 35);
+			this.lnkGitHub.TabIndex = 3;
+			this.lnkGitHub.TabStop = true;
+			this.lnkGitHub.Text = "https://github.com/laingsimon/draw-ship#drawship";
+			this.lnkGitHub.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lnkGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGitHub_LinkClicked);
 			// 
 			// HostingDetail
 			// 
@@ -118,12 +135,11 @@
 			this.ClientSize = new System.Drawing.Size(349, 78);
 			this.Controls.Add(this.tblLayout);
 			this.DoubleBuffered = true;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "HostingDetail";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "DrawShip hosting detail";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HostingDetail_FormClosing);
@@ -145,6 +161,7 @@
 		private System.Windows.Forms.ContextMenuStrip mnuTrayIcon;
 		private System.Windows.Forms.ToolStripMenuItem itmShowDetail;
 		private System.Windows.Forms.ToolStripMenuItem itmExit;
+		private System.Windows.Forms.LinkLabel lnkGitHub;
 	}
 }
 
