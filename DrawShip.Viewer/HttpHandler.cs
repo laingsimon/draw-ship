@@ -69,7 +69,7 @@ namespace DrawShip.Viewer
 				var drawing =  command.GetDrawing(fileName);
 				if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
 				{
-					await context.Respond(HttpStatusCode.NotFound, "Drawing not : " + drawing.FileName);
+					await context.Respond(HttpStatusCode.NotFound, "Drawing not found: " + drawing.FileName);
 					return;
 				}
 
