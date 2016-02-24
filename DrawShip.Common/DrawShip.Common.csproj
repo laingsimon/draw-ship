@@ -55,7 +55,6 @@
     <Compile Include="CompressedXmlStream.cs" />
     <Compile Include="DiagramExtensions.cs" />
     <Compile Include="Drawing.cs" />
-    <Compile Include="IDrawingViewModel.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="LocalFileSystem.cs" />
     <Compile Include="HtmlRenderer.cs" />
@@ -67,6 +66,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RazorView.cs" />
+    <Compile Include="IRenderResult.cs" />
+    <Compile Include="RazorViewResult.cs" />
+    <Compile Include="StreamRenderResult.cs" />
+    <Compile Include="StringRenderResult.cs" />
     <Compile Include="UrlEncodingStream.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,10 +11,10 @@ namespace DrawShip.Viewer
 	public class RenderResponseMessage : IHttpActionResult
 	{
 		private readonly ApiController _controller;
-		private readonly IRenderer _renderer;
+		private readonly IRenderer<DrawingViewModel> _renderer;
 		private readonly DrawingViewModel _viewModel;
 
-		public RenderResponseMessage(IRenderer renderer, DrawingViewModel viewModel, ApiController controller)
+		public RenderResponseMessage(IRenderer<DrawingViewModel> renderer, DrawingViewModel viewModel, ApiController controller)
 		{
 			_renderer = renderer;
 			_viewModel = viewModel;
@@ -26,7 +26,9 @@ namespace DrawShip.Viewer
 			return Task.Factory.StartNew(() =>
 			{
 				var renderStream = new MemoryStream();
-				_renderer.RenderDrawing(renderStream, _viewModel);
+				var result = _renderer.RenderDrawing(_viewModel);
+
+				result.WriteResult(renderStream);
 
 				var responseStream = new MemoryStream(renderStream.ToArray());
 				return new HttpResponseMessage(HttpStatusCode.OK)

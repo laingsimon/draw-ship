@@ -1,5 +1,4 @@
 ﻿using DrawShip.Common;
-using System;
 using System.IO;
 using System.Net;
 using System.Web.Http;
@@ -54,7 +53,7 @@ namespace DrawShip.Viewer
 		/// </summary>
 		/// <param name="request"></param>
 		/// <returns></returns>
-		private IRenderer _GetRenderer(DiagramFormat format)
+		private IRenderer<DrawingViewModel> _GetRenderer(DiagramFormat format)
 		{
 			switch (format)
 			{

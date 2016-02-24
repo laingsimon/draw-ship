@@ -1,12 +1,9 @@
-﻿using System.IO;
-using RazorEngine.Templating;
-
-namespace DrawShip.Common
+﻿namespace DrawShip.Common
 {
 	/// <summary>
 	/// Renderer that can render the drawing in a html interactive preview compatible manner
 	/// </summary>
-	public class HtmlRenderer : IRenderer
+	public class HtmlRenderer<T> : IRenderer<T>
 	{
 		private readonly RazorView _razorView;
 
@@ -15,18 +12,9 @@ namespace DrawShip.Common
 			_razorView = razorView;
 		}
 
-		public void RenderDrawing<T>(Stream outputStream, T viewModel)
-			where T : IDrawingViewModel
+		public IRenderResult RenderDrawing(T data)
 		{
-			using (var textWriter = new StreamWriter(outputStream))
-			{
-				RazorEngine.Engine.Razor.RunCompile(
-					templateSource: _razorView,
-					name: "drawing",
-					writer: textWriter,
-					modelType: typeof(T),
-					model: viewModel);
-			}
+			return new RazorViewResult(_razorView, data);
 		}
 	}
 }

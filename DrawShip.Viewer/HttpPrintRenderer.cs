@@ -1,10 +1,9 @@
-﻿using System.IO;
-using DrawShip.Common;
+﻿using DrawShip.Common;
 using System.Threading.Tasks;
 
 namespace DrawShip.Viewer
 {
-	public class HttpPrintRenderer : IRenderer
+	public class HttpPrintRenderer : IRenderer<DrawingViewModel>
 	{
 		private readonly ApplicationContext _applicationContext;
 
@@ -13,30 +12,24 @@ namespace DrawShip.Viewer
 			_applicationContext = applicationContext;
 		}
 
-		public void RenderDrawing<T>(Stream outputStream, T viewModel)
-			where T : IDrawingViewModel
+		public IRenderResult RenderDrawing(DrawingViewModel viewModel)
 		{
-			var concreteViewModel = viewModel as DrawingViewModel;
-
 			var task = Task.Factory.StartNew(() =>
 			{
 				_applicationContext.PrintDrawing(new ShowDiagramStructure
 				{
 					Format = DiagramFormat.Print,
-					Directory = concreteViewModel.Drawing.FilePath,
-					FileName = concreteViewModel.Drawing.FileName,
-					Version = concreteViewModel.Version
+					Directory = viewModel.Drawing.FilePath,
+					FileName = viewModel.Drawing.FileName,
+					Version = viewModel.Version
 				});
 			});
 
-			using (var writer = new StreamWriter(outputStream))
-			{
-				writer.WriteLine(@"
+			return new StringRenderResult(@"
 <html>
 <body onload='window.history.back();'>
 </body>
 </html>");
-			}
 		}
 	}
 }

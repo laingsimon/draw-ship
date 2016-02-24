@@ -1,9 +1,7 @@
 ﻿using DrawShip.ComInterop;
-using DrawShip.Common;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 
 namespace DrawShip.Viewer
 {
@@ -110,9 +108,13 @@ namespace DrawShip.Viewer
 			var renderer = RendererFactory.GetImageRenderer();
 			var fileSystem = FileSystemFactory.GetFileSystem(null);
 			var drawing = command.GetDrawing();
+			var viewModel = new DrawingViewModel(drawing, fileSystem, null, null);
 
 			using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
-				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem, null, null));
+			{
+				var result = renderer.RenderDrawing(viewModel);
+				result.WriteResult(writeStream);
+			}
 
 			Wia.Print(null, tempFile);
 		}

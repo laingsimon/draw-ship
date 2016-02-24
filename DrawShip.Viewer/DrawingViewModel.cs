@@ -8,7 +8,7 @@ namespace DrawShip.Viewer
 	/// <summary>
 	/// A view model representation of a drawing
 	/// </summary>
-	public class DrawingViewModel : IDrawingViewModel
+	public class DrawingViewModel
 	{
 		private readonly Drawing _drawing;
 		private readonly IFileSystem _fileSystem;

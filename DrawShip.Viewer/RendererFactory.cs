@@ -16,7 +16,7 @@ namespace DrawShip.Viewer
 		/// Create a renderer which can render a drawing into an image
 		/// </summary>
 		/// <returns></returns>
-		public ImageRenderer GetImageRenderer()
+		public IRenderer<DrawingViewModel> GetImageRenderer()
 		{
 			var imageExportUrl = new Uri("https://exp.draw.io/ImageExport4/export", UriKind.Absolute);
 			var proxy = WebRequest.DefaultWebProxy.GetProxy(imageExportUrl);
@@ -35,9 +35,9 @@ namespace DrawShip.Viewer
 		/// Create a renderer which can render a drawing into an interactive preview
 		/// </summary>
 		/// <returns></returns>
-		public HtmlRenderer GetHtmlRenderer()
+		public IRenderer<DrawingViewModel> GetHtmlRenderer()
 		{
-			return new HtmlRenderer(new RazorView(Properties.Resources.Drawing));
+			return new HtmlRenderer<DrawingViewModel>(new RazorView(Properties.Resources.Drawing));
 		}
 
 		private static Size _GetImagePreviewSize()
@@ -50,7 +50,7 @@ namespace DrawShip.Viewer
 				resolution);
 		}
 
-		public IRenderer GetHttpPrintRenderer(ApplicationContext applicationContext)
+		public IRenderer<DrawingViewModel> GetHttpPrintRenderer(ApplicationContext applicationContext)
 		{
 			return new HttpPrintRenderer(applicationContext);
 		}

@@ -16,12 +16,12 @@ namespace DrawShip.Handler
 	public class HttpHandler : IHttpHandler
 	{
 		private readonly PathLibrary _pathLibrary;
-		private readonly HtmlRenderer _renderer;
+		private readonly IRenderer<DrawingViewModel> _renderer;
 		private readonly FileSystemFactory _fileSystemFactory;
 
 		public HttpHandler()
 		{
-			_renderer = new HtmlRenderer(new RazorView(Properties.Resources.Drawing));
+			_renderer = new HtmlRenderer<DrawingViewModel>(new RazorView(Properties.Resources.Drawing));
 			_pathLibrary = new PathLibrary();
 			_fileSystemFactory = new FileSystemFactory();
 		}
@@ -66,7 +66,9 @@ namespace DrawShip.Handler
 				drawing,
 				_fileSystemFactory.GetFileSystem(request),
 				version);
-			_renderer.RenderDrawing(response.OutputStream, viewModel);
+			var result = _renderer.RenderDrawing(viewModel);
+
+			result.WriteResult(response.OutputStream);
 		}
 
 		private string _GetVersion(HttpRequest request)
