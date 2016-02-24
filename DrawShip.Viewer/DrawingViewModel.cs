@@ -1,13 +1,14 @@
-﻿using System;
+﻿using DrawShip.Common;
+using System;
 using System.IO;
 using System.Xml.Linq;
 
-namespace DrawShip.Common
+namespace DrawShip.Viewer
 {
 	/// <summary>
 	/// A view model representation of a drawing
 	/// </summary>
-	public class DrawingViewModel
+	public class DrawingViewModel : IDrawingViewModel
 	{
 		private readonly Drawing _drawing;
 		private readonly IFileSystem _fileSystem;

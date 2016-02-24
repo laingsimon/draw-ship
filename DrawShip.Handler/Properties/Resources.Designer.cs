@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DrawShip.Viewer.Properties {
+namespace DrawShip.Handler.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DrawShip.Viewer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DrawShip.Viewer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DrawShip.Handler.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,16 +66,6 @@ namespace DrawShip.Viewer.Properties {
         internal static byte[] Drawing {
             get {
                 object obj = ResourceManager.GetObject("Drawing", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Index {
-            get {
-                object obj = ResourceManager.GetObject("Index", resourceCulture);
                 return ((byte[])(obj));
             }
         }

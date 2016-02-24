@@ -15,7 +15,8 @@ namespace DrawShip.Common
 			_razorView = razorView;
 		}
 
-		public void RenderDrawing(Stream outputStream, DrawingViewModel viewModel)
+		public void RenderDrawing<T>(Stream outputStream, T viewModel)
+			where T : IDrawingViewModel
 		{
 			using (var textWriter = new StreamWriter(outputStream))
 			{
@@ -23,7 +24,7 @@ namespace DrawShip.Common
 					templateSource: _razorView,
 					name: "drawing",
 					writer: textWriter,
-					modelType: typeof(DrawingViewModel),
+					modelType: typeof(T),
 					model: viewModel);
 			}
 		}

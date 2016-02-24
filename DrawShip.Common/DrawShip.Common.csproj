@@ -55,7 +55,7 @@
     <Compile Include="CompressedXmlStream.cs" />
     <Compile Include="DiagramExtensions.cs" />
     <Compile Include="Drawing.cs" />
-    <Compile Include="DrawingViewModel.cs" />
+    <Compile Include="IDrawingViewModel.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="ImageRenderer.cs" />
     <Compile Include="LocalFileSystem.cs" />
@@ -79,7 +79,6 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Razor\Drawing.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

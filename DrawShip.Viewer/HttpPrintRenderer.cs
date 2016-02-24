@@ -13,16 +13,19 @@ namespace DrawShip.Viewer
 			_applicationContext = applicationContext;
 		}
 
-		public void RenderDrawing(Stream outputStream, DrawingViewModel viewModel)
+		public void RenderDrawing<T>(Stream outputStream, T viewModel)
+			where T : IDrawingViewModel
 		{
+			var concreteViewModel = viewModel as DrawingViewModel;
+
 			var task = Task.Factory.StartNew(() =>
 			{
 				_applicationContext.PrintDrawing(new ShowDiagramStructure
 				{
 					Format = DiagramFormat.Print,
-					Directory = viewModel.Drawing.FilePath,
-					FileName = viewModel.Drawing.FileName,
-					Version = viewModel.Version
+					Directory = concreteViewModel.Drawing.FilePath,
+					FileName = concreteViewModel.Drawing.FileName,
+					Version = concreteViewModel.Version
 				});
 			});
 

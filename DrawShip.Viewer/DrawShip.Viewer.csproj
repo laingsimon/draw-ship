@@ -115,6 +115,7 @@
     <Compile Include="ComInterop\WIA.cs" />
     <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
+    <Compile Include="DrawingViewModel.cs" />
     <Compile Include="FileSystemFactory.cs" />
     <Compile Include="HostingDetail.cs">
       <SubType>Form</SubType>
@@ -166,6 +167,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Razor\Drawing.cshtml" />
     <None Include="Razor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

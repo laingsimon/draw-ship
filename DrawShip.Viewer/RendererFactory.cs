@@ -37,7 +37,7 @@ namespace DrawShip.Viewer
 		/// <returns></returns>
 		public HtmlRenderer GetHtmlRenderer()
 		{
-			return new HtmlRenderer(RazorView.Drawing);
+			return new HtmlRenderer(new RazorView(Properties.Resources.Drawing));
 		}
 
 		private static Size _GetImagePreviewSize()

@@ -1,0 +1,66 @@
+﻿@model DrawShip.Viewer.DrawingViewModel
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>@Model.DrawingTitle</title>
+
+	<style>
+		body {
+			padding: 0px;
+			margin: 0px;
+		}
+
+		.drawing-title {
+			margin: 0px;
+			padding: 0px;
+			font-family: Tahoma;
+			font-size: 14px;
+			background: #ffff88;
+			padding-bottom: 2px;
+			margin-bottom: 2px;
+			border-bottom: 1px solid #888800;
+			font-weight: normal;
+			position: relative;
+		}
+
+			.drawing-title .powered-by {
+				position: absolute;
+				right: 0px;
+			}
+	</style>
+</head>
+<body>
+	<h2 class="drawing-title">
+		<text>
+			Drawing: @Model.DrawingTitle (<a target="_blank" href="@Model.ImageFormatUri">as image</a> / <a href="@Model.PrintUri">print</a>)
+		</text>
+		<span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
+	</h2>
+	<div class="mxgraph" style="position:relative;overflow:auto;width:100%;background-color:#ffffff;">
+		<div style="width:1px;height:1px;overflow:hidden;">@Model.ReadDrawingContent()</div>
+	</div>
+
+	<script type="text/javascript" src="https://www.draw.io/embed.js?s=@(Model.ShapeNames)"></script>
+
+	<script type="text/javascript">
+		var _originalWindowOpen = window.open;
+		var _ctrlKeyPressed = false
+		window.open = function (url, options, name) {
+			if (_ctrlKeyPressed)
+				_originalWindowOpen(url, options, name);
+			else
+				document.location = url;
+		}
+
+		window.addEventListener("keydown", function (event) {
+			_ctrlKeyPressed = event.ctrlKey;
+		})
+
+		window.addEventListener("keyup", function (event) {
+			_ctrlKeyPressed = false;
+		})
+	</script>
+</body>
+</html>

@@ -8,8 +8,6 @@ namespace DrawShip.Common
 	/// </summary>
 	public class RazorView : ITemplateSource
 	{
-		public static readonly RazorView Drawing = new RazorView(Properties.Resources.Drawing);
-
 		private readonly byte[] _content;
 
 		public RazorView(byte[] content)

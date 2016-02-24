@@ -21,7 +21,7 @@ namespace DrawShip.Handler
 
 		public HttpHandler()
 		{
-			_renderer = new HtmlRenderer(RazorView.Drawing);
+			_renderer = new HtmlRenderer(new RazorView(Properties.Resources.Drawing));
 			_pathLibrary = new PathLibrary();
 			_fileSystemFactory = new FileSystemFactory();
 		}
@@ -65,8 +65,6 @@ namespace DrawShip.Handler
 			var viewModel = new DrawingViewModel(
 				drawing,
 				_fileSystemFactory.GetFileSystem(request),
-				null,
-				null,
 				version);
 			_renderer.RenderDrawing(response.OutputStream, viewModel);
 		}

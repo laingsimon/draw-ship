@@ -59,15 +59,5 @@ namespace DrawShip.Common.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Drawing {
-            get {
-                object obj = ResourceManager.GetObject("Drawing", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

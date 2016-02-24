@@ -4,6 +4,7 @@ namespace DrawShip.Common
 {
 	public interface IRenderer
 	{
-		void RenderDrawing(Stream outputStream, DrawingViewModel viewModel);
+		void RenderDrawing<T>(Stream outputStream, T viewModel)
+			where T : IDrawingViewModel;
 	}
 }

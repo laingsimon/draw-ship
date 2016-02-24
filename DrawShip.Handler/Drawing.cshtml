@@ -1,4 +1,4 @@
-﻿@model DrawShip.Common.DrawingViewModel
+﻿@model DrawShip.Handler.DrawingViewModel
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -33,18 +33,9 @@
 </head>
 <body>
 	<h2 class="drawing-title">
-		@if (Model.ImageFormatUri != null)
-		{
-		<text>
-			Drawing: @Model.DrawingTitle (<a target="_blank" href="@Model.ImageFormatUri">as image</a> / <a href="@Model.PrintUri">print</a>)
-		</text>
-		}
-		else
-		{
 		<text>
 			Drawing: @Model.DrawingTitle
 		</text>
-		}
 		<span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
 	</h2>
 	<div class="mxgraph" style="position:relative;overflow:auto;width:100%;background-color:#ffffff;">

@@ -22,7 +22,8 @@ namespace DrawShip.Common
 			_renderSize = renderSize;
 		}
 
-		public void RenderDrawing(Stream outputStream, DrawingViewModel viewModel)
+		public void RenderDrawing<T>(Stream outputStream, T viewModel)
+			where T : IDrawingViewModel
 		{
 			var request = new FormUrlEncodedContent(new Dictionary<string, string>
 			{
@@ -44,7 +45,7 @@ namespace DrawShip.Common
 			stream.CopyTo(outputStream);
 		}
 
-		private string _ReadFileContent(DrawingViewModel viewModel)
+		private string _ReadFileContent(IDrawingViewModel viewModel)
 		{
 			return viewModel.ReadFileContent();
 		}
