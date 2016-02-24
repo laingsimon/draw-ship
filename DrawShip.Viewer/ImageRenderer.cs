@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DrawShip.Common;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net.Http;
 
-namespace DrawShip.Common
+namespace DrawShip.Viewer
 {
 	/// <summary>
 	/// Renderer that can render the drawing into an image (png)

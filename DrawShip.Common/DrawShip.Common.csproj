@@ -57,7 +57,6 @@
     <Compile Include="Drawing.cs" />
     <Compile Include="IDrawingViewModel.cs" />
     <Compile Include="IRenderer.cs" />
-    <Compile Include="ImageRenderer.cs" />
     <Compile Include="LocalFileSystem.cs" />
     <Compile Include="HtmlRenderer.cs" />
     <Compile Include="IFileSystem.cs" />
