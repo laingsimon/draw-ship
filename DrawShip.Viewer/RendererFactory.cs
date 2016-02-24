@@ -50,5 +50,9 @@ namespace DrawShip.Viewer
 				resolution);
 		}
 
+		public IRenderer GetHttpPrintRenderer(ApplicationContext applicationContext)
+		{
+			return new HttpPrintRenderer(applicationContext);
+		}
 	}
 }

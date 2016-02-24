@@ -123,6 +123,7 @@
       <DependentUpon>HostingDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="HostingContext.cs" />
+    <Compile Include="HttpPrintRenderer.cs" />
     <Compile Include="IndexController.cs" />
     <Compile Include="IndexViewModel.cs" />
     <Compile Include="InstallRunMode.cs" />

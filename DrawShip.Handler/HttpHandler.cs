@@ -66,6 +66,7 @@ namespace DrawShip.Handler
 				drawing,
 				_fileSystemFactory.GetFileSystem(request),
 				null,
+				null,
 				version);
 			_renderer.RenderDrawing(response.OutputStream, viewModel);
 		}

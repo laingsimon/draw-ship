@@ -11,20 +11,37 @@ namespace DrawShip.Common
 	{
 		private readonly Drawing _drawing;
 		private readonly IFileSystem _fileSystem;
-		private readonly Uri _imageFormatUrl;
+		private readonly Uri _imageFormatUri;
 		private readonly string _version;
+		private readonly Uri _printUri;
 
-		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, Uri imageFormatUrl, string version = null)
+		public DrawingViewModel(Drawing drawing, IFileSystem fileSystem, Uri imageFormatUri, Uri printUri, string version = null)
 		{
 			_drawing = drawing;
 			_fileSystem = fileSystem;
 			_version = version;
-			_imageFormatUrl = imageFormatUrl;
+			_imageFormatUri = imageFormatUri;
+			_printUri = printUri;
 		}
 
-		public Uri ImageFormatUrl
+		public Drawing Drawing
 		{
-			get { return _imageFormatUrl; }
+			get { return _drawing; }
+		}
+
+		public string Version
+		{
+			get { return _version; }
+		}
+
+		public Uri ImageFormatUri
+		{
+			get { return _imageFormatUri; }
+		}
+
+		public Uri PrintUri
+		{
+			get { return _printUri; }
 		}
 
 		/// <summary>

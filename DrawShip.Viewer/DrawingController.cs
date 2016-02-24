@@ -42,6 +42,7 @@ namespace DrawShip.Viewer
 				drawing,
 				_fileSystemFactory.GetFileSystem(Request),
 				WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Image, version),
+				WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Print, version),
 				command.Version);
 			var renderer = _GetRenderer(command.Format);
 
@@ -59,6 +60,8 @@ namespace DrawShip.Viewer
 			{
 				case DiagramFormat.Image:
 					return _rendererFactory.GetImageRenderer();
+				case DiagramFormat.Print:
+					return _rendererFactory.GetHttpPrintRenderer(_hostingContext.ApplicationContext);
 				default:
 					return _rendererFactory.GetHtmlRenderer();
 			}

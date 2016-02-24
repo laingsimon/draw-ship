@@ -112,7 +112,7 @@ namespace DrawShip.Viewer
 			var drawing = command.GetDrawing();
 
 			using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
-				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem, null));
+				renderer.RenderDrawing(writeStream, new DrawingViewModel(drawing, fileSystem, null, null));
 
 			Wia.Print(null, tempFile);
 		}

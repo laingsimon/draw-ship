@@ -33,10 +33,10 @@
 </head>
 <body>
 	<h2 class="drawing-title">
-		@if (Model.ImageFormatUrl != null)
+		@if (Model.ImageFormatUri != null)
 		{
 		<text>
-			Drawing: @Model.DrawingTitle (<a target="_blank" href="@Model.ImageFormatUrl.ToString()">as image</a>)
+			Drawing: @Model.DrawingTitle (<a target="_blank" href="@Model.ImageFormatUri">as image</a> / <a href="@Model.PrintUri">print</a>)
 		</text>
 		}
 		else
