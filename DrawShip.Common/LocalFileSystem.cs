@@ -8,6 +8,12 @@ namespace DrawShip.Common
 	/// </summary>
 	public class LocalFileSystem : IFileSystem
 	{
+		public bool FileExists(Drawing drawing)
+		{
+			var path = Path.Combine(drawing.FilePath, drawing.FileName);
+			return File.Exists(path);
+		}
+
 		public Stream OpenRead(Drawing drawing, string version = null)
 		{
 			if (!string.IsNullOrEmpty(version))

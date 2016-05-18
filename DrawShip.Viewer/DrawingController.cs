@@ -34,12 +34,13 @@ namespace DrawShip.Viewer
 			};
 
 			var drawing = command.GetDrawing(fileName);
-			if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
+			var fileSystem = _fileSystemFactory.GetFileSystem(Request);
+			if (!fileSystem.FileExists(drawing))
 				return Content(HttpStatusCode.NotFound, "Drawing not found: " + drawing.FileName);
 
 			var viewModel = new DrawingViewModel(
 				drawing,
-				_fileSystemFactory.GetFileSystem(Request),
+				fileSystem,
 				WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Image, version),
 				WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Print, version),
 				command.Version);

@@ -55,8 +55,9 @@ namespace DrawShip.Handler
 			}
 
 			var drawing = new Drawing(Path.ChangeExtension(fileName, ".xml"), physicalPath);
+			var fileSystem = _fileSystemFactory.GetFileSystem(request);
 
-			if (!File.Exists(Path.Combine(drawing.FilePath, drawing.FileName)))
+			if (!fileSystem.FileExists(drawing))
 			{
 				response.Respond(HttpStatusCode.NotFound, "Drawing not found: " + drawing.FileName);
 				return;
@@ -64,7 +65,7 @@ namespace DrawShip.Handler
 
 			var viewModel = new DrawingViewModel(
 				drawing,
-				_fileSystemFactory.GetFileSystem(request),
+				fileSystem,
 				version);
 			var result = _renderer.RenderDrawing(viewModel);
 
