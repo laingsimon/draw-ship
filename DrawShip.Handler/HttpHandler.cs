@@ -42,20 +42,20 @@ namespace DrawShip.Handler
 			var library = HttpUtility.UrlDecode(Path.GetDirectoryName(filePath));
 			var physicalPath = _pathLibrary.GetPhysicalPath(library);
 			var version = _GetVersion(request);
+			var fileSystem = _fileSystemFactory.GetFileSystem(request);
 
 			if (physicalPath == null)
 			{
 				response.Respond(HttpStatusCode.NotFound, "Library not found: " + library);
 				return;
 			}
-			else if (!Directory.Exists(physicalPath))
+			else if (!fileSystem.DirectoryExists(physicalPath))
 			{
 				response.Respond(HttpStatusCode.NotFound, "Library directory does not exist: " + library + " --> " + physicalPath);
 				return;
 			}
 
 			var drawing = new Drawing(Path.ChangeExtension(fileName, ".xml"), physicalPath);
-			var fileSystem = _fileSystemFactory.GetFileSystem(request);
 
 			if (!fileSystem.FileExists(drawing))
 			{

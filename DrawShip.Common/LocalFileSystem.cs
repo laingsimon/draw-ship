@@ -8,6 +8,11 @@ namespace DrawShip.Common
 	/// </summary>
 	public class LocalFileSystem : IFileSystem
 	{
+		public bool DirectoryExists(string physicalPath)
+		{
+			return Directory.Exists(physicalPath);
+		}
+
 		public bool FileExists(Drawing drawing)
 		{
 			var path = Path.Combine(drawing.FilePath, drawing.FileName);
