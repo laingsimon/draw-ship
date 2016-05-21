@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Linq;
 
 namespace DrawShip.Viewer
 {
@@ -29,7 +30,7 @@ namespace DrawShip.Viewer
 
 		private void _RemoveContextMenuItems(RegistryKey[] registryKey, string[] itemNames)
 		{
-			foreach (var key in registryKey)
+			foreach (var key in registryKey.Where(k => k != null))
 			foreach (var name in itemNames)
 				key.DeleteSubKeyTree(name, false);
 		}
