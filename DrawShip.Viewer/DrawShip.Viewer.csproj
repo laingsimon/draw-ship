@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -116,6 +117,7 @@
     <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
     <Compile Include="DrawingViewModel.cs" />
+    <Compile Include="DynamicContextMenu.cs" />
     <Compile Include="FileSystemFactory.cs" />
     <Compile Include="HostingDetail.cs">
       <SubType>Form</SubType>
@@ -134,6 +136,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRunMode.cs" />
+    <Compile Include="RegAsm.cs" />
     <Compile Include="RegistryExtensions.cs" />
     <Compile Include="RendererFactory.cs" />
     <Compile Include="RenderResponseMessage.cs" />

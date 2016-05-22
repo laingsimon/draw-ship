@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using System;
+using Microsoft.Win32;
 using System.Linq;
 
 namespace DrawShip.Viewer
@@ -9,6 +10,18 @@ namespace DrawShip.Viewer
 	public class UninstallRunMode : IRunMode
 	{
 		public bool Run(ApplicationContext applicationContext)
+		{
+			_DynamicVerbItems();
+			_StaticVerbItems();
+			return true;
+		}
+
+		private void _DynamicVerbItems()
+		{
+			RegAsm.Execute("/unregister");
+		}
+
+		private void _StaticVerbItems()
 		{
 			var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
 			var xmlFileType = (string)xml.GetValue(null, null);
@@ -24,8 +37,6 @@ namespace DrawShip.Viewer
 			_RemoveContextMenuItems(
 				new[] { windows10XmlShell, xmlShell },
 				new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName, InstallRunMode.PrintContextMenuName });
-			
-			return true;
 		}
 
 		private void _RemoveContextMenuItems(RegistryKey[] registryKey, string[] itemNames)

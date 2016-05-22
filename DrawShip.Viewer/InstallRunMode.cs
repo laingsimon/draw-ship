@@ -21,6 +21,16 @@ namespace DrawShip.Viewer
 
 		public bool Run(ApplicationContext applicationContext)
 		{
+			return _DynamicVerbItems(applicationContext) || _StaticVerbItems();
+		}
+
+		private bool _DynamicVerbItems(ApplicationContext applicationContext)
+		{
+			return RegAsm.Execute("/codebase", "/nologo");
+		}
+
+		private bool _StaticVerbItems()
+		{
 			var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
 			var xmlFileType = (string)xml.GetValue(null, null);
 			if (xmlFileType == null)
