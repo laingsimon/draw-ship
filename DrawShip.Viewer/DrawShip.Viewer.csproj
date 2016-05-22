@@ -102,7 +102,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="ComInterop\CLIPFORMAT.cs" />
+    <Compile Include="ComInterop\CMF.cs" />
+    <Compile Include="ComInterop\CMIC.cs" />
+    <Compile Include="ComInterop\CMINVOKECOMMANDINFO.cs" />
+    <Compile Include="ComInterop\CMINVOKECOMMANDINFOEX.cs" />
     <Compile Include="ComInterop\COLORREF.cs" />
+    <Compile Include="ComInterop\GCS.cs" />
+    <Compile Include="ComInterop\IContextMenu.cs" />
     <Compile Include="ComInterop\IInitializeWithFile.cs" />
     <Compile Include="ComInterop\IInitializeWithStream.cs" />
     <Compile Include="ComInterop\IObjectWithSite.cs" />
@@ -111,9 +118,14 @@
     <Compile Include="ComInterop\IPreviewHandlerFrame.cs" />
     <Compile Include="ComInterop\IPreviewHandlerVisuals.cs" />
     <Compile Include="ComInterop\LOGFONT.cs" />
+    <Compile Include="ComInterop\MF.cs" />
+    <Compile Include="ComInterop\MFMENU.cs" />
     <Compile Include="ComInterop\MSG.cs" />
+    <Compile Include="ComInterop\NativeMethods.cs" />
     <Compile Include="ComInterop\RECT.cs" />
+    <Compile Include="ComInterop\IShellExtInit.cs" />
     <Compile Include="ComInterop\WIA.cs" />
+    <Compile Include="ComInterop\WinError.cs" />
     <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
     <Compile Include="DrawingViewModel.cs" />
@@ -131,8 +143,12 @@
     <Compile Include="IndexController.cs" />
     <Compile Include="IndexViewModel.cs" />
     <Compile Include="InstallRunMode.cs" />
-    <Compile Include="NativeMethods.cs" />
+    <Compile Include="ComInterop\MENUITEMINFO.cs" />
+    <Compile Include="ComInterop\MFS.cs" />
+    <Compile Include="ComInterop\MFT.cs" />
+    <Compile Include="ComInterop\MIIM.cs" />
     <Compile Include="OpenDrawingInOtherHostRunMode.cs" />
+    <Compile Include="ComInterop\POINT.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRunMode.cs" />
