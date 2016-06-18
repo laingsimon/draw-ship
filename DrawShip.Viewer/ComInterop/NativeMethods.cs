@@ -128,5 +128,8 @@ namespace DrawShip.Viewer.ComInterop
 			Marshal.FreeHGlobal(ptr);
 			ptr = IntPtr.Zero;
 		}
+
+		[DllImport("user32.dll")]
+		public static extern int GetSystemMetrics(int nIndex);
 	}
 }

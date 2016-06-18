@@ -7,6 +7,10 @@ namespace DrawShip.Viewer
 {
 	public class ContextMenu
 	{
+		private const int SM_CXSMICON = 49;
+		private const int SM_CYSMICON = 50;
+
+		private static readonly Lazy<Size> _getIconSize = new Lazy<Size>(_GetRequiredSize);
 		private readonly IntPtr _menu;
 		private int _itemsAdded = 0;
 
@@ -18,7 +22,7 @@ namespace DrawShip.Viewer
 		public ContextMenu CreateSubMenu(string text, int position, Bitmap icon)
 		{
 			var submenu = NativeMethods.CreatePopupMenu();
-			var handleToIcon = _ResizeBitmap(icon, _GetRequiredSize()).GetHbitmap();
+			var handleToIcon = _ResizeBitmap(icon, _getIconSize.Value).GetHbitmap();
 			var menuItemInfo = new MENUITEMINFO
 			{
 				fType = MFT.MFT_BITMAP | MFT.MFT_STRING,
@@ -37,7 +41,7 @@ namespace DrawShip.Viewer
 
 		public void AppendMenuItem(string text, int id, Bitmap icon)
 		{
-			var handleToIcon = _ResizeBitmap(icon, _GetRequiredSize()).GetHbitmap();
+			var handleToIcon = _ResizeBitmap(icon, _getIconSize.Value).GetHbitmap();
 			var menuItemInfo = new MENUITEMINFO
 			{
 				fType = MFT.MFT_BITMAP | MFT.MFT_STRING,
@@ -53,10 +57,12 @@ namespace DrawShip.Viewer
 			_itemsAdded++;
 		}
 
-		private Size _GetRequiredSize()
+		private static Size _GetRequiredSize()
 		{
-			//TODO: read this from the system
-			return new Size(16, 16);
+			var width = NativeMethods.GetSystemMetrics(SM_CXSMICON);
+			var height = NativeMethods.GetSystemMetrics(SM_CYSMICON);
+
+			return new Size(width, height);
 		}
 
 		private Bitmap _ResizeBitmap(Bitmap icon, Size desiredSize)
