@@ -126,6 +126,7 @@
     <Compile Include="ComInterop\IShellExtInit.cs" />
     <Compile Include="ComInterop\WIA.cs" />
     <Compile Include="ComInterop\WinError.cs" />
+    <Compile Include="ContextMenu.cs" />
     <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
     <Compile Include="DrawingViewModel.cs" />

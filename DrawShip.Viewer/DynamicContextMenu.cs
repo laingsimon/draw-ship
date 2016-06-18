@@ -243,19 +243,14 @@ namespace DrawShip.Viewer
 				return 0;
 
 			var code = (uint)(idCmdFirst + _printVerb + 1);
+			var menu = new ContextMenu(hMenu);
 
-			var submenu = NativeMethods.CreatePopupMenu();
-			_InsertMenuItem(submenu, "Html viewer", (uint)(idCmdFirst + _htmlVerb), 0);
-			_InsertMenuItem(submenu, "Image viewer", (uint)(idCmdFirst + _imageVerb), 1);
-			_InsertMenuItem(submenu, "Print", (uint)(idCmdFirst + _printVerb), 2);
-			NativeMethods.InsertMenu(hMenu, 4, MFMENU.MF_BYPOSITION | MFMENU.MF_POPUP | MFMENU.MF_ENABLED, submenu, "Draw Ship");
+			var submenu = menu.CreateSubMenu("Draw Ship", 4);
+			submenu.AppendMenuItem("Html Viewer", idCmdFirst + _htmlVerb);
+			submenu.AppendMenuItem("Image Viewer", idCmdFirst + _imageVerb);
+			submenu.AppendMenuItem("Print", idCmdFirst + _printVerb);
 
 			return WinError.MAKE_HRESULT(0, 0, 3);
-		}
-
-		private static void _InsertMenuItem(IntPtr menu, string text, uint id, uint position)
-		{
-			NativeMethods.AppendMenu(menu, MFMENU.MF_STRING, new IntPtr(id), text);
 		}
 
 		private bool _IsDrawing(string fileName)
