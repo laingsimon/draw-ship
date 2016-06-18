@@ -245,10 +245,10 @@ namespace DrawShip.Viewer
 			var code = (uint)(idCmdFirst + _printVerb + 1);
 			var menu = new ContextMenu(hMenu);
 
-			var submenu = menu.CreateSubMenu("Draw Ship", 4);
-			submenu.AppendMenuItem("Html Viewer", idCmdFirst + _htmlVerb);
-			submenu.AppendMenuItem("Image Viewer", idCmdFirst + _imageVerb);
-			submenu.AppendMenuItem("Print", idCmdFirst + _printVerb);
+			var submenu = menu.CreateSubMenu("Draw Ship", 4, Properties.Resources.tray_icon.ToBitmap());
+			submenu.AppendMenuItem("Html Viewer", idCmdFirst + _htmlVerb, Properties.Resources.tray_icon.ToBitmap());
+			submenu.AppendMenuItem("Image Viewer", idCmdFirst + _imageVerb, Properties.Resources.tray_icon.ToBitmap());
+			submenu.AppendMenuItem("Print", idCmdFirst + _printVerb, Properties.Resources.tray_icon.ToBitmap());
 
 			return WinError.MAKE_HRESULT(0, 0, 3);
 		}
