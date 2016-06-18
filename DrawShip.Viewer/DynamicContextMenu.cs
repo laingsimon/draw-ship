@@ -246,9 +246,9 @@ namespace DrawShip.Viewer
 			var menu = new ContextMenu(hMenu);
 
 			var submenu = menu.CreateSubMenu("Draw Ship", 4, Properties.Resources.tray_icon.ToBitmap());
-			submenu.AppendMenuItem("Html Viewer", idCmdFirst + _htmlVerb, Properties.Resources.tray_icon.ToBitmap());
-			submenu.AppendMenuItem("Image Viewer", idCmdFirst + _imageVerb, Properties.Resources.tray_icon.ToBitmap());
-			submenu.AppendMenuItem("Print", idCmdFirst + _printVerb, Properties.Resources.tray_icon.ToBitmap());
+			submenu.AppendMenuItem("Html Viewer", idCmdFirst + _htmlVerb, Properties.Resources.PreviewHtml);
+			submenu.AppendMenuItem("Image Viewer", idCmdFirst + _imageVerb, Properties.Resources.PreviewImage);
+			submenu.AppendMenuItem("Print", idCmdFirst + _printVerb, Properties.Resources.PrintDrawing);
 
 			return WinError.MAKE_HRESULT(0, 0, 3);
 		}

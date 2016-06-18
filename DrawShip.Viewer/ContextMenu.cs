@@ -1,6 +1,7 @@
 ﻿using DrawShip.Viewer.ComInterop;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace DrawShip.Viewer
@@ -19,10 +20,10 @@ namespace DrawShip.Viewer
 			_menu = menu;
 		}
 
-		public ContextMenu CreateSubMenu(string text, int position, Bitmap icon)
+		public ContextMenu CreateSubMenu(string text, int position, Image icon)
 		{
 			var submenu = NativeMethods.CreatePopupMenu();
-			var handleToIcon = _ResizeBitmap(icon, _getIconSize.Value).GetHbitmap();
+			var handleToIcon = _ResizeIcon(icon, _getIconSize.Value);
 			var menuItemInfo = new MENUITEMINFO
 			{
 				fType = MFT.MFT_BITMAP | MFT.MFT_STRING,
@@ -39,9 +40,9 @@ namespace DrawShip.Viewer
 			return new ContextMenu(submenu);
 		}
 
-		public void AppendMenuItem(string text, int id, Bitmap icon)
+		public void AppendMenuItem(string text, int id, Image icon)
 		{
-			var handleToIcon = _ResizeBitmap(icon, _getIconSize.Value).GetHbitmap();
+			var handleToIcon = _ResizeIcon(icon, _getIconSize.Value);
 			var menuItemInfo = new MENUITEMINFO
 			{
 				fType = MFT.MFT_BITMAP | MFT.MFT_STRING,
@@ -65,9 +66,41 @@ namespace DrawShip.Viewer
 			return new Size(width, height);
 		}
 
-		private Bitmap _ResizeBitmap(Bitmap icon, Size desiredSize)
+		private IntPtr _CreateTransparentIcon(Bitmap icon)
 		{
-			return new Bitmap(icon, desiredSize);
+			IntPtr hBitmap, ppvBits;
+			BITMAPINFO bmi = new BITMAPINFO();
+			bmi.biSize = 40;            // Needed for RtlMoveMemory()
+			bmi.biBitCount = 32;        // Number of bits
+			bmi.biPlanes = 1;           // Number of planes
+			bmi.biWidth = icon.Width;     // Width of our new bitmap
+			bmi.biHeight = icon.Height;   // Height of our new bitmap
+			icon.RotateFlip(RotateFlipType.RotateNoneFlipY);
+			// Required due to the way bitmap is copied and read
+
+			hBitmap = NativeMethods.CreateDIBSection(new IntPtr(0), bmi, 0,
+					  out ppvBits, new IntPtr(0), 0);
+			//create our new bitmap
+			BitmapData bitmapData = icon.LockBits(new Rectangle(0, 0,
+					   icon.Width, icon.Height), ImageLockMode.ReadOnly,
+					   PixelFormat.Format32bppArgb);
+			NativeMethods.RtlMoveMemory(ppvBits, bitmapData.Scan0,
+						   icon.Height * bitmapData.Stride);
+			// copies the bitmap
+			icon.UnlockBits(bitmapData);
+
+			return hBitmap;
+		}
+
+		private IntPtr _ResizeIcon(Image icon, Size desiredSize)
+		{
+			var bitmap = icon as Bitmap;
+
+			if (icon.Size == desiredSize && bitmap != null)
+				return _CreateTransparentIcon(bitmap);
+
+			var resizedIcon = new Bitmap(icon, desiredSize);
+			return _CreateTransparentIcon(resizedIcon);
 		}
 	}
 }

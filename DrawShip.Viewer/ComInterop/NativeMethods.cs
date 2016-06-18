@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace DrawShip.Viewer.ComInterop
@@ -131,5 +130,11 @@ namespace DrawShip.Viewer.ComInterop
 
 		[DllImport("user32.dll")]
 		public static extern int GetSystemMetrics(int nIndex);
+
+		[DllImport("kernel32.dll")]
+		public static extern bool RtlMoveMemory(IntPtr dest, IntPtr source, int dwcount);
+
+		[DllImport("gdi32.dll")]
+		public static extern IntPtr CreateDIBSection(IntPtr hdc, [In, MarshalAs(UnmanagedType.LPStruct)]BITMAPINFO pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
 	}
 }
