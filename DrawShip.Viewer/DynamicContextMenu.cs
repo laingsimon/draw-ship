@@ -28,7 +28,6 @@ namespace DrawShip.Viewer
 		[ComRegisterFunction]
 		public static void Register(string anything)
 		{
-			var applicationExePath = Environment.GetCommandLineArgs().First();
 			var clsid = "{" + typeof(DynamicContextMenu).GUID + "}";
 			var progId = typeof(DynamicContextMenu).FullName;
 
@@ -43,11 +42,15 @@ namespace DrawShip.Viewer
 				xml.SetValue(_xmlPreviousProgNameValueName, prevProgram);
 			xml.SetValue(null, progId);
 
-			var xmlProg = Registry.ClassesRoot.OpenKey(@"CLSID\" + clsid);
+            var xmlProg = Registry.ClassesRoot.OpenKey(@"CLSID\" + clsid);
 			if (xmlProg == null)
 				return; //not installed properly?
 
-			var shellex = xmlProg.OpenKey(@"shellex\MayChangeDefaultMenu", createIfRequired: true);
+			xmlProg.OpenKey(@"shellex\MayChangeDefaultMenu", createIfRequired: true);
+
+		    var allContextMenuHandlers = Registry.ClassesRoot.OpenKey("*\\shellex\\ContextMenuHandlers\\DrawShip",
+		        createIfRequired: true);
+            allContextMenuHandlers.SetValue(null, clsid);
 		}
 
 		[ComUnregisterFunction]
@@ -58,7 +61,10 @@ namespace DrawShip.Viewer
 			if (prevProgram != null)
 				xml.SetValue(null, prevProgram);
 			xml.DeleteValue(_xmlPreviousProgNameValueName);
-		}
+
+            var allContextMenuHandlers = Registry.ClassesRoot.OpenKey("*\\shellex\\ContextMenuHandlers");
+            allContextMenuHandlers.DeleteSubKey("DrawShip");
+        }
 		#endregion
 
 		void IContextMenu.GetCommandString(int idcmd, uint uflags, int reserved, StringBuilder commandstring, int cch)
