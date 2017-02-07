@@ -24,8 +24,15 @@ namespace DrawShip.Viewer
 		private const int _printVerb = 2;
 		private string _fileName;
 
-		#region (un)installation
-		[ComRegisterFunction]
+        #region (un)installation
+        public static bool IsRegistered()
+        {
+            var progId = typeof(DynamicContextMenu).FullName;
+
+            return Registry.ClassesRoot.OpenPath(progId + @"\shellex\ContextMenuHandlers\DrawShip") != null;
+        }
+
+        [ComRegisterFunction]
 		public static void Register(string anything)
 		{
 			var clsid = "{" + typeof(DynamicContextMenu).GUID + "}";

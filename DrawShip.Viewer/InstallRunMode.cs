@@ -58,9 +58,32 @@ namespace DrawShip.Viewer
 
 				var preview = shell.OpenKey(name, createIfRequired: true);
 				var command = preview.OpenKey("command", createIfRequired: true);
-				command.SetValue(null, string.Format("\"{0}\" {1}", _applicationExePath, commandFormat));
+				command.SetValue(null, $@"""{_applicationExePath}"" {commandFormat}");
 				preview.SetValue("icon", string.Format("{0},0", _applicationExePath));
 			}
 		}
-	}
+
+	    public static bool IsInstalled()
+	    {
+	        return DynamicContextMenu.IsRegistered() || _IsRegistered();
+	    }
+
+	    private static bool _IsRegistered()
+	    {
+            var xml = Registry.ClassesRoot.OpenKey(@".xml");
+	        if (xml == null)
+	            return false;
+
+            var xmlFileType = (string)xml.GetValue(null, null);
+	        if (xmlFileType == null)
+	            return false;
+
+            var shell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
+            var preview = shell.OpenKey(HtmlPreviewContextMenuName);
+	        var command = preview?.OpenKey("command");
+            var value = command?.GetValue(null, null) as string;
+	        var applicationExePath = Environment.GetCommandLineArgs().First();
+            return value == $@"""{applicationExePath}"" ""%1""";
+	    }
+    }
 }

@@ -5,13 +5,16 @@ using System.Linq;
 
 namespace DrawShip.Viewer
 {
-	/// <summary>
+    using System.Windows.Forms;
+
+    /// <summary>
 	/// The context of the process/application
 	/// </summary>
 	public class ApplicationContext
 	{
 		private enum _RunMode
 		{
+            None,
 			Run,
 			Install,
 			Uninstall
@@ -50,16 +53,39 @@ namespace DrawShip.Viewer
 
 			FileSystemFactory = new FileSystemFactory();
 			RendererFactory = new RendererFactory();
-		}
 
-		/// <summary>
-		/// Get the run mode for the process/application
-		/// </summary>
-		/// <returns></returns>
-		public IRunMode GetRunMode()
+            if (_mode == _RunMode.Run)
+                _mode = ModifyModeIfRunFromInstallationDirectory();
+        }
+
+	    private static _RunMode ModifyModeIfRunFromInstallationDirectory()
+	    {
+            var args = Environment.GetCommandLineArgs();
+	        if (args.Length != 1 || Environment.CommandLine.Trim() != $@"""{args.Single()}""")
+                return _RunMode.Run;
+
+            var isInstalled = InstallRunMode.IsInstalled();
+
+            //no arguments supplied; if we're also running from the installation directory, maybe we need to install/uninstall
+	        if (isInstalled && MessageBox.Show("Do you wish to uninstall DrawShip?", "DrawShip", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+	            return _RunMode.Uninstall;
+	        if (!isInstalled && MessageBox.Show("Do you wish to install DrawShip?", "DrawShip", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+	            return _RunMode.Install;
+
+	        return _RunMode.None;
+;	    }
+
+	    /// <summary>
+        /// Get the run mode for the process/application
+        /// </summary>
+        /// <returns></returns>
+        public IRunMode GetRunMode()
 		{
-			switch(_mode)
+		    switch (_mode)
 			{
+                case _RunMode.None:
+			        return new NullRunMode();
+
 				case _RunMode.Install:
 					return new InstallRunMode();
 

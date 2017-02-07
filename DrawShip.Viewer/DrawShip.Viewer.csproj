@@ -149,6 +149,7 @@
     <Compile Include="ComInterop\MFS.cs" />
     <Compile Include="ComInterop\MFT.cs" />
     <Compile Include="ComInterop\MIIM.cs" />
+    <Compile Include="NullRunMode.cs" />
     <Compile Include="OpenDrawingInOtherHostRunMode.cs" />
     <Compile Include="ComInterop\POINT.cs" />
     <Compile Include="Program.cs" />
