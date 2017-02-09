@@ -1,5 +1,6 @@
 @echo off
 set installDir=%ProgramFiles%\DrawShip
+@set source=%~dp0
 
 if not exist %installDir% mkdir "%installDir%" 2> nul
 
@@ -12,7 +13,7 @@ echo Installing to %installDir%
 
 set installDirEscaped=%installDir:\=\\%
 
-xcopy "*.*" "%installDir%\" /Y /h
+xcopy "%source%*.*" "%installDir%\" /Y /h
 "%installDir%\DrawShip.Viewer.exe" /mode:install
 
 echo Windows Registry Editor Version 5.00 > "%installDir%\register_manually.reg"
