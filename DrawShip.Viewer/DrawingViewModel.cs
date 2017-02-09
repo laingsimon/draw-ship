@@ -1,4 +1,5 @@
 ﻿using DrawShip.Common;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Xml.Linq;
@@ -96,6 +97,21 @@ namespace DrawShip.Viewer
 
 				return diagram?.Value;
 			}
+		}
+
+		public string ReadDrawingData()
+		{
+			var data = new
+			{
+				highlight = "#0000ff",
+				nav = true,
+				resize = true,
+				xml = ReadFileContent(),
+				toolbar = "pages zoom layers lightbox",
+				page = 0
+			};
+
+			return JsonConvert.SerializeObject(data, Formatting.None);
 		}
 	}
 }

@@ -38,11 +38,9 @@
 		</text>
 		<span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
 	</h2>
-	<div class="mxgraph" style="position:relative;overflow:auto;width:100%;background-color:#ffffff;">
-		<div style="width:1px;height:1px;overflow:hidden;">@Model.ReadDrawingContent()</div>
-	</div>
+<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
 
-	<script type="text/javascript" src="https://www.draw.io/embed.js?s=@(Model.ShapeNames)"></script>
+	<script type="text/javascript" src="https://www.draw.io/embed2.js?s=@(Model.ShapeNames)"></script>
 
 	<script type="text/javascript">
 		var _originalWindowOpen = window.open;
