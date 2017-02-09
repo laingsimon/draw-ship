@@ -12,53 +12,69 @@
 			margin: 0px;
 		}
 
-		.drawing-title {
+        .drawing-title-position {
 			margin: 0px;
 			padding: 0px;
+			position: absolute;
+		    left: 0px;
+		    right: 0px;
+		    top: 1px;
+		    height: 28px;
+            z-index: 1;
+		}
+
+        .drawing-title-style {
+			background: #EEEEEE;
+			border-bottom: 1px solid #D0D0D0;
+            border-top: 1px solid #D0D0D0;
+        }
+
+		.drawing-title {
 			font-family: Tahoma;
 			font-size: 14px;
-			background: #ffff88;
-			padding-bottom: 2px;
-			margin-bottom: 2px;
-			border-bottom: 1px solid #888800;
 			font-weight: normal;
-			position: relative;
+		    z-index: 1000;
+		    left: 400px;
+		    line-height: 28px;
 		}
 
 			.drawing-title .powered-by {
 				position: absolute;
-				right: 0px;
+				right: 5px;
 			}
 	</style>
 </head>
 <body>
-	<h2 class="drawing-title">
-		<text>
-			Drawing: @Model.DrawingTitle (<a target="_blank" href="@Model.ImageFormatUri">as image</a> / <a href="@Model.PrintUri">print</a>)
-		</text>
-		<span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
-	</h2>
-<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
+<div class="drawing-title-position drawing-title-style"></div>
+<h2 class="drawing-title-position drawing-title">
+    <text>
+        Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a>)
+    </text>
+    <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
+</h2>
+<div class="mxgraph" style="max-width: 100%; border: 1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
 
-	<script type="text/javascript" src="https://www.draw.io/embed2.js?s=@(Model.ShapeNames)"></script>
+<script type="text/javascript" src="https://www.draw.io/embed2.js?s=@(Model.ShapeNames)"></script>
 
-	<script type="text/javascript">
-		var _originalWindowOpen = window.open;
-		var _ctrlKeyPressed = false
-		window.open = function (url, options, name) {
-			if (_ctrlKeyPressed)
-				_originalWindowOpen(url, options, name);
-			else
-				document.location = url;
-		}
+<script type="text/javascript">
+    var _originalWindowOpen = window.open;
+    var _ctrlKeyPressed = false
+    window.open = function(url, options, name) {
+        if (_ctrlKeyPressed)
+            _originalWindowOpen(url, options, name);
+        else
+            document.location = url;
+    }
 
-		window.addEventListener("keydown", function (event) {
-			_ctrlKeyPressed = event.ctrlKey;
-		})
+    window.addEventListener("keydown",
+        function(event) {
+            _ctrlKeyPressed = event.ctrlKey;
+        })
 
-		window.addEventListener("keyup", function (event) {
-			_ctrlKeyPressed = false;
-		})
-	</script>
+    window.addEventListener("keyup",
+        function(event) {
+            _ctrlKeyPressed = false;
+        })
+</script>
 </body>
 </html>
