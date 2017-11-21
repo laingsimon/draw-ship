@@ -107,7 +107,7 @@ namespace DrawShip.Viewer
 				nav = true,
 				resize = true,
 				xml = ReadFileContent(),
-				toolbar = "zoom layers",
+				toolbar = "pages zoom layers",
 				page = 0
 			};
 
