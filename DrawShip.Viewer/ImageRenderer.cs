@@ -30,7 +30,7 @@ namespace DrawShip.Viewer
 				{ "format", "png" },
 				{ "xml", viewModel.ReadFileContent() },
 				{ "base64", "O" },
-				{ "bg", "none" },
+				{ "bg", "#ffffff" },
 				{ "w", _renderSize.Width.ToString() },
 				{ "h", _renderSize.Height.ToString() },
 				{ "border", "1" }
