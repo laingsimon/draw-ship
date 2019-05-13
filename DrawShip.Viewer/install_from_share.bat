@@ -1,6 +1,8 @@
 @echo off
 set installDir=%ProgramFiles%\DrawShip
-@set source=%~dp0
+set source=%~dp0
+set netframework32=c:\Windows\Microsoft.NET\Framework64\v4.0.30319\
+set netframework64=c:\Windows\Microsoft.NET\Framework\v4.0.30319\
 
 if not exist %installDir% mkdir "%installDir%" 2> nul
 
@@ -29,6 +31,13 @@ echo [HKEY_CLASSES_ROOT\xmlfile\shell\Preview in DrawShip (image)\command] >> "%
 echo @="\"%installDirEscaped%\\DrawShip.Viewer.exe\" \"%%1\" /format:Image" >> "%installDir%\register_manually.reg"
 echo. >> "%installDir%\register_manually.reg"
 
-if "%errorlevel%"=="0" @echo Installed successfully
+if exist "%netframework32%regasm.exe" (
+	call "%netframework32%regasm.exe" "%installDir%\PreviewIo.dll" /codebase /nologo /silent
+)
+if exist "%netframework64%regasm.exe" (
+	call "%netframework64%regasm.exe" "%installDir%\PreviewIo.dll" /codebase /nologo /silent
+)
+
+if "%errorlevel%"=="0" echo Installed successfully
 
 pause
