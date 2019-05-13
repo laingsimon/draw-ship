@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Forms;
-using DrawShip.Preview.ComInterop;
+using DrawShip.Common.ComInterop;
 using STATSTG = System.Runtime.InteropServices.ComTypes.STATSTG;
 
 namespace DrawShip.Preview

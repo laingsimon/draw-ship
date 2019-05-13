@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace DrawShip.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	[ComImport]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

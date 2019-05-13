@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace DrawShip.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct COLORREF

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace DrawShip.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	public static class Wia
 	{

@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace DrawShip.Preview.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 	internal class LOGFONT

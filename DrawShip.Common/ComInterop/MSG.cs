@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace DrawShip.Preview.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct MSG
+	public struct MSG
 	{
 		public IntPtr hwnd;
 		public int message;

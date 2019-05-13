@@ -1,10 +1,10 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace DrawShip.Preview.ComInterop
+namespace DrawShip.Common.ComInterop
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct RECT
+	public struct RECT
 	{
 		public readonly int left;
 		public readonly int top;

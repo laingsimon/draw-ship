@@ -1,4 +1,4 @@
-﻿using DrawShip.ComInterop;
+﻿using DrawShip.Common.ComInterop;
 using System;
 using System.IO;
 using System.Linq;

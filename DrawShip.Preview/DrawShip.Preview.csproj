@@ -49,18 +49,6 @@
   <ItemGroup>
     <Compile Include="CachingPreviewGenerator.cs" />
     <Compile Include="CachingSizeExtractor.cs" />
-    <Compile Include="ComInterop\COLORREF.cs" />
-    <Compile Include="ComInterop\IInitializeWithFile.cs" />
-    <Compile Include="ComInterop\IInitializeWithStream.cs" />
-    <Compile Include="ComInterop\IObjectWithSite.cs" />
-    <Compile Include="ComInterop\IOleWindow.cs" />
-    <Compile Include="ComInterop\IPreviewHandler.cs" />
-    <Compile Include="ComInterop\IPreviewHandlerFrame.cs" />
-    <Compile Include="ComInterop\IPreviewHandlerVisuals.cs" />
-    <Compile Include="ComInterop\LOGFONT.cs" />
-    <Compile Include="ComInterop\MSG.cs" />
-    <Compile Include="ComInterop\RECT.cs" />
-    <Compile Include="ComInterop\WIA.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="ErrorControl.cs">
       <SubType>UserControl</SubType>

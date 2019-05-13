@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-using DrawShip.Preview.ComInterop;
+using DrawShip.Common.ComInterop;
 
 namespace DrawShip.Preview
 {
