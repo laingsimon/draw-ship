@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawShip.Viewer", "DrawShip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawShip.Preview", "DrawShip.Preview\DrawShip.Preview.csproj", "{A570CDD5-F5A5-454F-9FF5-8A59644A427D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DrawShip.Installer", "DrawShip.Installer\DrawShip.Installer.vdproj", "{C6710A05-47FD-40D2-9B9F-A5989B0CF216}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,8 @@ Global
 		{A570CDD5-F5A5-454F-9FF5-8A59644A427D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A570CDD5-F5A5-454F-9FF5-8A59644A427D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A570CDD5-F5A5-454F-9FF5-8A59644A427D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6710A05-47FD-40D2-9B9F-A5989B0CF216}.Debug|Any CPU.ActiveCfg = Debug
+		{C6710A05-47FD-40D2-9B9F-A5989B0CF216}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -157,5 +157,13 @@
   <ItemGroup>
     <None Include="resources\error.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="register.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="unregister.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
