@@ -2,8 +2,8 @@
 
 namespace DrawShip.Common
 {
-	public interface IRenderResult
-	{
-		void WriteResult(Stream output);
-	}
+    public interface IRenderResult
+    {
+        void WriteResult(Stream output);
+    }
 }

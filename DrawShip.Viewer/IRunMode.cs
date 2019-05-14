@@ -1,7 +1,7 @@
 ﻿namespace DrawShip.Viewer
 {
-	public interface IRunMode
-	{
-		bool Run(ApplicationContext applicationContext);
-	}
+    public interface IRunMode
+    {
+        bool Run(ApplicationContext applicationContext);
+    }
 }

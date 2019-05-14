@@ -2,10 +2,10 @@
 
 namespace DrawShip.Common
 {
-	public interface IFileSystem
-	{
-		Stream OpenRead(Drawing drawing, string version = null);
-		bool FileExists(Drawing drawing);
-		bool DirectoryExists(string physicalPath);
-	}
+    public interface IFileSystem
+    {
+        Stream OpenRead(Drawing drawing, string version = null);
+        bool FileExists(Drawing drawing);
+        bool DirectoryExists(string physicalPath);
+    }
 }

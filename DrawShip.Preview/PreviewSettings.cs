@@ -4,38 +4,38 @@ using System.Reflection;
 
 namespace DrawShip.Preview
 {
-	internal class PreviewSettings
-	{
-		public int UpScaleForPrint { get; set; }
-		public ImageFormat RenderingFormat { get; set; }
+    internal class PreviewSettings
+    {
+        public int UpScaleForPrint { get; set; }
+        public ImageFormat RenderingFormat { get; set; }
 
-		public PreviewSettings()
-		{
-			UpScaleForPrint = _ReadInt(ConfigurationManager.AppSettings["upScale"], 4);
-			RenderingFormat = _ReadImageFormat(ConfigurationManager.AppSettings["format"], ImageFormat.Png);
-		}
+        public PreviewSettings()
+        {
+            UpScaleForPrint = _ReadInt(ConfigurationManager.AppSettings["upScale"], 4);
+            RenderingFormat = _ReadImageFormat(ConfigurationManager.AppSettings["format"], ImageFormat.Png);
+        }
 
-		private static ImageFormat _ReadImageFormat(string value, ImageFormat defaultFormat)
-		{
-			if (string.IsNullOrEmpty(value))
-				return defaultFormat;
+        private static ImageFormat _ReadImageFormat(string value, ImageFormat defaultFormat)
+        {
+            if (string.IsNullOrEmpty(value))
+                return defaultFormat;
 
-			var property = typeof(ImageFormat).GetProperty(value, BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.IgnoreCase);
-			if (property == null)
-				return defaultFormat;
+            var property = typeof(ImageFormat).GetProperty(value, BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.IgnoreCase);
+            if (property == null)
+                return defaultFormat;
 
-			return (ImageFormat)property.GetValue(null);
-		}
+            return (ImageFormat)property.GetValue(null);
+        }
 
-		private static int _ReadInt(string value, int defaultResolution)
-		{
-			if (string.IsNullOrEmpty(value))
-				return defaultResolution;
+        private static int _ReadInt(string value, int defaultResolution)
+        {
+            if (string.IsNullOrEmpty(value))
+                return defaultResolution;
 
-			int resolution;
-			return !int.TryParse(value, out resolution)
-				? defaultResolution
-				: resolution;
-		}
-	}
+            int resolution;
+            return !int.TryParse(value, out resolution)
+                ? defaultResolution
+                : resolution;
+        }
+    }
 }

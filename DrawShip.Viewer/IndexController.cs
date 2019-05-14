@@ -8,45 +8,45 @@ using System.Web.Http;
 
 namespace DrawShip.Viewer
 {
-	public class IndexController : ApiController
-	{
-		private readonly HostingContext _hostingContext;
+    public class IndexController : ApiController
+    {
+        private readonly HostingContext _hostingContext;
 
-		public IndexController()
-		{
-			_hostingContext = HostingContext.Instance;
-		}
+        public IndexController()
+        {
+            _hostingContext = HostingContext.Instance;
+        }
 
-		public HttpResponseMessage Get()
-		{
-			return new HttpResponseMessage(HttpStatusCode.OK)
-			{
-				Content = new StringContent(_RenderHtml())
-				{
-					Headers =
-					{
-						ContentType = new MediaTypeHeaderValue("text/html")
-					}
-				}
-			};
-		}
+        public HttpResponseMessage Get()
+        {
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(_RenderHtml())
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("text/html")
+                    }
+                }
+            };
+        }
 
-		private string _RenderHtml()
-		{
-			var view = new RazorView(Properties.Resources.Index);
-			var viewModel = new IndexViewModel(_hostingContext);
+        private string _RenderHtml()
+        {
+            var view = new RazorView(Properties.Resources.Index);
+            var viewModel = new IndexViewModel(_hostingContext);
 
-			using (var textWriter = new StringWriter())
-			{
-				RazorEngine.Engine.Razor.RunCompile(
-					templateSource: view,
-					name: "index",
-					writer: textWriter,
-					modelType: typeof(IndexViewModel),
-					model: viewModel);
+            using (var textWriter = new StringWriter())
+            {
+                RazorEngine.Engine.Razor.RunCompile(
+                    templateSource: view,
+                    name: "index",
+                    writer: textWriter,
+                    modelType: typeof(IndexViewModel),
+                    model: viewModel);
 
-				return textWriter.GetStringBuilder().ToString();
-			}
-		}
-	}
+                return textWriter.GetStringBuilder().ToString();
+            }
+        }
+    }
 }

@@ -7,52 +7,52 @@ using System.Net.Http;
 
 namespace DrawShip.Viewer
 {
-	/// <summary>
-	/// Factory type for renderers
-	/// </summary>
-	public class RendererFactory
-	{
-		/// <summary>
-		/// Create a renderer which can render a drawing into an image
-		/// </summary>
-		/// <returns></returns>
-		public IRenderer<DrawingViewModel> GetImageRenderer()
-		{
-			var imageExportUrl = new Uri("https://exp.draw.io/ImageExport4/export", UriKind.Absolute);
-			var proxy = WebRequest.DefaultWebProxy.GetProxy(imageExportUrl);
+    /// <summary>
+    /// Factory type for renderers
+    /// </summary>
+    public class RendererFactory
+    {
+        /// <summary>
+        /// Create a renderer which can render a drawing into an image
+        /// </summary>
+        /// <returns></returns>
+        public IRenderer<DrawingViewModel> GetImageRenderer()
+        {
+            var imageExportUrl = new Uri("https://exp.draw.io/ImageExport4/export", UriKind.Absolute);
+            var proxy = WebRequest.DefaultWebProxy.GetProxy(imageExportUrl);
 
-			return new ImageRenderer(
-				new HttpClient(new HttpClientHandler
-				{
-					Proxy = proxy != imageExportUrl ? new WebProxy(proxy) { UseDefaultCredentials = true } : null,
-					UseProxy = proxy != null
-				}),
-				imageExportUrl,
-				_GetImagePreviewSize());
-		}
+            return new ImageRenderer(
+                new HttpClient(new HttpClientHandler
+                {
+                    Proxy = proxy != imageExportUrl ? new WebProxy(proxy) { UseDefaultCredentials = true } : null,
+                    UseProxy = proxy != null
+                }),
+                imageExportUrl,
+                _GetImagePreviewSize());
+        }
 
-		/// <summary>
-		/// Create a renderer which can render a drawing into an interactive preview
-		/// </summary>
-		/// <returns></returns>
-		public IRenderer<DrawingViewModel> GetHtmlRenderer()
-		{
-			return new HtmlRenderer<DrawingViewModel>(new RazorView(Properties.Resources.Drawing));
-		}
+        /// <summary>
+        /// Create a renderer which can render a drawing into an interactive preview
+        /// </summary>
+        /// <returns></returns>
+        public IRenderer<DrawingViewModel> GetHtmlRenderer()
+        {
+            return new HtmlRenderer<DrawingViewModel>(new RazorView(Properties.Resources.Drawing));
+        }
 
-		private static Size _GetImagePreviewSize()
-		{
-			int resolution = 3000;
+        private static Size _GetImagePreviewSize()
+        {
+            int resolution = 3000;
 
-			int.TryParse(ConfigurationManager.AppSettings["imageResolution"], out resolution);
-			return new Size(
-				resolution,
-				resolution);
-		}
+            int.TryParse(ConfigurationManager.AppSettings["imageResolution"], out resolution);
+            return new Size(
+                resolution,
+                resolution);
+        }
 
-		public IRenderer<DrawingViewModel> GetHttpPrintRenderer(ApplicationContext applicationContext)
-		{
-			return new HttpPrintRenderer(applicationContext);
-		}
-	}
+        public IRenderer<DrawingViewModel> GetHttpPrintRenderer(ApplicationContext applicationContext)
+        {
+            return new HttpPrintRenderer(applicationContext);
+        }
+    }
 }

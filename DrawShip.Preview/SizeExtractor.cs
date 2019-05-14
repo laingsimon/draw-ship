@@ -9,71 +9,71 @@ using DrawShip.Common;
 
 namespace DrawShip.Preview
 {
-	public interface ISizeExtractor
-	{
-		Task<Size?> ExtractSize(Stream fileContent, FileDetail fileDetail, CancellationToken token);
-	}
+    public interface ISizeExtractor
+    {
+        Task<Size?> ExtractSize(Stream fileContent, FileDetail fileDetail, CancellationToken token);
+    }
 
-	public class SizeExtractor : ISizeExtractor
-	{
-		public async Task<Size?> ExtractSize(Stream fileContent, FileDetail fileDetail, CancellationToken token)
-		{
-			if (fileContent == null)
-				throw new ArgumentNullException("fileContent");
-			if (fileDetail == null)
-				throw new ArgumentNullException("fileDetail");
-			if (!fileContent.CanRead)
-				throw new ArgumentException("Stream must be readable", "fileContent");
+    public class SizeExtractor : ISizeExtractor
+    {
+        public async Task<Size?> ExtractSize(Stream fileContent, FileDetail fileDetail, CancellationToken token)
+        {
+            if (fileContent == null)
+                throw new ArgumentNullException("fileContent");
+            if (fileDetail == null)
+                throw new ArgumentNullException("fileDetail");
+            if (!fileContent.CanRead)
+                throw new ArgumentException("Stream must be readable", "fileContent");
 
-			return await Task.Factory.StartNew(() =>
-			{
-				try
-				{
-					fileContent.Position = 0;
-					var reader = new StreamReader(fileContent);
-					var document = XDocument.Load(reader);
+            return await Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    fileContent.Position = 0;
+                    var reader = new StreamReader(fileContent);
+                    var document = XDocument.Load(reader);
 
-					return _ReadSizeFromDocument(document);
-				}
-				finally
-				{
-					fileContent.Position = 0;
-				}
-			}, token);
-		}
+                    return _ReadSizeFromDocument(document);
+                }
+                finally
+                {
+                    fileContent.Position = 0;
+                }
+            }, token);
+        }
 
-		private static Size? _ReadSizeFromDocument(XDocument document)
-		{
-			var rootNode = document.Root;
-			var rootNodeName = rootNode.Name.LocalName;
-			if (!rootNodeName.Equals("mxGraphModel"))
-				rootNode = _UnCompressDocument(rootNode.Element("diagram"));
+        private static Size? _ReadSizeFromDocument(XDocument document)
+        {
+            var rootNode = document.Root;
+            var rootNodeName = rootNode.Name.LocalName;
+            if (!rootNodeName.Equals("mxGraphModel"))
+                rootNode = _UnCompressDocument(rootNode.Element("diagram"));
 
-			if (rootNode == null)
-				return null;
+            if (rootNode == null)
+                return null;
 
-			var dx = rootNode.Attribute("dx").Value;
-			var dy = rootNode.Attribute("dy").Value;
+            var dx = rootNode.Attribute("dx").Value;
+            var dy = rootNode.Attribute("dy").Value;
 
-			var size = new Size(int.Parse(dx), int.Parse(dy));
-			if (size.Width > 0 && size.Height > 0)
-				return size;
+            var size = new Size(int.Parse(dx), int.Parse(dy));
+            if (size.Width > 0 && size.Height > 0)
+                return size;
 
-			return null;
-		}
+            return null;
+        }
 
-		private static XElement _UnCompressDocument(XElement diagram)
-		{
-			if (diagram == null)
-				return null;
+        private static XElement _UnCompressDocument(XElement diagram)
+        {
+            if (diagram == null)
+                return null;
 
-			var stream = CompressedXmlStream.Read(diagram.Value);
-			using (var reader = new StreamReader(stream))
-			{
-				var urlEncodedXml = reader.ReadToEnd();
-				var xml = HttpUtility.UrlDecode(urlEncodedXml);
-				return XElement.Parse(xml);
-			}
-		}
-	}
+            var stream = CompressedXmlStream.Read(diagram.Value);
+            using (var reader = new StreamReader(stream))
+            {
+                var urlEncodedXml = reader.ReadToEnd();
+                var xml = HttpUtility.UrlDecode(urlEncodedXml);
+                return XElement.Parse(xml);
+            }
+        }
+    }
 }

@@ -1,49 +1,48 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System.Linq;
 
 namespace DrawShip.Viewer
 {
-	/// <summary>
-	/// Run mode for uninstalling the context menu items from windows
-	/// </summary>
-	public class UninstallRunMode : IRunMode
-	{
-		public bool Run(ApplicationContext applicationContext)
-		{
-			_DynamicVerbItems();
-			_StaticVerbItems();
-			return true;
-		}
+    /// <summary>
+    /// Run mode for uninstalling the context menu items from windows
+    /// </summary>
+    public class UninstallRunMode : IRunMode
+    {
+        public bool Run(ApplicationContext applicationContext)
+        {
+            _DynamicVerbItems();
+            _StaticVerbItems();
+            return true;
+        }
 
-		private void _DynamicVerbItems()
-		{
-			RegAsm.Execute("/unregister");
-		}
+        private void _DynamicVerbItems()
+        {
+            RegAsm.Execute("/unregister");
+        }
 
-		private void _StaticVerbItems()
-		{
-			var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
-			var xmlFileType = (string)xml.GetValue(null, null);
-			if (xmlFileType == null)
-			{
-				xmlFileType = "xmlfile";
-				xml.SetValue(null, xmlFileType);
-			}
+        private void _StaticVerbItems()
+        {
+            var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
+            var xmlFileType = (string)xml.GetValue(null, null);
+            if (xmlFileType == null)
+            {
+                xmlFileType = "xmlfile";
+                xml.SetValue(null, xmlFileType);
+            }
 
-			var windows10XmlShell = Registry.ClassesRoot.OpenPath(@"SystemFileAssociations\.xml\shell");
-			var xmlShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
+            var windows10XmlShell = Registry.ClassesRoot.OpenPath(@"SystemFileAssociations\.xml\shell");
+            var xmlShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
 
-			_RemoveContextMenuItems(
-				new[] { windows10XmlShell, xmlShell },
-				new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName, InstallRunMode.PrintContextMenuName });
-		}
+            _RemoveContextMenuItems(
+                new[] { windows10XmlShell, xmlShell },
+                new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName, InstallRunMode.PrintContextMenuName });
+        }
 
-		private void _RemoveContextMenuItems(RegistryKey[] registryKey, string[] itemNames)
-		{
-			foreach (var key in registryKey.Where(k => k != null))
-			foreach (var name in itemNames)
-				key.DeleteSubKeyTree(name, false);
-		}
-	}
+        private void _RemoveContextMenuItems(RegistryKey[] registryKey, string[] itemNames)
+        {
+            foreach (var key in registryKey.Where(k => k != null))
+                foreach (var name in itemNames)
+                    key.DeleteSubKeyTree(name, false);
+        }
+    }
 }
