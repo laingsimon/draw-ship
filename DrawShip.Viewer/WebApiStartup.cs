@@ -10,7 +10,7 @@ namespace DrawShip.Viewer
 	public class WebApiStartup
 	{
 		private static HttpConfiguration _configuation;
-		private static string _rootUrl;
+		private static List<string> _rootUrls;
 
 		// This code configures Web API. The Startup class is specified as a type
 		// parameter in the WebApp.Start method.
@@ -41,10 +41,10 @@ namespace DrawShip.Viewer
 			appBuilder.UseWebApi(_configuation);
 		}
 
-		public static IDisposable Start(string url)
+		public static IDisposable Start(IEnumerable<string> urls)
 		{
-			_rootUrl = url;
-			return WebApp.Start<WebApiStartup>(url: url);
+			_rootUrls = urls.ToList();
+			return WebApp.Start<WebApiStartup>(new StartOptions(urls.First()));
 		}
 
 		public static Uri FormatUrl(int workingDirectoryKey, string fileName, DiagramFormat format, string version, string routeName = "DefaultApi")
@@ -60,7 +60,7 @@ namespace DrawShip.Viewer
 			var routeValues = _RemoveDefaults(allRouteValues, route.Defaults);
 			var relativeUrl = route.RouteTemplate.Supplant(routeValues).RemoveAll("//");
 
-			return new Uri(_rootUrl + "/" + relativeUrl, UriKind.Absolute);
+			return new Uri(_rootUrls.First() + "/" + relativeUrl, UriKind.Absolute);
 		}
 
 		private static IReadOnlyDictionary<string, object> _RemoveDefaults(

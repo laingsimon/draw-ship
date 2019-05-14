@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -40,7 +41,7 @@ namespace DrawShip.Viewer
 					return true;
 				}
 
-				using (var owinHost = WebApiStartup.Start(string.Format("http://localhost:{0}", 5142)))
+				using (var owinHost = WebApiStartup.Start(GetUrls()))
 				{
 					Application.EnableVisualStyles();
 					Application.SetCompatibleTextRenderingDefault(false);
@@ -58,6 +59,12 @@ namespace DrawShip.Viewer
 			{
 				_mutex.ReleaseMutex();
 			}
+		}
+
+		private static IEnumerable<string> GetUrls()
+		{
+			yield return string.Format("http://{0}:{1}", Environment.MachineName, 5142);
+			yield return string.Format("http://localhost:{0}", 5142);
 		}
 	}
 }
