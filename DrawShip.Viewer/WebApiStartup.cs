@@ -44,7 +44,11 @@ namespace DrawShip.Viewer
         public static IDisposable Start(IEnumerable<string> urls)
         {
             _rootUrls = urls.ToList();
-            return WebApp.Start<WebApiStartup>(new StartOptions(urls.First()));
+
+            var options = new StartOptions();
+            _rootUrls.ForEach(url => options.Urls.Add(url));
+
+            return WebApp.Start<WebApiStartup>(options);
         }
 
         public static Uri FormatUrl(int workingDirectoryKey, string fileName, DiagramFormat format, string version, string routeName = "DefaultApi")
