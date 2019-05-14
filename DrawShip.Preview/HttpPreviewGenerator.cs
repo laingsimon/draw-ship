@@ -44,7 +44,7 @@ namespace DrawShip.Preview
 			var request = new FormUrlEncodedContent(new Dictionary<string, string>
 			{
 				{ "filename", "preview" },
-				{ "format", _settings.RenderingFormat.ToString() },
+				{ "format", _settings.RenderingFormat.ToString().ToLower() },
 				{ "xml", _ReadFileContent(drawingContent) },
 				{ "base64", "O" },
 				{ "bg", "none" },
