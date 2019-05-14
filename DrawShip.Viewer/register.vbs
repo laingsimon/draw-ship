@@ -10,3 +10,6 @@ end if
 
 strCommand = """" & Replace(installPath, """", "") & "DrawShip.Viewer.exe"" /mode:install"
 WshShell.Run strCommand, True, 1
+
+'' Permit route via the firewall
+WshShell.Run "netsh advfirewall firewall add rule name=""DrawShip viewer"" dir=in action=allow protocol=TCP localport=5142", True, 1
