@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace DrawShip.Common
 {
@@ -15,8 +17,15 @@ namespace DrawShip.Common
 
         public bool FileExists(Drawing drawing)
         {
-            var path = Path.Combine(drawing.FilePath, drawing.FileName);
-            return File.Exists(path);
+            return _GetFileNames(drawing).Any(File.Exists);
+        }
+
+        private IEnumerable<string> _GetFileNames(Drawing drawing)
+        {
+            if (Path.GetExtension(drawing.FileName) != "")
+                return new[] { Path.Combine(drawing.FilePath, drawing.FileName) };
+
+            return Drawing.permittedExtensions.Select(extension => Path.ChangeExtension(drawing.FileName, extension));
         }
 
         public Stream OpenRead(Drawing drawing, string version = null)
@@ -24,7 +33,9 @@ namespace DrawShip.Common
             if (!string.IsNullOrEmpty(version))
                 throw new NotSupportedException("The local filesystem does not support versioned documents");
 
-            var path = Path.Combine(drawing.FilePath, drawing.FileName);
+            var path = _GetFileNames(drawing)
+                .Where(File.Exists)
+                .Single();
             return File.OpenRead(path);
         }
     }

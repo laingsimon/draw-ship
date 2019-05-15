@@ -42,11 +42,8 @@ namespace DrawShip.Viewer
             var progName = Registry.ClassesRoot.OpenKey(progId);
             progName.SetValue(null, "DrawShip");
 
-            var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
-            var prevProgram = (string)xml.GetValue(null, null);
-            if (prevProgram != null && prevProgram != progId)
-                xml.SetValue(_xmlPreviousProgNameValueName, prevProgram);
-            xml.SetValue(null, progId);
+            RegisterForExtension(progId, ".xml");
+            RegisterForExtension(progId, ".drawio");
 
             var xmlProg = Registry.ClassesRoot.OpenKey(@"CLSID\" + clsid);
             if (xmlProg == null)
@@ -59,17 +56,32 @@ namespace DrawShip.Viewer
             allContextMenuHandlers.SetValue(null, clsid);
         }
 
+        private static void RegisterForExtension(string progId, string extension)
+        {
+            var extensionKey = Registry.ClassesRoot.OpenKey(extension, createIfRequired: true);
+            var prevProgram = (string)extensionKey.GetValue(null, null);
+            if (prevProgram != null && prevProgram != progId)
+                extensionKey.SetValue(_xmlPreviousProgNameValueName, prevProgram);
+            extensionKey.SetValue(null, progId);
+        }
+
         [ComUnregisterFunction]
         public static void UnRegister(string anything)
         {
-            var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
-            var prevProgram = (string)xml.GetValue(_xmlPreviousProgNameValueName, null);
-            if (prevProgram != null)
-                xml.SetValue(null, prevProgram);
-            xml.DeleteValue(_xmlPreviousProgNameValueName);
+            UnregisterForExtension(".xml");
+            UnregisterForExtension(".drawio");
 
             var allContextMenuHandlers = Registry.ClassesRoot.OpenKey("*\\shellex\\ContextMenuHandlers");
             allContextMenuHandlers.DeleteSubKey("DrawShip");
+        }
+
+        private static void UnregisterForExtension(string extension)
+        {
+            var extensionKey = Registry.ClassesRoot.OpenKey(extension, createIfRequired: true);
+            var prevProgram = (string)extensionKey.GetValue(_xmlPreviousProgNameValueName, null);
+            if (prevProgram != null)
+                extensionKey.SetValue(null, prevProgram);
+            extensionKey.DeleteValue(_xmlPreviousProgNameValueName);
         }
         #endregion
 
@@ -245,7 +257,7 @@ namespace DrawShip.Viewer
                 return 0;
 
             var extension = Path.GetExtension(_fileName);
-            if (string.IsNullOrEmpty(extension) || !extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrEmpty(extension) || !IsDrawingExtension(extension))
                 return 0;
 
             if (!_IsDrawing(_fileName))
@@ -263,6 +275,12 @@ namespace DrawShip.Viewer
             submenu.AppendMenuItem("Print", idCmdFirst + _printVerb, Properties.Resources.PrintDrawing);
 
             return WinError.MAKE_HRESULT(0, 0, 3);
+        }
+
+        private static bool IsDrawingExtension(string extension)
+        {
+            return extension.Equals(".xml", StringComparison.OrdinalIgnoreCase)
+                || extension.Equals(".drawio", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool _IsDrawing(string fileName)

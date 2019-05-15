@@ -29,8 +29,9 @@ namespace DrawShip.Viewer
                     return Enumerable.Empty<string>();
 
                 var path = Paths[_directoryKey.Value];
-                return Directory.EnumerateFiles(path, "*.xml")
-                    .Select(file => Path.GetFileName(file));
+                return Directory.EnumerateFiles(path, "*.xml").Concat(Directory.EnumerateFiles(path, "*.drawio"))
+                    .Select(file => Path.GetFileName(file))
+                    .OrderBy(file => Path.GetFileNameWithoutExtension(file));
             }
         }
     }

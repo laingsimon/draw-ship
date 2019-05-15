@@ -1,5 +1,7 @@
 ﻿using DrawShip.Common;
+using System;
 using System.IO;
+using System.Linq;
 
 namespace DrawShip.Viewer
 {
@@ -16,7 +18,20 @@ namespace DrawShip.Viewer
 
         public Drawing GetDrawing(string fileName = null)
         {
-            return new Drawing(Path.ChangeExtension(fileName ?? FileName, ".xml"), Directory);
+            fileName = fileName ?? FileName;
+
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
+            if (Path.GetExtension(fileName) != "" && !Drawing.permittedExtensions.Any(ext => _ExtensionMatches(fileName, ext)))
+                return null;
+
+            return new Drawing(fileName, Directory);
+        }
+
+        private static bool _ExtensionMatches(string fileName, string permittedExtension)
+        {
+            return Path.GetExtension(fileName).Equals(permittedExtension, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

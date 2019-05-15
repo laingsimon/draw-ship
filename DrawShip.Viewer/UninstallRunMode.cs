@@ -22,19 +22,22 @@ namespace DrawShip.Viewer
 
         private void _StaticVerbItems()
         {
-            var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
+            _UninstallStaticVerbItems(".xml");
+            _UninstallStaticVerbItems(".drawio");
+        }
+
+        private void _UninstallStaticVerbItems(string extension)
+        {
+            var xml = Registry.ClassesRoot.OpenKey(extension, createIfRequired: true);
             var xmlFileType = (string)xml.GetValue(null, null);
             if (xmlFileType == null)
-            {
-                xmlFileType = "xmlfile";
-                xml.SetValue(null, xmlFileType);
-            }
+                return;
 
-            var windows10XmlShell = Registry.ClassesRoot.OpenPath(@"SystemFileAssociations\.xml\shell");
-            var xmlShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
+            var windows10ExtensionShell = Registry.ClassesRoot.OpenPath($@"SystemFileAssociations\{extension}\shell");
+            var extensionShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
 
             _RemoveContextMenuItems(
-                new[] { windows10XmlShell, xmlShell },
+                new[] { windows10ExtensionShell, extensionShell },
                 new[] { InstallRunMode.HtmlPreviewContextMenuName, InstallRunMode.ImagePreviewContextMenuName, InstallRunMode.PrintContextMenuName });
         }
 

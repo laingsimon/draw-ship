@@ -5,6 +5,8 @@
     /// </summary>
     public class Drawing
     {
+        public static string[] permittedExtensions = { ".xml", ".drawio" };
+
         public Drawing(string fileName, string filePath)
         {
             FileName = fileName;

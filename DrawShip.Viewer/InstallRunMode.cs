@@ -31,15 +31,21 @@ namespace DrawShip.Viewer
 
         private bool _StaticVerbItems()
         {
-            var xml = Registry.ClassesRoot.OpenKey(@".xml", createIfRequired: true);
+            return _RegisterStaticVerbItems(".xml")
+                && _RegisterStaticVerbItems(".drawio");
+        }
+
+        private bool _RegisterStaticVerbItems(string extension)
+        {
+            var xml = Registry.ClassesRoot.OpenKey(extension, createIfRequired: true);
             var xmlFileType = (string)xml.GetValue(null, null);
             if (xmlFileType == null)
             {
-                xmlFileType = "xmlfile";
+                xmlFileType = $"{extension.Substring(1)}file";
                 xml.SetValue(null, xmlFileType);
             }
 
-            var windows10XmlShell = Registry.ClassesRoot.OpenPath(@"SystemFileAssociations\.xml\shell", createIfRequired: true);
+            var windows10XmlShell = Registry.ClassesRoot.OpenPath($@"SystemFileAssociations\{extension}\shell", createIfRequired: true);
             var xmlShell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
 
             _CreatePreviewItem(HtmlPreviewContextMenuName, "\"%1\"", new[] { xmlShell, windows10XmlShell });
@@ -70,15 +76,15 @@ namespace DrawShip.Viewer
 
         private static bool _IsRegistered()
         {
-            var xml = Registry.ClassesRoot.OpenKey(@".xml");
-            if (xml == null)
+            var anExtension = Registry.ClassesRoot.OpenKey(@".xml") ?? Registry.ClassesRoot.OpenKey(@".drawio");
+            if (anExtension == null)
                 return false;
 
-            var xmlFileType = (string)xml.GetValue(null, null);
-            if (xmlFileType == null)
+            var extensionFileType = (string)anExtension.GetValue(null, null);
+            if (extensionFileType == null)
                 return false;
 
-            var shell = Registry.ClassesRoot.OpenPath(xmlFileType + @"\shell");
+            var shell = Registry.ClassesRoot.OpenPath(extensionFileType + @"\shell");
             var preview = shell.OpenKey(HtmlPreviewContextMenuName);
             var command = preview?.OpenKey("command");
             var value = command?.GetValue(null, null) as string;

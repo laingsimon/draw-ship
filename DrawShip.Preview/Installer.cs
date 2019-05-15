@@ -47,54 +47,66 @@ namespace DrawShip.Preview
 		}
 
 		internal static void RegisterPreviewHandler(string name, Type previewerType)
-		{
-			var previewTypeClassId = previewerType.GUID.ToString("B");
+        {
+            var previewTypeClassId = previewerType.GUID.ToString("B");
 
-			// Add preview handler to preview handler list
-			using (var handlersKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PreviewHandlers", true))
-				handlersKey.SetValue(previewTypeClassId, name, RegistryValueKind.String);
+            // Add preview handler to preview handler list
+            using (var handlersKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PreviewHandlers", true))
+                handlersKey.SetValue(previewTypeClassId, name, RegistryValueKind.String);
 
-			// Modify preview handler registration
-			using (var clsidKey = Registry.ClassesRoot.OpenSubKey("CLSID"))
-			using (var idKey = clsidKey.OpenSubKey(previewTypeClassId, true))
-			{
-				idKey.SetValue("DisplayName", name, RegistryValueKind.String);
-				idKey.SetValue("AppID", "{6d2b5079-2f0b-48dd-ab7f-97cec514d30b}", RegistryValueKind.String); //see https://msdn.microsoft.com/en-us/library/windows/desktop/cc144144(v=vs.85).aspx
-			}
+            // Modify preview handler registration
+            using (var clsidKey = Registry.ClassesRoot.OpenSubKey("CLSID"))
+            using (var idKey = clsidKey.OpenSubKey(previewTypeClassId, true))
+            {
+                idKey.SetValue("DisplayName", name, RegistryValueKind.String);
+                idKey.SetValue("AppID", "{6d2b5079-2f0b-48dd-ab7f-97cec514d30b}", RegistryValueKind.String); //see https://msdn.microsoft.com/en-us/library/windows/desktop/cc144144(v=vs.85).aspx
+            }
 
-			Trace.WriteLine("Registering extension '.xml' with previewer '" + previewTypeClassId + "'");
+            RegisterForExtension(previewTypeClassId, ".xml");
+            RegisterForExtension(previewTypeClassId, ".drawio");
+        }
 
-			// Set preview handler for specific extension
-			using (var extensionKey = Registry.ClassesRoot.CreateSubKey(".xml"))
-			using (var shellexKey = extensionKey.CreateSubKey("shellex"))
-			using (var previewKey = shellexKey.CreateSubKey(_previewHandlerClassId))
-			{
-				previewKey.SetValue(null, previewTypeClassId, RegistryValueKind.String);
-			}
-		}
+        private static void RegisterForExtension(string previewTypeClassId, string extension)
+        {
+            Trace.WriteLine($"Registering extension '{extension}' with previewer '{previewTypeClassId}'");
 
-		internal static void UnregisterPreviewHandler(Type previewerType)
-		{
-			var previewTypeClassId = previewerType.GUID.ToString("B");
+            // Set preview handler for specific extension
+            using (var extensionKey = Registry.ClassesRoot.CreateSubKey(extension))
+            using (var shellexKey = extensionKey.CreateSubKey("shellex"))
+            using (var previewKey = shellexKey.CreateSubKey(_previewHandlerClassId))
+            {
+                previewKey.SetValue(null, previewTypeClassId, RegistryValueKind.String);
+            }
+        }
 
-			Trace.WriteLine("Unregistering extension '.xml' with previewer '" + previewTypeClassId + "'");
-			using (var shellexKey = Registry.ClassesRoot.OpenSubKey(".xml\\shellex", true))
-			{
-				try { shellexKey.DeleteSubKey(_previewHandlerClassId); }
-				catch { }
-			}
+        internal static void UnregisterPreviewHandler(Type previewerType)
+        {
+            var previewTypeClassId = previewerType.GUID.ToString("B");
 
-			using (var appIdsKey = Registry.ClassesRoot.OpenSubKey("AppID", true))
-			{
-				try { appIdsKey.DeleteSubKey(_componentClassId); }
-				catch { }
-			}
+            UnregisterPreviewHandlerForExtension(previewTypeClassId, ".xml");
+            UnregisterPreviewHandlerForExtension(previewTypeClassId, ".drawio");
+        }
 
-			using (var classesKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PreviewHandlers", true))
-			{
-				try { classesKey.DeleteValue(previewTypeClassId); }
-				catch { }
-			}
-		}
-	}
+        private static void UnregisterPreviewHandlerForExtension(string previewTypeClassId, string extension)
+        {
+            Trace.WriteLine($"Unregistering extension '{extension}' with previewer '{previewTypeClassId}'");
+            using (var shellexKey = Registry.ClassesRoot.OpenSubKey($"{extension}\\shellex", true))
+            {
+                try { shellexKey.DeleteSubKey(_previewHandlerClassId); }
+                catch { }
+            }
+
+            using (var appIdsKey = Registry.ClassesRoot.OpenSubKey("AppID", true))
+            {
+                try { appIdsKey.DeleteSubKey(_componentClassId); }
+                catch { }
+            }
+
+            using (var classesKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PreviewHandlers", true))
+            {
+                try { classesKey.DeleteValue(previewTypeClassId); }
+                catch { }
+            }
+        }
+    }
 }
