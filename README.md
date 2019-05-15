@@ -1,6 +1,9 @@
 # DrawShip
 
-A `S`elf-`H`osted `I`nteractive `P`review tool for Draw.io diagrams.
+A `S`elf-`H`osted `I`nteractive `P`review tool for [draw.io](https://draw.io) diagrams.
+
+## Installation
+Download the latest installer from the [releases page](https://github.com/laingsimon/draw-ship/releases) 
 
 ## Features supported:
 ### IIS hosted version (http handler)
@@ -12,7 +15,8 @@ A `S`elf-`H`osted `I`nteractive `P`review tool for Draw.io diagrams.
 2. Print diagrams from the windows file context (right click) menu
 3. View diagrams in HTML or as an image (png)
 4. Diagrams rendered in your default browser
+5. Preview diagrams within windows explorer, outlook and other tools supporting windows file previewers.
+6. Serve diagrams from the same computer externally (requires application to be run as an administrator)
 
 ## Resources:
-1.  Preview-io: https://github.com/laingsimon/preview-io, a Windows Preview Handler for draw.io diagrams
-2.  Draw.io: https://draw.io, the tool that supports the development and preview of the diagrams
+1.  [Draw.io](https://draw.io), the tool that supports the development and preview of the diagrams
