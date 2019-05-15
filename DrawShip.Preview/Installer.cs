@@ -9,9 +9,10 @@ using Microsoft.Win32;
 namespace DrawShip.Preview
 {
 	[RunInstaller(true)]
-	// ReSharper disable UnusedMember.Global
-	// ReSharper disable ClassNeverInstantiated.Global
-	public class Installer : System.Configuration.Install.Installer
+    // ReSharper disable UnusedMember.Global
+    // ReSharper disable ClassNeverInstantiated.Global
+    [System.ComponentModel.DesignerCategory("")]
+    public class Installer : System.Configuration.Install.Installer
 	// ReSharper restore ClassNeverInstantiated.Global
 	// ReSharper restore UnusedMember.Global
 	{
