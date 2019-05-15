@@ -72,7 +72,14 @@ namespace DrawShip.Preview
             {
                 var urlEncodedXml = reader.ReadToEnd();
                 var xml = HttpUtility.UrlDecode(urlEncodedXml);
-                return XElement.Parse(xml);
+                try
+                {
+                    return XElement.Parse(xml);
+                }
+                catch (Exception)
+                {
+                    return XElement.Parse(urlEncodedXml);
+                }
             }
         }
     }
