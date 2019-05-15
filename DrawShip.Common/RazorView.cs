@@ -8,9 +8,9 @@ namespace DrawShip.Common
     /// </summary>
     public class RazorView : ITemplateSource
     {
-        private readonly byte[] _content;
+        private readonly string _content;
 
-        public RazorView(byte[] content)
+        public RazorView(string content)
         {
             _content = content;
         }
@@ -20,7 +20,7 @@ namespace DrawShip.Common
 
         public TextReader GetTemplateReader()
         {
-            return new StreamReader(new MemoryStream(_content));
+            return new StringReader(_content);
         }
     }
 }

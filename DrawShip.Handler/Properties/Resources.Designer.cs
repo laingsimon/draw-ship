@@ -19,7 +19,7 @@ namespace DrawShip.Handler.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,12 +61,35 @@ namespace DrawShip.Handler.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to @model DrawShip.Handler.DrawingViewModel
+        ///&lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///	&lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///	&lt;title&gt;@Model.DrawingTitle&lt;/title&gt;
+        ///
+        ///	&lt;style&gt;
+        ///		body {
+        ///			padding: 0px;
+        ///			margin: 0px;
+        ///		}
+        ///
+        ///		.drawing-title {
+        ///			margin: 0px;
+        ///			padding: 0px;
+        ///			font-family: Tahoma;
+        ///			font-size: 14px;
+        ///			background: #ffff88;
+        ///			padding-bottom: 2px;
+        ///			margin-bottom: 2px;
+        ///			border-bottom: 1px solid #888800;
+        ///			font-weight: normal;
+        ///			position: relative; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static byte[] Drawing {
+        internal static string Drawing {
             get {
-                object obj = ResourceManager.GetObject("Drawing", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("Drawing", resourceCulture);
             }
         }
     }

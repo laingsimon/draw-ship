@@ -19,7 +19,7 @@ namespace DrawShip.Viewer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,22 +61,102 @@ namespace DrawShip.Viewer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to @model DrawShip.Viewer.DrawingViewModel
+        ///&lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///	&lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///	&lt;title&gt;@Model.DrawingTitle&lt;/title&gt;
+        ///
+        ///	&lt;style&gt;
+        ///		body {
+        ///			padding: 0px;
+        ///			margin: 0px;
+        ///		}
+        ///
+        ///        .drawing-title-position {
+        ///			margin: 0px;
+        ///			padding: 0px;
+        ///			position: absolute;
+        ///		    left: 0px;
+        ///		    right: 0px;
+        ///		    top: 1px;
+        ///		    height: 28px;
+        ///            z-index: 1;
+        ///		}
+        ///
+        ///        .drawing-title-style {
+        ///			background: #EEEEEE;
+        ///			 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static byte[] Drawing {
+        internal static string Drawing {
             get {
-                object obj = ResourceManager.GetObject("Drawing", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("Drawing", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to @model DrawShip.Viewer.IndexViewModel
+        ///&lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///	&lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///	&lt;title&gt;DrawShip detail&lt;/title&gt;
+        ///
+        ///	&lt;style&gt;
+        ///		body {
+        ///			padding: 0px;
+        ///			margin: 0px;
+        ///			font-family: Tahoma;
+        ///			font-size: 14px;
+        ///		}
+        ///
+        ///		.drawing-title {
+        ///			font-size: 14px;
+        ///			margin: 0px;
+        ///			padding: 0px;
+        ///			background: #ffff88;
+        ///			padding-bottom: 2px;
+        ///			margin-bottom: 2px;
+        ///			border-bottom: 1px solid #888800;
+        ///			font-weight: normal;
+        ///			posit [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static byte[] Index {
+        internal static string Index {
             get {
-                object obj = ResourceManager.GetObject("Index", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @model DrawShip.Viewer.NotFoundViewModel
+        ///&lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///    &lt;title&gt;DrawShip - diagram not found&lt;/title&gt;
+        ///
+        ///    &lt;style&gt;
+        ///        body {
+        ///            padding: 0px;
+        ///            margin: 0px;
+        ///            font-family: Tahoma;
+        ///            font-size: 14px;
+        ///        }
+        ///
+        ///        .drawing-title {
+        ///            font-size: 14px;
+        ///            margin: 0px;
+        ///            padding: 0px;
+        ///            background: #ffff88;
+        ///      [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
         

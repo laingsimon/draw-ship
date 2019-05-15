@@ -1,13 +1,13 @@
-﻿@model DrawShip.Viewer.IndexViewModel
+﻿@model DrawShip.Viewer.NotFoundViewModel
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8" />
-	<title>DrawShip detail</title>
+    <meta charset="utf-8" />
+    <title>DrawShip - diagram not found</title>
 
-	<style>
-		body {
+    <style>
+        body {
 			padding: 0px;
 			margin: 0px;
 		}
@@ -52,19 +52,28 @@
             padding: 5px;
             font-size: 12px;
         }
-	</style>
+
+        p.error {
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
     <div class="drawing-title-position drawing-title-style"></div>
     <h2 class="drawing-title-position drawing-title">
         <text>
-            DrawShip - Hosting information
+            Drawing not found
         </text>
         <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
     </h2>
     <div class="heading-clear"></div>
     <div class="content">
-        @if (Model.DirectoryKey != null && Model.Files.Any())
+        <p class="error">
+            The drawing you requested <b>@Model.RequestedFile</b> could not be found
+        </p>
+        <p>Did you mean one of these drawings?</p>
+
+        @if (Model.DirectoryKey != null)
         {
             <p><b>Drawings in current directory</b></p>
             <ol>
@@ -76,21 +85,7 @@
                 }
             </ol>
         }
-        <p><b>Registered paths</b></p>
-        <ul>
-            @foreach (var path in Model.Paths)
-            {
-                <li>
-                    <a href="/@path.Key">@path.Value</a>
-                </li>
-            }
-        </ul>
-
-        <ul style="display: none;">
-            <li>
-                Executing path: <b>@Model.ExecutingPath</b>
-            </li>
-        </ul>
     </div>
+
 </body>
 </html>

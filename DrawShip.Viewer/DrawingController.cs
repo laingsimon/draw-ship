@@ -1,5 +1,4 @@
 ﻿using DrawShip.Common;
-using System.IO;
 using System.Net;
 using System.Web.Http;
 
@@ -23,7 +22,10 @@ namespace DrawShip.Viewer
             var directory = _hostingContext.GetDirectory(directoryKey);
 
             if (directory == null)
-                return Content(HttpStatusCode.NotFound, "Directory not known - " + directoryKey);
+                return new RenderViewActionResult(
+                    Properties.Resources.Index,
+                    new IndexViewModel(_hostingContext, directoryKey),
+                    HttpStatusCode.NotFound);
 
             var command = new ShowDiagramStructure
             {
@@ -36,7 +38,10 @@ namespace DrawShip.Viewer
             var drawing = command.GetDrawing(fileName);
             var fileSystem = _fileSystemFactory.GetFileSystem(Request);
             if (!fileSystem.FileExists(drawing))
-                return Content(HttpStatusCode.NotFound, "Drawing not found: " + drawing.FileName);
+                return new RenderViewActionResult(
+                    Properties.Resources.NotFound, 
+                    new NotFoundViewModel(_hostingContext, directoryKey, fileName), 
+                    HttpStatusCode.NotFound);
 
             var viewModel = new DrawingViewModel(
                 drawing,

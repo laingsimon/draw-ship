@@ -129,6 +129,7 @@
     <Compile Include="ComInterop\MFS.cs" />
     <Compile Include="ComInterop\MFT.cs" />
     <Compile Include="ComInterop\MIIM.cs" />
+    <Compile Include="NotFoundViewModel.cs" />
     <Compile Include="NullRunMode.cs" />
     <Compile Include="OpenDrawingInOtherHostRunMode.cs" />
     <Compile Include="ComInterop\POINT.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="RegistryExtensions.cs" />
     <Compile Include="RendererFactory.cs" />
     <Compile Include="RenderResponseMessage.cs" />
+    <Compile Include="RenderViewActionResult.cs" />
     <Compile Include="SelfHostRunMode.cs" />
     <Compile Include="ShowDiagramStructure.cs" />
     <Compile Include="StringExtensions.cs" />
@@ -170,6 +172,7 @@
     </Compile>
     <None Include="Razor\Drawing.cshtml" />
     <None Include="Razor\Index.cshtml" />
+    <None Include="Razor\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
