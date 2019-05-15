@@ -37,12 +37,24 @@
 		Info
 		<span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
 	</h2>
+    @if (Model.DirectoryKey != null)
+    {
+        <p>Files</p>
+        <ul>
+            @foreach (var entry in Model.Files)
+            {
+                <li>
+                    <a href="/@Model.DirectoryKey/@entry">@entry</a>
+                </li>
+            }
+        </ul>
+    }
 	<p>Registered paths</p>
 	<ul>
 		@foreach (var path in Model.Paths)
 		{
 		<li>
-			<b>@path.Key</b> &rarr; @path.Value
+            <a href="/@path.Key"><b>@path.Key</b></a> &rarr; @path.Value
 		</li>
 		}
 	</ul>

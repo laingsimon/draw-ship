@@ -17,11 +17,11 @@ namespace DrawShip.Viewer
             _hostingContext = HostingContext.Instance;
         }
 
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(int? directoryKey = null)
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(_RenderHtml())
+                Content = new StringContent(_RenderHtml(directoryKey))
                 {
                     Headers =
                     {
@@ -31,10 +31,10 @@ namespace DrawShip.Viewer
             };
         }
 
-        private string _RenderHtml()
+        private string _RenderHtml(int? directoryKey = null)
         {
             var view = new RazorView(Properties.Resources.Index);
-            var viewModel = new IndexViewModel(_hostingContext);
+            var viewModel = new IndexViewModel(_hostingContext, directoryKey);
 
             using (var textWriter = new StringWriter())
             {

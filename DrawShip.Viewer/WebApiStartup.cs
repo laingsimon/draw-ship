@@ -31,10 +31,11 @@ namespace DrawShip.Viewer
 
             _configuation.Routes.MapHttpRoute(
                 name: "Index",
-                routeTemplate: "",
+                routeTemplate: "{directoryKey}",
                 defaults: new
                 {
-                    controller = "Index"
+                    controller = "Index",
+                    directoryKey = RouteParameter.Optional
                 }
             );
 
