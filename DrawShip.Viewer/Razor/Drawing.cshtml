@@ -38,10 +38,10 @@
 		    line-height: 28px;
 		}
 
-			.drawing-title .powered-by {
-				position: absolute;
-				right: 5px;
-			}
+		.drawing-title .powered-by {
+			position: absolute;
+			right: 5px;
+		}
 	</style>
 </head>
 <body>
@@ -50,6 +50,11 @@
     <text>
         Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a>)
     </text>
+    <span>
+        Page: 
+        <b id="page-id" data-pages="@Model.PageNamesJson"></b>
+        of @Model.PageCount
+    </span>
     <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
 </h2>
 <div class="mxgraph" style="max-width: 100%; border: 1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
@@ -58,7 +63,11 @@
 
 <script type="text/javascript">
     var _originalWindowOpen = window.open;
-    var _ctrlKeyPressed = false
+    var _ctrlKeyPressed = false;
+    var _currentPage = 0;
+    var _pageId = document.getElementById("page-id");
+    var _pages = JSON.parse(_pageId.getAttribute("data-pages"));
+
     window.open = function(url, options, name) {
         if (_ctrlKeyPressed)
             _originalWindowOpen(url, options, name);
@@ -75,6 +84,39 @@
         function(event) {
             _ctrlKeyPressed = false;
         })
+
+    window.addEventListener("click", function (event) {
+        if (event.target.tagName !== "IMG") {
+            return;
+        }
+
+        let button = event.target.parentNode;
+        if (!button.title) {
+            return;
+        }
+
+        if (button.title === "Next Page") {
+            _setPage(1);
+        } else if (button.title === "Previous Page") {
+            _setPage(-1);
+        }
+    });
+
+    function _setPage(change) {
+        _currentPage += change;
+
+        if (_currentPage >= _pages.length) {
+            _currentPage = 0;
+        } else if (_currentPage < 0) {
+            _currentPage = _pages.length - 1;
+        }
+
+        let newPage = _pages[_currentPage];
+        _pageId.innerText = newPage;
+        _pageId.title = "Page " + (_currentPage + 1)
+    }
+
+    window.setTimeout(function () { _setPage(0); }, 100);
 </script>
 </body>
 </html>

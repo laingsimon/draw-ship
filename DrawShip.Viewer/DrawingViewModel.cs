@@ -1,7 +1,9 @@
 ﻿using DrawShip.Common;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace DrawShip.Viewer
@@ -71,6 +73,16 @@ namespace DrawShip.Viewer
                     ? drawingName
                     : drawingName + " - v" + _version;
             }
+        }
+
+        public string PageNamesJson
+        {
+            get { return JsonConvert.SerializeObject(_drawing.GetPageNames(_fileSystem, _version).ToList()); }
+        }
+
+        public int PageCount
+        {
+            get { return _drawing.GetPageNames(_fileSystem, _version).Count(); }
         }
 
         /// <summary>

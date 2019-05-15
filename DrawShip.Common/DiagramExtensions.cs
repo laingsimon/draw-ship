@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -60,6 +61,20 @@ namespace DrawShip.Common
             return match.Success
                 ? match.Groups["shape"].Value.Replace(".", "/")
                 : null;
+        }
+
+        public static IEnumerable<string> GetPageNames(this Drawing drawing, IFileSystem fileSystem, string version)
+        {
+            using (var rawDrawingStream = fileSystem.OpenRead(drawing, version))
+            {
+                var xml = XDocument.Load(rawDrawingStream);
+                var diagrams = xml.XPathSelectElements("//diagram");
+
+                return from diagram in diagrams
+                       let name = diagram.Attribute("name")?.Value
+                       where !string.IsNullOrEmpty(name)
+                       select name;
+            }
         }
     }
 }
