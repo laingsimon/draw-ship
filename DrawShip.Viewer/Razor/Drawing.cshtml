@@ -64,7 +64,7 @@
 <script type="text/javascript">
     var _originalWindowOpen = window.open;
     var _ctrlKeyPressed = false;
-    var _currentPage = 0;
+    var _currentPage = @Model.PageIndex;
     var _pageId = document.getElementById("page-id");
     var _pages = JSON.parse(_pageId.getAttribute("data-pages"));
 

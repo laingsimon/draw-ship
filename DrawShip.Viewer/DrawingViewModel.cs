@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -85,6 +86,11 @@ namespace DrawShip.Viewer
             get { return _drawing.GetPageNames(_fileSystem, _version).Count(); }
         }
 
+        public int PageIndex { get; set; }
+        public string HighlightColour { get; set; } = ConfigurationManager.AppSettings["linkColour"] ?? "#0000ff";
+        public List<string> ToolbarButtons { get; set; } = new List<string>(new[] { "pages", "zoom", "layers" });
+        public bool Lightbox { get; set; }
+
         /// <summary>
         /// Read the drawing file content
         /// </summary>
@@ -115,12 +121,13 @@ namespace DrawShip.Viewer
         {
             var data = new
             {
-                highlight = "#0000ff",
+                highlight = HighlightColour,
                 nav = true,
                 resize = true,
                 xml = ReadFileContent(),
-                toolbar = "pages zoom layers",
-                page = 0
+                toolbar = string.Join(" ", ToolbarButtons),
+                page = PageIndex,
+                lightbox = Lightbox
             };
 
             return JsonConvert.SerializeObject(data, Formatting.None);
