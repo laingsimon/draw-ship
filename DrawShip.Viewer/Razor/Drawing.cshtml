@@ -34,7 +34,7 @@
 			font-size: 14px;
 			font-weight: normal;
 		    z-index: 1000;
-		    left: 186px;
+		    left: @(Model.GetTitleOffset(20, 30))px;
 		    line-height: 28px;
 		}
 
@@ -50,11 +50,14 @@
     <text>
         Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a>)
     </text>
+    @if (Model.PageCount > 1)
+    {
     <span>
         Page: 
         <b id="page-id" data-pages="@Model.PageNamesJson"></b>
         of @Model.PageCount
     </span>
+    }
     <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship#drawship" target="_blank">DrawShip</a></span>
 </h2>
 <div class="mxgraph" style="max-width: 100%; border: 1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
@@ -66,7 +69,7 @@
     var _ctrlKeyPressed = false;
     var _currentPage = @Model.PageIndex;
     var _pageId = document.getElementById("page-id");
-    var _pages = JSON.parse(_pageId.getAttribute("data-pages"));
+    var _pages = _pageId ? JSON.parse(_pageId.getAttribute("data-pages")) : [];
 
     window.open = function(url, options, name) {
         if (_ctrlKeyPressed)

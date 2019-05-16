@@ -86,9 +86,46 @@ namespace DrawShip.Viewer
             get { return _drawing.GetPageNames(_fileSystem, _version).Count(); }
         }
 
+        public int LayerCount
+        {
+            get { return _drawing.GetMaxNumberOfLayersPerDiagram(_fileSystem, _version); }
+        }
+
         public int PageIndex { get; set; }
         public string HighlightColour { get; set; } = ConfigurationManager.AppSettings["linkColour"] ?? "#0000ff";
-        public List<string> ToolbarButtons { get; set; } = new List<string>(new[] { "pages", "zoom", "layers" });
+        private IEnumerable<string> _GetToolbarOptions()
+        {
+            yield return "zoom";
+            if (PageCount > 1)
+                yield return "pages";
+
+            if (LayerCount >= 1)    //TODO: Change this to > 1 when the layer-count algorithm is complete
+                yield return "layers";
+        }
+
+        private int _GetVisibleButtons()
+        {
+            return (from buttonName in _GetToolbarOptions()
+                   let visibleButtonCount = _GetVisibleButtonCount(buttonName)
+                   select visibleButtonCount).Sum();
+        }
+
+        private int _GetVisibleButtonCount(string buttonName)
+        {
+            switch (buttonName)
+            {
+                case "pages": return 3;
+                case "zoom": return 3;
+                default: return 1;
+            }
+        }
+
+        public int GetTitleOffset(int pageSelectorWidth, int buttonWidth)
+        {
+            int initial = PageCount > 1 ? pageSelectorWidth : 0;
+            return initial + buttonWidth * _GetVisibleButtons();
+        }
+
         public bool Lightbox { get; set; }
 
         /// <summary>
@@ -125,7 +162,7 @@ namespace DrawShip.Viewer
                 nav = true,
                 resize = true,
                 xml = ReadFileContent(),
-                toolbar = string.Join(" ", ToolbarButtons),
+                toolbar = "toolbar " + string.Join(" ", _GetToolbarOptions()),
                 page = PageIndex,
                 lightbox = Lightbox
             };

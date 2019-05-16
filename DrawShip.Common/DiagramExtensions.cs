@@ -76,5 +76,28 @@ namespace DrawShip.Common
                        select name;
             }
         }
+
+        public static int GetMaxNumberOfLayersPerDiagram(this Drawing drawing, IFileSystem fileSystem, string version)
+        {
+            using (var rawDrawingStream = fileSystem.OpenRead(drawing, version))
+            {
+                var xml = XDocument.Load(rawDrawingStream);
+
+                var diagrams = xml.XPathSelectElements("//diagram");
+                var layersInDiagrams = from diagram in diagrams
+                                       select _GetLayerCountInDiagram(diagram);
+
+                return layersInDiagrams.Max();
+            }
+        }
+
+        private static int _GetLayerCountInDiagram(XElement diagram)
+        {
+            using (var drawingStream = CompressedXmlStream.Read(diagram.Value))
+            {
+                var xml = XDocument.Load(drawingStream);
+                return 1; //TODO: Detect the number of layers in this diagram.
+            }
+        }
     }
 }
