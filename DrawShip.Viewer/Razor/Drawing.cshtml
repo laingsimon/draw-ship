@@ -70,7 +70,7 @@
     var _currentPage = @Model.PageIndex;
     var _pageId = document.getElementById("page-id");
     var _pages = _pageId ? JSON.parse(_pageId.getAttribute("data-pages")) : [];
-    var _writeTime = "@(Model.LastWriteTime.ToString("yyyy-MM-ddTHH:mm:ss"))";
+    var _lastWriteTime = "@(Model.LastWriteTime.ToString("u"))";
 
     window.open = function(url, options, name) {
         if (_ctrlKeyPressed)
@@ -121,6 +121,48 @@
     }
 
     window.setTimeout(function () { _setPage(0); }, 100);
+
+    function loadDataFromUrlThen(url, callback) {
+	    let xmlhttp = null;
+
+	    if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4)
+            {
+			    if (xmlhttp.status==200) {
+				    callback(xmlhttp.responseText, null);
+			    } else {
+				    callback(null, { status: xmlhttp.status, text: xmlhttp.responseText });
+			    }
+			    return;
+            }
+        }
+        xmlhttp.open("GET", url, true);
+	    xmlhttp.send();
+    }
+
+    let monitorChangesInterval = window.setInterval(function () {
+        loadDataFromUrlThen(document.location + "/details", function (data, error) {
+            let jsonData = JSON.parse(data);
+
+            if (jsonData.lastWriteTime && jsonData.lastWriteTime !== _lastWriteTime) {
+                window.clearInterval(monitorChangesInterval);
+                monitorChangesInterval = null;
+
+                if (confirm("The diagram content has changed, do you want to reload?")) {
+                    document.location.reload(); //diagram has changed
+                }
+            }
+        })
+    }, 5000);
 </script>
 </body>
 </html>
