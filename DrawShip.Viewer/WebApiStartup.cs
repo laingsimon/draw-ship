@@ -44,10 +44,12 @@ namespace DrawShip.Viewer
 
         public static IDisposable Start(IEnumerable<string> urls)
         {
-            _rootUrls = urls.ToList();
+            var givenUrls = urls.ToList();
+
+            _rootUrls = givenUrls.Select(url => url.Replace("+", Environment.MachineName)).ToList();
 
             var options = new StartOptions();
-            _rootUrls.ForEach(url => options.Urls.Add(url));
+            givenUrls.ForEach(url => options.Urls.Add(url));
 
             return WebApp.Start<WebApiStartup>(options);
         }

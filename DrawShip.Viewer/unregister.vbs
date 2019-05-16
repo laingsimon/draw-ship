@@ -9,3 +9,6 @@ end if
 
 strCommand = """" & Replace(installPath, """", "") & "DrawShip.Viewer.exe"" /mode:uninstall"
 WshShell.Run strCommand, True, 1
+
+strCommand = "netsh http delete urlacl url=http://+:5142/"
+WshShell.Run strCommand, True, 1

@@ -64,12 +64,7 @@ namespace DrawShip.Viewer
 
         private static IEnumerable<string> GetUrls()
         {
-            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-
-            if (principal.IsInRole(WindowsBuiltInRole.Administrator))
-                yield return string.Format("http://{0}:{1}", Environment.MachineName, 5142);
-
-            yield return string.Format("http://localhost:{0}", 5142);
+            yield return string.Format("http://+:{0}", 5142);
         }
     }
 }

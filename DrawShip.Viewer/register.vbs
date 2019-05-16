@@ -13,3 +13,8 @@ WshShell.Run strCommand, True, 1
 
 '' Permit route via the firewall
 WshShell.Run "netsh advfirewall firewall add rule name=""DrawShip viewer"" dir=in action=allow protocol=TCP localport=5142", True, 1
+
+username = wshShell.ExpandEnvironmentStrings( "%USERNAME%" )
+domain = wshShell.ExpandEnvironmentStrings( "%USERDOMAIN%" )
+strCommand = "netsh http add urlacl url=http://+:5142/ user=" & domain & "\" & username & ""
+WshShell.Run strCommand, True, 1
