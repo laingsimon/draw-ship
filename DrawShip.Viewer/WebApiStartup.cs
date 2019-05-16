@@ -3,6 +3,7 @@ using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
 
 namespace DrawShip.Viewer
@@ -51,7 +52,18 @@ namespace DrawShip.Viewer
             var options = new StartOptions();
             givenUrls.ForEach(url => options.Urls.Add(url));
 
-            return WebApp.Start<WebApiStartup>(options);
+            try
+            {
+                return WebApp.Start<WebApiStartup>(options);
+            }
+            catch (TargetInvocationException exc)
+            {
+                throw new InvalidOperationException($"Unable to start web-host - {exc.InnerException.GetType().Name}, for urls: {string.Join(", ", urls)}\r\n{exc.InnerException.Message}");
+            }
+            catch (Exception exc)
+            {
+                throw new InvalidOperationException($"Unable to start web-host - {exc.GetType().Name}, for urls: {string.Join(", ", urls)}", exc.InnerException);
+            }
         }
 
         public static Uri FormatUrl(int workingDirectoryKey, string fileName, DiagramFormat format, string version, string routeName = "DefaultApi")

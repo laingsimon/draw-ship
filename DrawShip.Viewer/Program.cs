@@ -24,7 +24,7 @@ namespace DrawShip.Viewer
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error running command:\r\n" + exc.Message, "DrawShip", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error running command:\r\n" + exc.ToString(), "DrawShip", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.ExitCode = -1;
             }
         }
