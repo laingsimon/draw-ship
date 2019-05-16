@@ -54,5 +54,10 @@ namespace DrawShip.Viewer
         {
             return new HttpPrintRenderer(applicationContext);
         }
+
+        internal IRenderer<DrawingViewModel> GetDetailsRenderer()
+        {
+            return new DrawingDetailsRenderer();
+        }
     }
 }

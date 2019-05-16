@@ -18,6 +18,11 @@
         /// <summary>
         /// Render the drawing in a compatible method for print
         /// </summary>
-        Print
+        Print,
+
+        /// <summary>
+        /// Return the details of the drawing
+        /// </summary>
+        Details
     }
 }

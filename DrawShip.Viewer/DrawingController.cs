@@ -67,6 +67,8 @@ namespace DrawShip.Viewer
                     return _rendererFactory.GetImageRenderer();
                 case DiagramFormat.Print:
                     return _rendererFactory.GetHttpPrintRenderer(_hostingContext.ApplicationContext);
+                case DiagramFormat.Details:
+                    return _rendererFactory.GetDetailsRenderer();
                 default:
                     return _rendererFactory.GetHtmlRenderer();
             }

@@ -110,6 +110,7 @@
     <Compile Include="ContextMenu.cs" />
     <Compile Include="DrawingController.cs" />
     <Compile Include="DiagramFormat.cs" />
+    <Compile Include="DrawingDetailsRenderer.cs" />
     <Compile Include="DrawingViewModel.cs" />
     <Compile Include="DynamicContextMenu.cs" />
     <Compile Include="FileSystemFactory.cs" />
