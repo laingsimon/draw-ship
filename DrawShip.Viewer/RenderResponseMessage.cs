@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -33,7 +34,11 @@ namespace DrawShip.Viewer
                 var responseStream = new MemoryStream(renderStream.ToArray());
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StreamContent(responseStream)
+                    Content = new StreamContent(responseStream),
+                    Headers =
+                    {
+                        ETag = new EntityTagHeaderValue("\"" + _viewModel.LastWriteTime.ToString("yyyy-MM-ddTHH:mm:ss") + "\"")
+                    }
                 };
             }, cancellationToken);
         }

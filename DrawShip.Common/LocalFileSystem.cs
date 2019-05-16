@@ -20,6 +20,14 @@ namespace DrawShip.Common
             return _GetFileNames(drawing).Any(File.Exists);
         }
 
+        public DateTime GetLastWriteTime(Drawing drawing, string version)
+        {
+            return _GetFileNames(drawing)
+                .Where(File.Exists)
+                .Select(File.GetLastWriteTimeUtc)
+                .FirstOrDefault();
+        }
+
         private IEnumerable<string> _GetFileNames(Drawing drawing)
         {
             if (Path.GetExtension(drawing.FileName) != "")

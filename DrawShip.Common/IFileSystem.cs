@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace DrawShip.Common
 {
@@ -7,5 +8,6 @@ namespace DrawShip.Common
         Stream OpenRead(Drawing drawing, string version = null);
         bool FileExists(Drawing drawing);
         bool DirectoryExists(string physicalPath);
+        DateTime GetLastWriteTime(Drawing drawing, string version);
     }
 }

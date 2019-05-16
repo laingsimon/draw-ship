@@ -93,6 +93,9 @@ namespace DrawShip.Viewer
 
         public int PageIndex { get; set; }
         public string HighlightColour { get; set; } = ConfigurationManager.AppSettings["linkColour"] ?? "#0000ff";
+
+		public DateTime LastWriteTime => _fileSystem.GetLastWriteTime(_drawing, _version);
+
         private IEnumerable<string> _GetToolbarOptions()
         {
             yield return "zoom";

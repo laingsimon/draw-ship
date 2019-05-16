@@ -70,6 +70,7 @@
     var _currentPage = @Model.PageIndex;
     var _pageId = document.getElementById("page-id");
     var _pages = _pageId ? JSON.parse(_pageId.getAttribute("data-pages")) : [];
+    var _writeTime = "@(Model.LastWriteTime.ToString("yyyy-MM-ddTHH:mm:ss"))";
 
     window.open = function(url, options, name) {
         if (_ctrlKeyPressed)
