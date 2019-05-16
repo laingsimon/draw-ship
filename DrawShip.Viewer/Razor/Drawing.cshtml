@@ -48,7 +48,7 @@
 <div class="drawing-title-position drawing-title-style"></div>
 <h2 class="drawing-title-position drawing-title">
     <text>
-        Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a>)
+        Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a> / <a href="https://draw.io/#R@(Model.ReadFileContent())" target="_blank">edit</a>)
     </text>
     @if (Model.PageCount > 1)
     {
