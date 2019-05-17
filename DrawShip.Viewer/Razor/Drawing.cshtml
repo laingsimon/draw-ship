@@ -42,29 +42,75 @@
 			position: absolute;
 			right: 5px;
 		}
+
+        .dialog{
+            font-family: Tahoma;
+        }
+
+        .dialog .lock-layer{
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            background-color: #aaaaaa;
+            opacity: 0.5;
+        }
+
+        .dialog .message{
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-top: -50px;
+            margin-left: -150px;
+            border: 1px solid #888888;
+            background: #ffffff;
+        }
+
+        .dialog .message h3 {
+            margin: 0px;
+            padding: 3px 2px;
+            background: #D0D0D0;
+            font-weight: normal;
+        }
+
+        .dialog .message span {
+            padding: 5px;
+            display: block;
+        }
+
+        .dialog .message .buttons {
+            padding: 2px;
+            border-top: 1px solid #d0d0d0;
+            text-align: center;
+        }
+
+        .dialog .message .buttons button {
+            margin: 0px 1px;
+        }
 	</style>
 </head>
 <body>
-<div class="drawing-title-position drawing-title-style"></div>
-<h2 class="drawing-title-position drawing-title">
-    <text>
-        Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a> / <a href="https://draw.io/?title=@(Model.DrawingTitle)#R@(Model.ReadFileContent())" target="_blank">edit</a>)
-    </text>
-    @if (Model.PageCount > 1)
-    {
-    <span>
-        Page: 
-        <b id="page-id" data-pages="@Model.PageNamesJson"></b>
-        of @Model.PageCount
-    </span>
-    }
-    <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship" target="_blank">DrawShip</a> &amp; <a href="https://about.draw.io" target="_blank">draw.io</a></span>
-</h2>
-<div class="mxgraph" style="max-width: 100%; border: 1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
+    <div class="drawing-title-position drawing-title-style"></div>
+    <h2 class="drawing-title-position drawing-title">
+        <text>
+            Drawing: @Model.DrawingTitle (as <a target="_blank" href="@Model.ImageFormatUri">image</a> / <a href="@Model.PrintUri">print</a> / <a href="https://draw.io/?title=@(Model.DrawingTitle)#R@(Model.ReadFileContent())" target="_blank">edit</a>)
+        </text>
+        @if (Model.PageCount > 1)
+        {
+            <span>
+                Page:
+                <b id="page-id" data-pages="@Model.PageNamesJson"></b>
+                of @Model.PageCount
+            </span>
+        }
+        <span class="powered-by">Powered by <a href="https://github.com/laingsimon/draw-ship" target="_blank">DrawShip</a> &amp; <a href="https://about.draw.io" target="_blank">draw.io</a></span>
+    </h2>
+    <div class="mxgraph" style="max-width: 100%; border: 1px solid transparent;" data-mxgraph="@Model.ReadDrawingData()"></div>
 
-<script type="text/javascript" src="https://www.draw.io/embed2.js?s=@(Model.ShapeNames)"></script>
+    <script type="text/javascript" src="https://www.draw.io/embed2.js?s=@(Model.ShapeNames)"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     var _originalWindowOpen = window.open;
     var _ctrlKeyPressed = false;
     var _currentPage = @Model.PageIndex;
@@ -157,12 +203,64 @@
                 window.clearInterval(monitorChangesInterval);
                 monitorChangesInterval = null;
 
-                if (confirm("The diagram content has changed, do you want to reload?")) {
-                    document.location.reload(); //diagram has changed
-                }
+                document.querySelectorAll(".drawing-title a").forEach(function (element) {
+                    element.addEventListener("click", function (e) {
+                        let proceed = confirm("The diagram has changed; using this facility will use the latest saved copy; do you want to continue?");
+                        if (!proceed) {
+                            e.preventDefault();
+                        }
+
+                        return proceed;
+                    });
+                });
+
+                dialog("Diagram changed", "The diagram has changed, do you want to reload it?", { Reload: function () { document.location.reload(); }, No: null })
             }
         })
     }, 5000);
-</script>
+
+        function dialog(title, text, theButtons) {
+            let parent = document.createElement("div");
+            parent.className = "dialog";
+
+            let lockLayer = document.createElement("div");
+            lockLayer.className = "lock-layer";
+
+            let dialog = document.createElement("div");
+            dialog.className = "message"
+
+            let buttons = document.createElement("div");
+            buttons.className = "buttons";
+
+            parent.appendChild(lockLayer);
+            parent.appendChild(dialog);
+
+            let dialogTitle = document.createElement("h3");
+            dialogTitle.innerText = title;
+
+            let dialogText = document.createElement("span");
+            dialogText.innerText = text;
+
+            dialog.appendChild(dialogTitle);
+            dialog.appendChild(dialogText);
+            dialog.appendChild(buttons);
+
+            for (let buttonName in theButtons) {
+                let button = document.createElement("button");
+                button.innerText = buttonName;
+                button.addEventListener("click", function () {
+                    document.body.removeChild(parent);
+
+                    if (theButtons[buttonName]) {
+                        theButtons[buttonName]();
+                    }
+                });
+
+                buttons.appendChild(button);
+            }
+
+            document.body.appendChild(parent);
+        }
+    </script>
 </body>
 </html>
