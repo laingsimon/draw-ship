@@ -33,7 +33,8 @@ namespace DrawShip.Viewer
                 { "bg", "#ffffff" },
                 { "w", _renderSize.Width.ToString() },
                 { "h", _renderSize.Height.ToString() },
-                { "border", "1" }
+                { "border", "1" },
+                { "pageId", viewModel.PageIndex.ToString() }
             });
 
             var response = _client.PostAsync(

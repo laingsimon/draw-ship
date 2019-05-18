@@ -17,7 +17,7 @@ namespace DrawShip.Viewer
             _rendererFactory = new RendererFactory();
         }
 
-        public IHttpActionResult Get(int directoryKey, string fileName, string version = null, DiagramFormat format = DiagramFormat.Html)
+        public IHttpActionResult Get(int directoryKey, string fileName, string version = null, DiagramFormat format = DiagramFormat.Html, int? page = null)
         {
             var directory = _hostingContext.GetDirectory(directoryKey);
 
@@ -32,7 +32,8 @@ namespace DrawShip.Viewer
                 FileName = fileName,
                 Directory = directory,
                 Version = version,
-                Format = format
+                Format = format,
+                PageIndex = page ?? 0
             };
 
             var drawing = command.GetDrawing(fileName);
@@ -48,7 +49,10 @@ namespace DrawShip.Viewer
                 fileSystem,
                 WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Image, version),
                 WebApiStartup.FormatUrl(directoryKey, fileName, DiagramFormat.Print, version),
-                command.Version);
+                command.Version)
+            {
+                PageIndex = command.PageIndex
+            };
             var renderer = _GetRenderer(command.Format);
 
             return new RenderResponseMessage(renderer, viewModel, this);

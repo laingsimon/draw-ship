@@ -135,7 +135,10 @@ namespace DrawShip.Viewer
             var renderer = RendererFactory.GetImageRenderer();
             var fileSystem = FileSystemFactory.GetFileSystem(null);
             var drawing = command.GetDrawing();
-            var viewModel = new DrawingViewModel(drawing, fileSystem, null, null);
+            var viewModel = new DrawingViewModel(drawing, fileSystem, null, null)
+            {
+                PageIndex = command.PageIndex
+            };
 
             using (var writeStream = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
             {

@@ -15,6 +15,7 @@ namespace DrawShip.Viewer
         public string Version { get; set; }
         public string Directory { get; set; }
         public DiagramFormat Format { get; set; }
+        public int PageIndex { get; set; }
 
         public Drawing GetDrawing(string fileName = null)
         {

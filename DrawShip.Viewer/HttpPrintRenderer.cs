@@ -21,13 +21,14 @@ namespace DrawShip.Viewer
                     Format = DiagramFormat.Print,
                     Directory = viewModel.Drawing.FilePath,
                     FileName = viewModel.Drawing.FileName,
-                    Version = viewModel.Version
+                    Version = viewModel.Version,
+                    PageIndex = viewModel.PageIndex
                 });
             });
 
             return new StringRenderResult(@"
 <html>
-<body onload='window.history.back();'>
+<body onload='window.close();'>
 </body>
 </html>");
         }
