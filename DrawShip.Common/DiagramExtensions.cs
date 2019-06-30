@@ -77,6 +77,20 @@ namespace DrawShip.Common
             }
         }
 
+        public static IEnumerable<string> GetPageIds(this Drawing drawing, IFileSystem fileSystem, string version)
+        {
+            using (var rawDrawingStream = fileSystem.OpenRead(drawing, version))
+            {
+                var xml = XDocument.Load(rawDrawingStream);
+                var diagrams = xml.XPathSelectElements("//diagram");
+
+                return from diagram in diagrams
+                       let id = diagram.Attribute("id")?.Value
+                       where !string.IsNullOrEmpty(id)
+                       select id;
+            }
+        }
+
         public static int GetMaxNumberOfLayersPerDiagram(this Drawing drawing, IFileSystem fileSystem, string version)
         {
             using (var rawDrawingStream = fileSystem.OpenRead(drawing, version))

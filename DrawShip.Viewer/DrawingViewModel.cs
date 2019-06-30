@@ -49,6 +49,16 @@ namespace DrawShip.Viewer
             get { return _printUri; }
         }
 
+        public string GetPageId(int pageIndex)
+        {
+            return _drawing.GetPageIds(_fileSystem, _version).ElementAtOrDefault(pageIndex);
+        }
+
+        public string GetPageName(int pageIndex)
+        {
+            return _drawing.GetPageNames(_fileSystem, _version).ElementAtOrDefault(pageIndex);
+        }
+
         /// <summary>
         /// The names of the shapes that are used in the drawing
         /// </summary>
